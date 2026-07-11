@@ -25,37 +25,24 @@
   "main": {
     "title": "OpenFront (ALFA)",
     "join_discord": "Discord",
-    "login_discord": "Login met Discord",
-    "sign_in": "Aanmelden",
-    "discord_avatar_alt": "Avatar Discord profiel",
-    "user_avatar_alt": "Avatar van {username}",
     "checking_login": "Inlog controleren...",
     "logged_in": "Ingelogd!",
     "log_out": "Uitloggen",
-    "create": "Lobby aanmaken",
-    "join": "Lobby toetreden",
     "solo": "Solo",
     "instructions": "Instructies",
     "game_info": "Spelinformatie",
-    "wiki": "Wiki",
-    "privacy_policy": "Privacybeleid",
-    "terms_of_service": "Servicevoorwaarden",
-    "copyright": "© OpenFront™ en Bijdragers",
     "reddit": "Reddit",
     "play": "Spelen",
-    "news": "Nieuws",
     "store": "Winkel",
     "settings": "Instellingen",
     "keys": "Sneltoetsen",
     "stats": "Statistieken",
-    "account": "Account",
     "help": "Help",
     "menu": "Menu",
     "pick_pattern": "Kies een skin!"
   },
   "news": {
-    "github_link": "op GitHub",
-    "title": "Release-opmerkingen"
+    "github_link": "op GitHub"
   },
   "help_modal": {
     "hotkeys": "Sneltoetsen",
@@ -155,8 +142,6 @@
     "title": "Solo",
     "random_spawn": "Willekeurige startpositie",
     "allow_alliances": "Bondgenootschappen toestaan",
-    "toggle_achievements": "Prestaties in- of uitschakelen",
-    "sign_in_for_achievements": "Meld je aan voor prestaties",
     "options_title": "Opties",
     "bots": "Bots:",
     "bots_disabled": "Uitgeschakeld",
@@ -172,29 +157,6 @@
     "disable_nukes": "Kernwapens uitschakelen",
     "enables_title": "Onderdelen inschakelen",
     "start": "Start Spel"
-  },
-  "token_login_modal": {
-    "title": "Aan het inloggen...",
-    "logging_in": "Aan het inloggen...",
-    "success": "Succesvol ingelogd als {email}!"
-  },
-  "account_modal": {
-    "title": "Account",
-    "connected_as": "Gekoppeld als",
-    "stats_overview": "Overzicht van statistieken",
-    "link_discord": "Discord-account koppelen",
-    "log_out": "Uitloggen",
-    "sign_in_desc": "Meld je aan om statistieken en voortgang op te slaan",
-    "or": "OF",
-    "email_placeholder": "Voer je e-mailadres in",
-    "get_magic_link": "Krijg Magische Link",
-    "linked_account": "Ingelogd als {account_name}",
-    "fetching_account": "Accountgegevens ophalen...",
-    "recovery_email_sent": "Herstelmail verzonden naar {email}",
-    "not_found": "Niet Gevonden",
-    "clear_session": "Sessie Wissen",
-    "failed_to_send_recovery_email": "Verzenden herstel e-mail mislukt",
-    "enter_email_address": "Voer een e-mailadres in alsjeblieft"
   },
   "stats_modal": {
     "title": "Statistieken",
@@ -300,17 +262,9 @@
     "error": "Fout"
   },
   "private_lobby": {
-    "title": "Privélobby toetreden",
-    "enter_id": "Voer Lobby-ID in",
     "player": "Speler",
     "players": "Spelers",
-    "join_lobby": "Lobby toetreden",
-    "checking": "Lobby controleren...",
-    "not_found": "Lobby niet gevonden. Controleer het ID en probeer het opnieuw.",
-    "error": "Er is een fout opgetreden. Probeer het opnieuw of neem contact op met support.",
-    "joined_waiting": "Toegetreden tot lobby! Wachten op host om te starten...",
-    "version_mismatch": "Dit spel is aangemaakt met een andere versie. Kan niet afspelen of deelnemen.",
-    "disabled_units": "Uitgeschakelde Eenheden"
+    "checking": "Lobby controleren..."
   },
   "public_lobby": {
     "join": "Deelnemen aan volgende Spel",
@@ -318,20 +272,10 @@
     "teams_Duos": "{team_count} Teams van 2 (Duo's)",
     "teams_Trios": "{team_count} Teams van 3 (Trio's)",
     "teams_Quads": "{team_count} Teams van 4 (Viertallen)",
-    "waiting_for_players": "Wachten op spelers",
-    "starting_game": "Spel starten…",
     "teams_hvn": "Mensen vs Naties",
     "teams_hvn_detailed": "{num} Mensen vs {num} Naties",
     "teams": "{num} Teams",
-    "players_per_team": "van {num}",
-    "started": "Begonnen"
-  },
-  "matchmaking_modal": {
-    "title": "1v1 Competitieve Matchmaking (ALFA)",
-    "connecting": "Verbinden met matchmakingserver...",
-    "searching": "Zoeken naar een spel...",
-    "waiting_for_game": "Wachten tot het spel begint...",
-    "elo": "Jouw ELO: {elo}"
+    "players_per_team": "van {num}"
   },
   "username": {
     "enter_username": "Voer je gebruikersnaam in",
@@ -344,33 +288,15 @@
     "tag_invalid_chars": "Clantag kan alleen letters en cijfers bevatten."
   },
   "host_modal": {
-    "title": "Privélobby Aanmaken",
     "label": "Privé",
-    "mode": "Modus",
-    "team_count": "Aantal teams",
     "team_type": "Teamtype",
-    "options_title": "Opties",
-    "bots": "Bots:",
-    "bots_disabled": "Uitgeschakeld",
-    "player_immunity_duration": "PVP-immuniteitsduur (minuten)",
-    "nations": "Naties: ",
     "disable_nations": "Naties uitschakelen",
-    "max_timer": "Spellengte (minuten)",
-    "mins_placeholder": "Min.",
-    "instant_build": "Bouwwachttijd uitschakelen",
-    "infinite_gold": "Oneindig goud",
-    "donate_gold": "Goud doneren",
-    "infinite_troops": "Oneindige troepen",
-    "donate_troops": "Troepen doneren",
     "compact_map": "Compacte kaart",
-    "enables_title": "Onderdelen inschakelen",
     "player": "Speler",
     "players": "Spelers",
     "nation_players": "Naties",
     "nation_player": "Natie",
-    "waiting": "Wachten op spelers...",
     "random_spawn": "Willekeurige startpositie",
-    "start": "Start Spel",
     "host_badge": "Host",
     "assigned_teams": "Toegewezen Teams",
     "empty_teams": "Lege Teams",
@@ -838,7 +764,6 @@
     "multiplayer_game_paused": "Spel gepauzeerd door Lobby-maker"
   },
   "territory_patterns": {
-    "title": "Skins ",
     "colors": "Kleuren",
     "purchase": "Kopen",
     "show_only_owned": "Mijn Skins",
@@ -851,8 +776,7 @@
     "pattern": {
       "default": "Standaard"
     },
-    "select_skin": "Kies Skin",
-    "selected": "geselecteerd"
+    "select_skin": "Kies Skin"
   },
   "flag_input": {
     "title": "Selecteer Vlag",
@@ -943,11 +867,5 @@
     "mode_ffa": "Iedereen tegen elkaar",
     "mode_team": "Team",
     "no_stats": "Geen statistieken vastgelegd voor deze selectie."
-  },
-  "matchmaking_button": {
-    "play_ranked": "1v1 Competitieve Matchmaking",
-    "description": "(ALFA)",
-    "login_required": "Log in om competitief te spelen!",
-    "must_login": "Je moet ingelogd zijn om competitieve matchmaking te spelen."
   }
 }

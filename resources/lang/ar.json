@@ -8,15 +8,13 @@
   "main": {
     "title": "OpentFront (النسخة الأولية)",
     "join_discord": "انضم إلى \"Discord\"!",
-    "login_discord": "تسجيل الدخول عبر ديسكورد",
     "logged_in": "تم تسجيل الدخول!",
     "log_out": "تسجيل الخروج",
     "create_lobby": "إنشاء لوبي",
     "join_lobby": "انضمام للوبي",
     "single_player": "لاعب فردي",
     "instructions": "التعليمات",
-    "how_to_play": "كيفية اللعب",
-    "wiki": "الويكي"
+    "how_to_play": "كيفية اللعب"
   },
   "help_modal": {
     "hotkeys": "اختصارات",
@@ -136,15 +134,9 @@
     "fantasy": "خيالي"
   },
   "private_lobby": {
-    "title": "الانضمام إلى لوبي خاص",
-    "enter_id": "أدخل رقم اللوبي",
     "player": "لاعب",
     "players": "لاعبين",
-    "join_lobby": "انضمام للوبي",
-    "checking": "جار التحقق من اللوبي...",
-    "not_found": "لم يتم العثور على اللوبي. تحقق من الرقم وحاول مرة أخرى.",
-    "error": "حدث خطأ. حاول مجددًا.",
-    "joined_waiting": "...تم الانضمام! بانتظار بدء اللعبة"
+    "checking": "جار التحقق من اللوبي..."
   },
   "public_lobby": {
     "join": "الانضمام للعبة القادمة",
@@ -159,21 +151,9 @@
     "invalid_chars": ".يمكن للاسم أن يحتوي فقط على حروف، أرقام، فراغات، شرطات سفلية، و[أقواس مربعة]"
   },
   "host_modal": {
-    "title": "لوبي خاص",
-    "mode": "الوضع",
-    "team_count": "عدد الفرق",
-    "options_title": "خيارات",
-    "bots": "البوتات: ",
-    "bots_disabled": "معطل",
     "disable_nations": "تعطيل الدول",
-    "instant_build": "بناء فوري",
-    "infinite_gold": "ذهب غير محدود",
-    "infinite_troops": "جنود غير محدودين",
-    "enables_title": "تفعيل الإعدادات",
     "player": "لاعب",
-    "players": "لاعبين",
-    "waiting": "بانتظار اللاعبين...",
-    "start": "بدء اللعبة"
+    "players": "لاعبين"
   },
   "game_starting_modal": {
     "title": "...يتم بدء اللعبة",

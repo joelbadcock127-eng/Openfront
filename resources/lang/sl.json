@@ -11,7 +11,6 @@
   "main": {
     "title": "OpenFront (Alfa)",
     "join_discord": "Pridruži se našemu Discord serverju!",
-    "login_discord": "Prijava z Discord računom",
     "checking_login": "Preverjanje prijave...",
     "logged_in": "Prijava uspešna!",
     "log_out": "Odjavi se",
@@ -20,15 +19,11 @@
     "single_player": "Enoigralni način",
     "instructions": "Navodila",
     "how_to_play": "Kako igrati",
-    "advertise": "Oglaševanje",
-    "wiki": "Wiki",
-    "privacy_policy": "Politika zasebnosti",
-    "terms_of_service": "Pogoji storitve"
+    "advertise": "Oglaševanje"
   },
   "news": {
     "see_all_releases": "Poglej vse posodobitve",
-    "github_link": "na GitHub",
-    "title": "Zadnje posodobitve"
+    "github_link": "na GitHub"
   },
   "help_modal": {
     "hotkeys": "Bližnjice",
@@ -136,16 +131,9 @@
     "enables_title": "Aktiviraj nastavitve",
     "start": "Začni igro"
   },
-  "token_login_modal": {
-    "title": "Prijava...",
-    "logging_in": "Prijava...",
-    "success": "Uspešno prijavljen kot {email}!"
-  },
   "account_modal": {
-    "title": "Račun",
     "logged_in_as": "Prijavljen kot {email}",
-    "logged_in_with_discord": "Prijavljen z Discordom",
-    "recovery_email_sent": "Obnovitveni email je bil poslan na {email}"
+    "logged_in_with_discord": "Prijavljen z Discordom"
   },
   "map": {
     "map": "Zemljevid",
@@ -190,16 +178,9 @@
     "loading": "Nalaganje..."
   },
   "private_lobby": {
-    "title": "Pridruži se privatni sobi",
-    "enter_id": "Vnesi ID sobe",
     "player": "Igralec",
     "players": "Igralci",
-    "join_lobby": "Pridruži se sobi",
-    "checking": "Preverjanje sobe...",
-    "not_found": "Sobe ni mogoče najti. Prosimo preverite ID in poskusite znova.",
-    "error": "Prišlo je do napake. Poskusite znova ali se obrnite na podporo.",
-    "joined_waiting": "Uspešna pridružitev! Čakanje na začetek igre...",
-    "version_mismatch": "Ta soba je bila ustvarjena z drugo verzijo igre. Napaka pridružitve."
+    "checking": "Preverjanje sobe..."
   },
   "public_lobby": {
     "join": "Pridruži se naslednji igri",
@@ -217,24 +198,10 @@
     "invalid_chars": "Uporabniško ime lahko vsebuje samo črke, številke, presledke, podčrtaje in [oglate oklepaje]."
   },
   "host_modal": {
-    "title": "Zasebna soba",
-    "mode": "Način",
-    "team_count": "Število ekip",
-    "options_title": "Možnosti",
-    "bots": "Roboti: ",
-    "bots_disabled": "Onemogočeno",
     "disable_nations": "Deaktiviraj nacije",
-    "instant_build": "Instantna gradnja",
-    "infinite_gold": "Neomejeno zlata",
-    "donate_gold": "Doniraj zlato",
-    "infinite_troops": "Neomejene enote",
-    "donate_troops": "Doniraj enote",
     "compact_map": "Mini mapa",
-    "enables_title": "Aktiviraj nastavitve",
     "player": "Igralec",
     "players": "Igralci",
-    "waiting": "Čakanje na igralce...",
-    "start": "Začni igro",
     "host_badge": "Gostitelj"
   },
   "team_colors": {
@@ -591,7 +558,6 @@
     "choose_spawn": "Izberite začetno lokacijo"
   },
   "territory_patterns": {
-    "title": "Izberi poslikavo območja",
     "purchase": "Nakup",
     "blocked": {
       "login": "Za dostop do tega vzorca morate biti prijavljeni.",

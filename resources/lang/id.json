@@ -8,7 +8,6 @@
   "common": {
     "close": "Keluar",
     "copy": "Salin",
-    "paste": "Tempel",
     "back": "Kembali",
     "available": "Tersedia",
     "preset_max": "Maks",
@@ -23,37 +22,22 @@
     "none": "Tidak Satupun",
     "copied": "Tersalin",
     "click_to_copy": "Klik untuk salin",
-    "enabled": "Diaktifkan",
     "map_default": "Peta Default"
   },
   "main": {
     "title": "OpenFront (ALPHA)",
-    "login_discord": "Masuk dengan Discord",
-    "sign_in": "Masuk",
-    "discord_avatar_alt": "Avatar profil Discord",
-    "user_avatar_alt": "Avatar {username}",
-    "create": "Buat Lobi",
-    "join": "Bergabung ke Lobi",
     "solo": "Solo",
     "game_info": "Informasi Permainan",
-    "wiki": "Wiki",
-    "privacy_policy": "Kebijakan Privasi",
-    "terms_of_service": "Ketentuan Layanan",
-    "copyright": "© OpenFront™ dan para kontributor",
     "play": "Main",
-    "news": "Berita",
     "store": "Toko",
     "settings": "Pengaturan",
-    "leaderboard": "Papan Peringkat",
-    "account": "Akun",
     "help": "Bantuan",
     "menu": "Menu",
     "troubleshooting": "Penyelesaian masalah",
     "go_to_troubleshooting": "Pergi ke halaman penyelesaian masalah kami"
   },
   "news": {
-    "github_link": "di GitHub",
-    "title": "Catatan Rilis"
+    "github_link": "di GitHub"
   },
   "troubleshooting": {
     "title": "Penyelesaian masalah",
@@ -184,8 +168,6 @@
   },
   "single_modal": {
     "random_spawn": "Kemunculan acak",
-    "toggle_achievements": "Tampilkan / Sembunyikan pencapaian",
-    "sign_in_for_achievements": "Masuk untuk melihat pencapaian",
     "options_title": "Opsi",
     "bots": "Suku-suku: ",
     "bots_disabled": "Dinonaktifkan",
@@ -201,58 +183,16 @@
     "max_timer_invalid": "Silakan masukkan nilai pengatur waktu maksimum yang valid (1-120 menit)",
     "enables_title": "Aktifkan Pengaturan",
     "start": "Mulai Permainan",
-    "options_changed_no_achievements": "Pengaturan khusus – pencapaian dinonaktifkan",
     "gold_multiplier": "Pengganda emas",
     "gold_multiplier_placeholder": "2.0x",
     "starting_gold": "Emas Awal (Juta)",
     "starting_gold_placeholder": "5"
   },
-  "token_login_modal": {
-    "title": "Sedang masuk...",
-    "logging_in": "Sedang masuk...",
-    "success": "Berhasil masuk sebagai {email}!"
-  },
   "account_modal": {
-    "title": "Akun",
-    "connected_as": "Terhubung sebagai",
-    "stats_overview": "Gambaran Umum Statistik",
-    "link_discord": "Tautkan Akun Discord",
-    "log_out": "Keluar",
-    "sign_in_desc": "Masuk untuk menyimpan statistik dan kemajuan Anda",
-    "or": "ATAU",
-    "email_placeholder": "Masukkan alamat email Anda",
-    "get_magic_link": "Dapatkan Tautan Ajaib",
-    "linked_account": "Masuk sebagai {account_name}",
-    "fetching_account": "Mengambil informasi akun...",
-    "recovery_email_sent": "Pemulihan email dikirim ke {email}",
-    "not_found": "Tidak Ditemukan",
-    "clear_session": "Hapus Sesi",
-    "failed_to_send_recovery_email": "Gagal mengirim pemulihan email",
-    "enter_email_address": "Silahkan masukan alamat email",
     "personal_player_id": "ID Pemain Pribadi:"
   },
   "leaderboard_modal": {
-    "title": "Papan Peringkat",
-    "ranked_tab": "Pertandingan Peringkat 1v1",
-    "clans_tab": "Klan",
-    "refresh_time": "Diperbarui setiap 1 jam",
-    "loading": "Memuat...",
-    "error": "Kesalahan memuat leaderboard",
-    "no_stats": "Statistik tidak tersedia",
-    "no_data_yet": "Data belum tersedia",
-    "clan": "Klan",
-    "player": "Pemain",
-    "games": "Permainan",
-    "elo": "ELO",
-    "win_score": "Skor Kemenangan",
-    "win_score_tooltip": "Kemenangan dihitung berdasarkan bobot partisipasi klan dan tingkat kesulitan pertandingan",
-    "loss_score": "Skor Kekalahan",
-    "loss_score_tooltip": "Kerugian dihitung berdasarkan partisipasi klan dan kesulitan pertandingan",
-    "win_loss_ratio": "Menang/Kalah",
-    "ratio": "Rasio",
-    "rank": "Peringkat",
-    "try_again": "Coba lagi",
-    "your_ranking": "Peringkat Anda"
+    "try_again": "Coba lagi"
   },
   "game_info_modal": {
     "title": "Informasi Permainan",
@@ -356,37 +296,11 @@
     "loading": "Loading...",
     "error": "Kesalahan"
   },
-  "private_lobby": {
-    "title": "Gabung Lobi Privat",
-    "enter_id": "Masukan ID Lobi",
-    "join_lobby": "Bergabung ke Lobi",
-    "not_found": "Lobi tidak ditemukan. Mohon periksa ID dan coba lagi.",
-    "error": "Beberapa kesalahan terjadi. Silakan coba lagi atau hubungi dukungan.",
-    "joined_waiting": "Berhasil gabung ke lobi! Menunggu untuk penyelenggara untuk memulai...",
-    "version_mismatch": "Permainan ini dibuat dengan versi yang berbeda. Tidak dapat gabung.",
-    "disabled_units": "Nonaktfikan Units"
-  },
   "public_lobby": {
-    "title": "Menunggu permainan untuk dimulai...",
-    "waiting_for_players": "Menunggu pemain",
-    "connecting": "Menghubungkan ke lobi...",
-    "starting_in": "Dimulai dalam {time}",
-    "starting_game": "Memulai…",
     "teams_hvn": "Pemain vs Negara",
     "teams_hvn_detailed": "{num} Pemain vs {num} Negara",
     "teams": "{num} tim",
-    "players_per_team": "dari {num}",
-    "started": "Dimulai",
-    "status": "Status",
-    "join_timeout": "Anda tidak masuk ke dalam permainan tepat waktu."
-  },
-  "matchmaking_modal": {
-    "title": "Pertandingan 1v1 Ranked (ALPHA)",
-    "connecting": "Menghubungkan ke server pencarian lawan...",
-    "searching": "Mencari permainan...",
-    "waiting_for_game": "Menunggu permainan untuk dimulai...",
-    "elo": "ELO anda: {elo}",
-    "no_elo": "Belum ada ELO"
+    "players_per_team": "dari {num}"
   },
   "username": {
     "enter_username": "Masukkan nama pengguna",
@@ -399,32 +313,13 @@
     "tag_invalid_chars": "Tag klan hanya boleh berisi huruf dan angka"
   },
   "host_modal": {
-    "title": "Buat Lobi Tertutup",
-    "mode": "Mode",
-    "team_count": "Jumlah Tim",
-    "options_title": "Pilihan",
-    "bots": "Suku-suku: ",
-    "bots_disabled": "Nonaktif",
-    "nations": "Negara: ",
-    "nations_disabled": "Nonaktif",
-    "player_immunity_duration": "Durasi imunitas PVP (menit)",
-    "max_timer": "Lama permainan (menit)",
-    "mins_placeholder": "Menit",
-    "instant_build": "Bangun instan",
-    "infinite_gold": "Emas tak terbatas",
-    "donate_gold": "Donasikan emas",
-    "infinite_troops": "Pasukan tak terbatas",
-    "donate_troops": "Donasikan pasukan",
     "compact_map": "Peta Kecil",
     "disable_alliances": "Nonaktifkan aliansi",
-    "enables_title": "Aktifkan Pengaturan",
     "player": "Pemain",
     "players": "Pemain",
     "nation_players": "Bangsa-bangsa",
     "nation_player": "Bangsa",
-    "waiting": "Menunggu pemain...",
     "random_spawn": "Kemunculan Acak",
-    "start": "Mulai Permainan",
     "host_badge": "Host",
     "assigned_teams": "Tim yang Ditugaskan",
     "empty_teams": "Tim Kosong",
@@ -437,10 +332,6 @@
     "crowded": "Pengubah yang ramai",
     "hard_nations": "Negara Sulit",
     "gold_multiplier": "Pengganda emas",
-    "gold_multiplier_placeholder": "2.0x",
-    "starting_gold": "Emas Awal (Juta)",
-    "starting_gold_placeholder": "5",
-    "leave_confirmation": "Apakah Anda yakin ingin meninggalkan lobi?",
     "team_type": "Tipe Tim"
   },
   "team_colors": {
@@ -470,15 +361,6 @@
   "game_mode": {
     "ffa": "Siapapun bisa bergabung",
     "teams": "Tim-tim"
-  },
-  "mode_selector": {
-    "teams_title": "Tim-tim",
-    "teams_count": "{teamCount} tim",
-    "teams_of": "{teamCount} tim dari {playersPerTeam}",
-    "ranked_title": "Ranked",
-    "ranked_1v1_title": "1v1",
-    "ranked_2v2_title": "2v1",
-    "coming_soon": "Segera Hadir"
   },
   "public_game_modifier": {
     "random_spawn": "Kemunculan Acak",
@@ -899,13 +781,11 @@
     "catching_up": "Menyusul..."
   },
   "territory_patterns": {
-    "title": "Tampilan",
     "purchase": "Beli",
     "pattern": {
       "default": "Default"
     },
     "select_skin": "Pilih Skin",
-    "selected": "dipilih",
     "colors": "Warna-Warna",
     "show_only_owned": "Skin Saya",
     "all_owned": "Semua skin sudah dimiliki! Silakan periksa kembali nanti untuk item baru.",
@@ -986,11 +866,5 @@
     "stats_wlr": "Menang:Kalah Rasio",
     "stats_games_played": "Permainan Dimainkan",
     "no_stats": "Tidak ada statistik yang tercatat untuk pilihan ini."
-  },
-  "matchmaking_button": {
-    "play_ranked": "Pertandingan 1v1 Ranked",
-    "description": "(ALPHA)",
-    "login_required": "Masuk untuk bermain peringkat!",
-    "must_login": "Anda harus masuk untuk bermain di pertandingan 1v1 Ranked."
   }
 }

@@ -11,7 +11,6 @@
   "main": {
     "title": "OpenFront (ALPHA)",
     "join_discord": "Deltag i vores Discord!",
-    "login_discord": "Log ind med Discord",
     "checking_login": "Tjekker login...",
     "logged_in": "Logget ind!",
     "log_out": "Log ud",
@@ -20,15 +19,11 @@
     "single_player": "Enkeltspiller",
     "instructions": "Instruktioner",
     "how_to_play": "Sådan spiller du",
-    "advertise": "Annoncér",
-    "wiki": "Wiki",
-    "privacy_policy": "Privatlivspolitik",
-    "terms_of_service": "Servicevilkår"
+    "advertise": "Annoncér"
   },
   "news": {
     "see_all_releases": "Se alle udgivelser",
-    "github_link": "på GitHub",
-    "title": "Udgivelsesnoter"
+    "github_link": "på GitHub"
   },
   "help_modal": {
     "hotkeys": "Genvejstaster",
@@ -177,15 +172,9 @@
     "loading": "Indlæser..."
   },
   "private_lobby": {
-    "title": "Deltag I Privat Lobby",
-    "enter_id": "Indtast Lobby ID",
     "player": "Spiller",
     "players": "Spillere",
-    "join_lobby": "Deltag I Lobby",
-    "checking": "Kontrollerer lobby...",
-    "not_found": "Lobbyen blev ikke fundet. Kontroller ID og prøv igen.",
-    "error": "Der opstod en fejl. Prøv igen.",
-    "joined_waiting": "Tilslutning gennemført! Venter på, at spillet starter..."
+    "checking": "Kontrollerer lobby..."
   },
   "public_lobby": {
     "join": "Deltag i næste Spil",
@@ -203,21 +192,9 @@
     "invalid_chars": "Brugernavn kan kun indeholde bogstaver, tal, mellemrum, understregninger og [firkantede parenteser]."
   },
   "host_modal": {
-    "title": "Privat Lobby",
-    "mode": "Tilstand",
-    "team_count": "Antal Hold",
-    "options_title": "Indstillinger",
-    "bots": "Bots: ",
-    "bots_disabled": "Slået fra",
     "disable_nations": "Deaktiver Nationer",
-    "instant_build": "Øjeblikkelig opbygning",
-    "infinite_gold": "Uendeligt guld",
-    "infinite_troops": "Uendelige tropper",
-    "enables_title": "Aktiver Indstillinger",
     "player": "Spiller",
     "players": "Spillere",
-    "waiting": "Venter på spillerne...",
-    "start": "Start spil",
     "host_badge": "Vært"
   },
   "team_colors": {
@@ -547,7 +524,6 @@
     "choose_spawn": "Vælg en startplacering"
   },
   "territory_patterns": {
-    "title": "Vælg Territoriummønster",
     "purchase": "Køb",
     "blocked": {
       "login": "Du skal være logget ind for at få adgang til dette mønster.",

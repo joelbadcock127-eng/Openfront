@@ -13,12 +13,8 @@ import {
 } from "../../core/game/DoomsdayClock";
 import {
   Difficulty,
-  Duos,
   GameMapType,
   GameMode,
-  HumansVsNations,
-  Quads,
-  Trios,
   UnitType,
 } from "../../core/game/Game";
 import { TeamCountConfig } from "../../core/Schemas";
@@ -45,18 +41,6 @@ const CARD_LABEL_CLASS =
 const DIFFICULTY_OPTIONS = Object.entries(Difficulty).filter(([key]) =>
   isNaN(Number(key)),
 ) as Array<[string, Difficulty]>;
-const TEAM_COUNT_OPTIONS: TeamCountConfig[] = [
-  2,
-  3,
-  4,
-  5,
-  6,
-  7,
-  Quads,
-  Trios,
-  Duos,
-  HumansVsNations,
-];
 
 function stateTextClass(active: boolean): string {
   return active ? "text-white" : "text-white/60";
@@ -128,10 +112,6 @@ const DIFFICULTY_ICON = svg`<path
   fill-rule="evenodd"
   d="M12.97 3.97a.75.75 0 011.06 0l7.5 7.5a.75.75 0 010 1.06l-7.5 7.5a.75.75 0 11-1.06-1.06l6.22-6.22H3a.75.75 0 010-1.5h16.19l-6.22-6.22a.75.75 0 010-1.06z"
   clip-rule="evenodd"
-/>`;
-
-const MODE_ICON = svg`<path
-  d="M11.25 4.533A9.707 9.707 0 006 3a9.735 9.735 0 00-3.25.555.75.75 0 00-.5.707v14.25a.75.75 0 001 .707A8.237 8.237 0 016 18.75c1.995 0 3.823.707 5.25 1.886V4.533zM12.75 20.636A8.214 8.214 0 0118 18.75c.966 0 1.89.166 2.75.47a.75.75 0 001-.708V4.262a.75.75 0 00-.5-.707A9.735 9.735 0 0018 3a9.707 9.707 0 00-5.25 1.533v16.103z"
 />`;
 
 const OPTIONS_ICON = svg`<path
@@ -448,8 +428,6 @@ export class GameConfigSettings extends LitElement {
             .onSelectRandom=${this.handleSelectRandom}
             .searchQuery=${this.mapSearchQuery}
           ></map-picker>`,
-          undefined,
-          this.renderMapSearchInput(),
         )}
         ${renderSection(
           DIFFICULTY_ICON,
@@ -491,66 +469,6 @@ export class GameConfigSettings extends LitElement {
             </div>
           `,
         )}
-        ${renderSection(
-          MODE_ICON,
-          "text-purple-400",
-          "bg-purple-500/20",
-          "host_modal.mode",
-          html`
-            <div class="grid grid-cols-2 gap-4">
-              ${[GameMode.FFA, GameMode.Team].map((mode) => {
-                const isSelected = settings.gameMode.selected === mode;
-                return html`
-                  <button
-                    class="${cardClass(isSelected, "py-6 text-center")}"
-                    @click=${() => this.handleGameModeSelect(mode)}
-                  >
-                    <span
-                      class="text-sm font-bold text-white uppercase tracking-widest"
-                    >
-                      ${mode === GameMode.FFA
-                        ? translateText("game_mode.ffa")
-                        : translateText("game_mode.teams")}
-                    </span>
-                  </button>
-                `;
-              })}
-            </div>
-          `,
-        )}
-        ${settings.gameMode.selected === GameMode.FFA
-          ? nothing
-          : html`
-              <section class="space-y-6">
-                <div
-                  class="text-xs font-bold text-white/40 uppercase tracking-widest mb-4 pl-2"
-                >
-                  ${translateText("host_modal.team_count")}
-                </div>
-                <div class="grid grid-cols-2 md:grid-cols-5 gap-3">
-                  ${TEAM_COUNT_OPTIONS.map((o) => {
-                    const isSelected = settings.teamCount.selected === o;
-                    return html`
-                      <button
-                        class="${cardClass(
-                          isSelected,
-                          "px-4 py-3 text-center",
-                        )}"
-                        @click=${() => this.handleTeamCountSelect(o)}
-                      >
-                        <span class="${CARD_LABEL_CLASS} text-white">
-                          ${typeof o === "string"
-                            ? o === HumansVsNations
-                              ? translateText("public_lobby.teams_hvn")
-                              : translateText(`host_modal.teams_${o}`)
-                            : translateText("public_lobby.teams", { num: o })}
-                        </span>
-                      </button>
-                    `;
-                  })}
-                </div>
-              </section>
-            `}
         ${renderSection(
           OPTIONS_ICON,
           "text-orange-400",

@@ -11,7 +11,6 @@
   "main": {
     "title": "OpenFront (АЛФА)",
     "join_discord": "Приклучи се на Discord!",
-    "login_discord": "Најави се со Discord",
     "checking_login": "Проверка на најава...",
     "logged_in": "Успешна најава!",
     "log_out": "Одјава",
@@ -20,15 +19,11 @@
     "single_player": "Еден Играч",
     "instructions": "Инструкции",
     "how_to_play": "Како се игра",
-    "advertise": "Рекламирај",
-    "wiki": "Вики",
-    "privacy_policy": "Политика за приватност",
-    "terms_of_service": "Услови за користење"
+    "advertise": "Рекламирај"
   },
   "news": {
     "see_all_releases": "Види ги сите изданија",
-    "github_link": "на GitHub",
-    "title": "Белешки за изданието"
+    "github_link": "на GitHub"
   },
   "help_modal": {
     "hotkeys": "Кратенки",
@@ -137,16 +132,9 @@
     "enables_title": "Овозможи Опции",
     "start": "Започни игра"
   },
-  "token_login_modal": {
-    "title": "Најавување...",
-    "logging_in": "Најавување...",
-    "success": "Успешно најавен како {email}!"
-  },
   "account_modal": {
-    "title": "Профил",
     "logged_in_as": "Најавен како {email}",
-    "logged_in_with_discord": "Најавен преку Discord",
-    "recovery_email_sent": "Испратен порака на {email}"
+    "logged_in_with_discord": "Најавен преку Discord"
   },
   "map": {
     "map": "Карта",
@@ -189,15 +177,9 @@
     "loading": "Вчитување..."
   },
   "private_lobby": {
-    "title": "Приклучи се во приватно лоби",
-    "enter_id": "Внеси ID на лобито",
     "player": "Играч",
     "players": "Играчи",
-    "join_lobby": "Приклучи се во лоби",
-    "checking": "Се проверува лобито...",
-    "not_found": "Лобито не е пронајдено. Провери го ID-то и обиди се повторно.",
-    "error": "Се појави грешка. Обидете се повторно.",
-    "joined_waiting": "Успешно се приклучи! Чекање играта да започне..."
+    "checking": "Се проверува лобито..."
   },
   "public_lobby": {
     "join": "Приклучи се на следната игра",
@@ -215,23 +197,9 @@
     "invalid_chars": "Корисничкото име може да содржи само букви, бројки, празни места, долни црти и [квадратни загради]."
   },
   "host_modal": {
-    "title": "Приватно лоби",
-    "mode": "Режим",
-    "team_count": "Број на тимови",
-    "options_title": "Опции",
-    "bots": "Ботови ",
-    "bots_disabled": "Исклучени",
     "disable_nations": "Оневозможи држави",
-    "instant_build": "Инстант градба",
-    "infinite_gold": "Бесконечно злато",
-    "donate_gold": "Донирај злато",
-    "infinite_troops": "Бесконечна војска",
-    "donate_troops": "Донирај војници",
-    "enables_title": "Вклучи поставки",
     "player": "Играч",
     "players": "Играчи",
-    "waiting": "Се чекаат играчи...",
-    "start": "Започни игра",
     "host_badge": "Хост"
   },
   "team_colors": {
@@ -585,7 +553,6 @@
     "choose_spawn": "Избери почетна локација"
   },
   "territory_patterns": {
-    "title": "Избери шема на територија",
     "purchase": "Купи",
     "blocked": {
       "login": "Мораш да бидеш најавен за да пристапиш до оваа шема.",

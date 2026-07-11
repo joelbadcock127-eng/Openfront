@@ -8,15 +8,13 @@
   "main": {
     "title": "OpenFront (ALPHA)",
     "join_discord": "¡Únete al Discord!",
-    "login_discord": "Iniciar sesión con Discord",
     "logged_in": "¡Sesión iniciada!",
     "log_out": "Cerrar sesión",
     "create_lobby": "Crear Lobby",
     "join_lobby": "Unirse al Lobby",
     "single_player": "Juego en solitario",
     "instructions": "Instrucciones",
-    "how_to_play": "Cómo jugar",
-    "wiki": "Wiki"
+    "how_to_play": "Cómo jugar"
   },
   "help_modal": {
     "hotkeys": "Atajos de Teclado",
@@ -150,15 +148,9 @@
     "fantasy": "Otro"
   },
   "private_lobby": {
-    "title": "Unirse a Partida Privada",
-    "enter_id": "Introduce ID de la Partida",
     "player": "Jugador",
     "players": "Jugadores",
-    "join_lobby": "Unirse a Partida",
-    "checking": "Comprobando Partida...",
-    "not_found": "No se ha encontrado Partida. Comprueba el ID e inténtalo de nuevo.",
-    "error": "Ha ocurrido un error. Inténtalo de nuevo.",
-    "joined_waiting": "¡Te has unido a la Partida! Esperando a que comience el juego..."
+    "checking": "Comprobando Partida..."
   },
   "public_lobby": {
     "join": "Unirse a la próxima Partida",
@@ -173,21 +165,9 @@
     "invalid_chars": "El nombre de usuario solamente puede contener letras, números, espacios, barras bajas y [corchetes]."
   },
   "host_modal": {
-    "title": "Partida Privada",
-    "mode": "Modo",
-    "team_count": "Número de equipos",
-    "options_title": "Opciones",
-    "bots": "Bots: ",
-    "bots_disabled": "Deshabilitados",
     "disable_nations": "Deshabilitar Naciones",
-    "instant_build": "Construcción instantánea",
-    "infinite_gold": "Oro infinito",
-    "infinite_troops": "Tropas infinitas",
-    "enables_title": "Activar configuración",
     "player": "Jugador",
-    "players": "Jugadores",
-    "waiting": "Esperando jugadores...",
-    "start": "Iniciar Partida"
+    "players": "Jugadores"
   },
   "game_starting_modal": {
     "title": "La partida está comenzando...",

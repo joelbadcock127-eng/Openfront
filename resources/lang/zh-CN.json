@@ -9,7 +9,6 @@
     "not_logged_in": "未登录",
     "close": "关闭",
     "copy": "复制",
-    "paste": "粘贴",
     "back": "返回",
     "available": "剩余",
     "preset_max": "最大",
@@ -24,37 +23,22 @@
     "none": "空",
     "copied": "已复制！",
     "click_to_copy": "点击复制",
-    "enabled": "已启用",
     "disabled": "已禁用",
     "map_default": "地图默认值"
   },
   "main": {
     "title": "OpenFront (内测版)",
-    "login_discord": "用 Discord 登录",
-    "sign_in": "登录",
-    "discord_avatar_alt": "Discord 头像",
-    "user_avatar_alt": "{username} 的头像",
-    "create": "创建房间",
-    "join": "加入房间",
     "solo": "单人模式",
     "game_info": "游戏信息",
-    "wiki": "游戏百科",
-    "privacy_policy": "隐私政策",
-    "terms_of_service": "服务条款",
-    "copyright": "© OpenFront™ 和贡献者们",
     "play": "游戏",
-    "news": "公告",
     "store": "商店",
     "settings": "设置",
-    "leaderboard": "排行榜",
-    "account": "账号",
     "help": "帮助",
     "menu": "菜单",
     "troubleshooting": "疑难解答",
     "go_to_troubleshooting": "移步到我们的疑难解答页面"
   },
   "news": {
-    "title": "发行说明",
     "github_link": "在 Github 上"
   },
   "troubleshooting": {
@@ -193,8 +177,6 @@
   },
   "single_modal": {
     "random_spawn": "随机出生点",
-    "toggle_achievements": "切换成就",
-    "sign_in_for_achievements": "登录以获取成就",
     "options_title": "选项",
     "bots": "部落：",
     "bots_disabled": "已禁用",
@@ -211,58 +193,13 @@
     "max_timer_invalid": "请输入一个有效的最大计时器值（1-120分钟）",
     "enables_title": "禁用单位",
     "start": "开始游戏",
-    "options_changed_no_achievements": "自定义设置 - 成就已禁用",
     "gold_multiplier": "黄金乘数",
     "gold_multiplier_placeholder": "2.0x",
     "starting_gold": "初始黄金（M）",
     "starting_gold_placeholder": "5"
   },
-  "token_login_modal": {
-    "title": "正在登录……",
-    "logging_in": "正在登录……",
-    "success": "成功以 {email} 身份登录！"
-  },
-  "account_modal": {
-    "title": "账号",
-    "connected_as": "已连接为",
-    "stats_overview": "统计概览",
-    "link_discord": "链接 Discord 帐号",
-    "log_out": "退出登录",
-    "sign_in_desc": "登录以保存您的统计数据和进度",
-    "or": "或",
-    "email_placeholder": "请输入您的电子邮件地址",
-    "get_magic_link": "获取魔法链接",
-    "linked_account": "以 {account_name} 身份登录成功",
-    "fetching_account": "正在获取帐户信息......",
-    "recovery_email_sent": "账号找回邮件已发送至 {email}",
-    "not_found": "未找到",
-    "clear_session": "清除会话",
-    "failed_to_send_recovery_email": "发送恢复邮件失败",
-    "enter_email_address": "请输入电子邮件地址",
-    "public_player_id": "公开的玩家 ID："
-  },
   "leaderboard_modal": {
-    "title": "排行榜",
-    "ranked_tab": "1v1 排位赛",
-    "clans_tab": "军团",
-    "refresh_time": "每 1 小时刷新一次",
-    "loading": "正在加载……",
-    "error": "加载排行榜时出错",
-    "no_stats": "暂无统计数据",
-    "no_data_yet": "暂无数据",
-    "clan": "军团",
-    "player": "玩家",
-    "games": "游戏场数",
-    "elo": "ELO",
-    "win_score": "胜者积分",
-    "win_score_tooltip": "加权胜场数基于军团参与度和比赛难度计算",
-    "loss_score": "败者积分",
-    "loss_score_tooltip": "加权败场数基于军团参与度和比赛难度计算",
-    "win_loss_ratio": "胜负比",
-    "ratio": "比率",
-    "rank": "排名",
-    "try_again": "再试一次",
-    "your_ranking": "你的排名"
+    "try_again": "再试一次"
   },
   "game_info_modal": {
     "title": "游戏信息",
@@ -384,41 +321,11 @@
     "loading": "正在加载...",
     "error": "错误"
   },
-  "private_lobby": {
-    "title": "加入私人房间",
-    "enter_id": "输入房间 ID",
-    "join_lobby": "加入房间",
-    "not_found": "找不到房间。请检查 ID 然后重试。",
-    "error": "发生错误。请再试一次或联系支持人员。",
-    "joined_waiting": "房间已加入！等待房主开始游戏……",
-    "version_mismatch": "这场游戏基于另一个版本，无法加入。",
-    "disabled_units": "禁用单位",
-    "game_length": "游戏时长",
-    "pvp_immunity": "PVP 开局和平期时长",
-    "starting_gold": "开局黄金",
-    "host_cheats": "房主作弊模式"
-  },
   "public_lobby": {
-    "title": "正在等待游戏开始……",
-    "waiting_for_players": "正在等待玩家",
-    "connecting": "正在连接到房间……",
-    "starting_in": "在 {time} 后开始",
-    "starting_game": "正在开始……",
     "teams_hvn": "人类 VS 国家",
     "teams_hvn_detailed": "{num} 个人类 VS {num} 个国家",
     "teams": "{num} 个队伍",
-    "players_per_team": "每队 {num} 人",
-    "started": "已开始",
-    "status": "状态",
-    "join_timeout": "您没有及时进入游戏。"
-  },
-  "matchmaking_modal": {
-    "title": "1v1 排位赛（内测版）",
-    "connecting": "正在连接到匹配服务器……",
-    "searching": "正在搜索游戏……",
-    "waiting_for_game": "正在等待游戏开始……",
-    "elo": "你的 ELO 分：{elo}",
-    "no_elo": "暂无ELO"
+    "players_per_team": "每队 {num} 人"
   },
   "username": {
     "enter_username": "输入用户名",
@@ -431,33 +338,13 @@
     "tag_invalid_chars": "战队标签只能包含字母和数字。"
   },
   "host_modal": {
-    "title": "创建私人房间",
-    "mode": "模式",
-    "team_count": "队伍数量",
-    "options_title": "选项",
-    "bots": "部落：",
-    "bots_disabled": "禁用",
-    "nations": "国家：",
-    "nations_disabled": "已禁用",
-    "player_immunity_duration": "PVP 开局和平期时长（分钟）",
-    "max_timer": "游戏时长（分钟）",
-    "mins_placeholder": "分钟",
-    "instant_build": "立即建造",
-    "infinite_gold": "无限金钱",
-    "donate_gold": "捐赠金币",
-    "infinite_troops": "无限军队",
-    "donate_troops": "捐赠军队",
     "compact_map": "紧凑地图",
     "disable_alliances": "禁用结盟",
-    "water_nukes": "水中核弹",
-    "enables_title": "禁用单位",
     "player": "玩家",
     "players": "玩家",
     "nation_players": "国家",
     "nation_player": "国家",
-    "waiting": "正在等待玩家...",
     "random_spawn": "随机出生点",
-    "start": "开始游戏",
     "host_badge": "主机",
     "assigned_teams": "已分配的队伍",
     "empty_teams": "空队伍",
@@ -469,12 +356,7 @@
     "teams_Humans Vs Nations": "人类 VS 国家",
     "crowded": "密度修改器",
     "hard_nations": "困难的国家",
-    "gold_multiplier": "黄金乘数",
-    "gold_multiplier_placeholder": "2.0x",
-    "starting_gold": "初始黄金（M）",
-    "starting_gold_placeholder": "5",
-    "host_cheats": "房主作弊模式",
-    "leave_confirmation": "确定要离开房间吗？"
+    "gold_multiplier": "黄金乘数"
   },
   "team_colors": {
     "red": "红色",
@@ -503,15 +385,6 @@
   "game_mode": {
     "ffa": "混战",
     "teams": "团队"
-  },
-  "mode_selector": {
-    "teams_title": "队伍",
-    "teams_count": "{teamCount} 个队伍",
-    "teams_of": "{teamCount} 个队伍，每队 {playersPerTeam} 人",
-    "ranked_title": "排位赛",
-    "ranked_1v1_title": "1v1",
-    "ranked_2v2_title": "2v2",
-    "coming_soon": "即将推出"
   },
   "public_game_modifier": {
     "random_spawn": "随机出生点",
@@ -962,14 +835,7 @@
     "catching_up": "正在追赶进度……"
   },
   "store": {
-    "title": "商店",
-    "patterns": "皮肤",
-    "flags": "旗帜",
-    "packs": "合集包",
-    "no_flags": "这里没有别的旗帜啦！过段时间再来吧。",
-    "no_skins": "这里没有别的皮肤啦！过段时间再来吧。",
     "no_packs": "这里没有别的合集包啦！过段时间再来吧。",
-    "currency_pack_purchase_success": "货币合集包购买成功！",
     "checkout_failed": "创建结账会话失败啦。",
     "login_required": "你需要登录才能买。",
     "not_enough_currency": "钱不够，买不了。",
@@ -977,14 +843,11 @@
     "purchase_success": "购买成功：{name}"
   },
   "territory_patterns": {
-    "title": "皮肤",
     "purchase": "购买",
     "pattern": {
       "default": "默认"
     },
-    "select_skin": "选择皮肤",
-    "selected": "已选择",
-    "search": "正在努力搜索……"
+    "select_skin": "选择皮肤"
   },
   "cosmetics": {
     "artist_label": "艺术家：",
@@ -1076,33 +939,12 @@
     "stats_games_played": "游戏场数",
     "no_stats": "所选项没有统计记录。"
   },
-  "matchmaking_button": {
-    "play_ranked": "1v1 排位赛",
-    "description": "（内测版）",
-    "login_required": "登录后开始排位赛！",
-    "must_login": "您必须登录才能玩排位赛。"
-  },
   "news_box": {
     "tournament": "锦标赛",
     "tutorial": "教程",
     "news": "新闻",
     "warning": "警告",
-    "dismiss": "忽略",
-    "go_to_item": "跳转到商品 {num}",
     "firefox_warning": "Openfront.io 在 [基于 Firefox 的浏览器](https://simple.wikipedia.org/wiki/Web_browsers_based_on_Firefox) 上表现不佳。我们推荐你使用 [基于 Chromium 的浏览器](https://en.wikipedia.org/wiki/Chromium_(web_browser)#Browsers_based_on_Chromium) 来获得最佳性能体验。"
-  },
-  "ios_banner": {
-    "text": "将 OpenFront 添加到主屏幕，获得全屏体验",
-    "how": "如何操作",
-    "later": "稍后",
-    "never": "从不",
-    "modal_title": "在 iOS 上全屏使用",
-    "modal_desc": "您的浏览器不支持全屏，但您可以将 OpenFront 添加到您的主屏幕以获得沉浸体验：",
-    "step_share": "点击浏览器中的“分享”按钮",
-    "step_scroll_and_tap": "向下滚动并点击",
-    "step_add_to_home_label": "添加到主屏幕",
-    "step_open": "从主屏幕打开 — 无地址栏，全屏启动",
-    "got_it": "好的"
   },
   "fullscreen": {
     "enter": "进入全屏",

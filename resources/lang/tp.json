@@ -8,15 +8,13 @@
   "main": {
     "title": "musi Openpon (ALPHA)",
     "join_discord": "o tawa kulupu mi lon ilo Siko a!",
-    "login_discord": "o kama kepeken ilo Siko",
     "logged_in": "kama a!",
     "log_out": "o weka",
     "create_lobby": "o pali e musi sin",
     "join_lobby": "o kama tawa tomo",
     "single_player": "musi pi jan wan",
     "instructions": "lawa musi",
-    "how_to_play": "nasin musi",
-    "wiki": "lipu sona"
+    "how_to_play": "nasin musi"
   },
   "help_modal": {
     "hotkeys": "ilo luka",
@@ -136,15 +134,9 @@
     "fantasy": "ma ante"
   },
   "private_lobby": {
-    "title": "o kama tawa tomo len",
-    "enter_id": "o pana e nanpa tomo",
     "player": "jan musi",
     "players": "jan musi",
-    "join_lobby": "o kama tawa tomo",
-    "checking": "ilo li alasa e tomo...",
-    "not_found": "ilo li alasa ala e tomo. o lukin e nanpa tomo o alasa sin.",
-    "error": "ijo li pakala. o alasa sin.",
-    "joined_waiting": "sina kama! musi li awen tawa open..."
+    "checking": "ilo li alasa e tomo..."
   },
   "public_lobby": {
     "join": "o kama tawa musi kama",
@@ -159,21 +151,9 @@
     "invalid_chars": "nimi o jo taso e ijo nimi e nanpa e ala e linja e [poki nimi leko]."
   },
   "host_modal": {
-    "title": "tomo len",
-    "mode": "nasin",
-    "team_count": "nanpa kulupu",
-    "options_title": "ken",
-    "bots": "ilo: ",
-    "bots_disabled": "pini",
     "disable_nations": "o pini e ma suli",
-    "instant_build": "o pali kepeken tenpo ala",
-    "infinite_gold": "o jo e mani ale",
-    "infinite_troops": "o jo e kulupu utala ale",
-    "enables_title": "o ken e lipu ken",
     "player": "jan musi",
-    "players": "jan musi",
-    "waiting": "tomo li awen tawa jan musi...",
-    "start": "o open"
+    "players": "jan musi"
   },
   "game_starting_modal": {
     "title": "musi li open...",

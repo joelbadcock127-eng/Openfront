@@ -8,15 +8,13 @@
   "main": {
     "title": "OpenFront (ALPHA)",
     "join_discord": "Připoj se na Discord!",
-    "login_discord": "Přihlásit se Discordem",
     "logged_in": "Přihlášen*a!",
     "log_out": "Odhlásit se",
     "create_lobby": "Vytvořit Lobby",
     "join_lobby": "Připojit se do Lobby",
     "single_player": "Jeden hráč",
     "instructions": "Instrukce",
-    "how_to_play": "Jak Hrát",
-    "wiki": "Wiki"
+    "how_to_play": "Jak Hrát"
   },
   "help_modal": {
     "hotkeys": "Klávesové zkratky",
@@ -150,15 +148,9 @@
     "fantasy": "Ostatní"
   },
   "private_lobby": {
-    "title": "Připojit se do soukromé lobby",
-    "enter_id": "Zadat ID Lobby",
     "player": "Hráč",
     "players": "Hráči",
-    "join_lobby": "Připojit se do Lobby",
-    "checking": "Kontrola lobby...",
-    "not_found": "Lobby nelze najít. Zkontroluj znovu ID a zkus to znovu.",
-    "error": "Něco se pokazilo. Zkus to znovu.",
-    "joined_waiting": "Úspěšně připojeno! Čekej na začátek hry..."
+    "checking": "Kontrola lobby..."
   },
   "public_lobby": {
     "join": "Připojit se do další hry",
@@ -173,21 +165,9 @@
     "invalid_chars": "Uživatelské jméno může obsahovat pouze písmena, číslice, mezery, podtržítka a [hranaté závorky]."
   },
   "host_modal": {
-    "title": "Soukromé Lobby",
-    "mode": "Režim",
-    "team_count": "Počet Týmů",
-    "options_title": "Nastavení",
-    "bots": "Boti: ",
-    "bots_disabled": "Vypnuto",
     "disable_nations": "Vypnout Národy",
-    "instant_build": "Okamžitá stavba",
-    "infinite_gold": "Nekonečné zlato",
-    "infinite_troops": "Nekonečný počet Jednotek",
-    "enables_title": "Aktivovat nastavení",
     "player": "Hráč",
-    "players": "Hráči",
-    "waiting": "Čeká se na hráče...",
-    "start": "Začít hru"
+    "players": "Hráči"
   },
   "game_starting_modal": {
     "title": "Hra začíná...",

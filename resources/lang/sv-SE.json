@@ -11,7 +11,6 @@
   "main": {
     "title": "OpenFront (ALPHA)",
     "join_discord": "Gå med i Discord!",
-    "login_discord": "Logga in med Discord",
     "checking_login": "Kontrollerar inloggning...",
     "logged_in": "Inloggad!",
     "log_out": "Logga ut",
@@ -20,15 +19,11 @@
     "single_player": "Enspelarläge",
     "instructions": "Instruktioner",
     "how_to_play": "Hur man Spelar",
-    "advertise": "Annonsera",
-    "wiki": "Wiki",
-    "privacy_policy": "Sekretesspolicy",
-    "terms_of_service": "Användarvillkor"
+    "advertise": "Annonsera"
   },
   "news": {
     "full_changelog": "Se fullständig ändringslogg",
-    "github_link": "på GitHub",
-    "title": "Ändringslogg"
+    "github_link": "på GitHub"
   },
   "help_modal": {
     "hotkeys": "Kortkommandon",
@@ -173,15 +168,9 @@
     "loading": "Laddar..."
   },
   "private_lobby": {
-    "title": "Gå med i Privat Lobby",
-    "enter_id": "Ange Lobby-ID",
     "player": "Spelare",
     "players": "Spelare",
-    "join_lobby": "Gå med i Lobby",
-    "checking": "Kontrollerar Lobby...",
-    "not_found": "Lobby hittades inte. Kontrollera ID:t och försök igen.",
-    "error": "Ett fel inträffade. Vänligen försök igen.",
-    "joined_waiting": "Du kom in! Väntar på att spelet ska starta..."
+    "checking": "Kontrollerar Lobby..."
   },
   "public_lobby": {
     "join": "Gå med i nästa spel",
@@ -199,21 +188,9 @@
     "invalid_chars": "Användarnamnet får enbart innehålla bokstäver, siffror, mellanslag, understreck och [hakparenteser]."
   },
   "host_modal": {
-    "title": "Privat lobby",
-    "mode": "Läge",
-    "team_count": "Antal Lag",
-    "options_title": "Alternativ",
-    "bots": "Botar: ",
-    "bots_disabled": "Avaktiverat",
     "disable_nations": "Inaktivera Nationer",
-    "instant_build": "Omedelbar byggnation",
-    "infinite_gold": "Obegränsat guld",
-    "infinite_troops": "Obegränsade trupper",
-    "enables_title": "Aktivera inställningar",
     "player": "Spelare",
-    "players": "Spelare",
-    "waiting": "Väntar på spelare...",
-    "start": "Starta spelet"
+    "players": "Spelare"
   },
   "team_colors": {
     "red": "Röd",
@@ -536,7 +513,6 @@
     "choose_spawn": "Välj en plats att börja på"
   },
   "territory_patterns": {
-    "title": "Välj Mönster för Territorium",
     "purchase": "Köp",
     "blocked": {
       "login": "Du måste vara inloggad för att få åtkomst till det här mönstret.",

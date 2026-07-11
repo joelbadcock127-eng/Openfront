@@ -25,37 +25,24 @@
   "main": {
     "title": "OpenFront (ALFA)",
     "join_discord": "Discord",
-    "login_discord": "Discord'la giriş yap",
-    "sign_in": "Oturum Aç",
-    "discord_avatar_alt": "Discord profil avatarı",
-    "user_avatar_alt": "{username}'in avatarı",
     "checking_login": "Giriş kontrol ediliyor...",
     "logged_in": "Giriş yapıldı!",
     "log_out": "Çıkış yap",
-    "create": "Lobi Oluştur",
-    "join": "Lobiye Katıl",
     "solo": "Tekli",
     "instructions": "Rehber",
     "game_info": "Oyun bilgisi",
-    "wiki": "Wiki",
-    "privacy_policy": "Gizlilik Politikası",
-    "terms_of_service": "Hizmet Şartları",
-    "copyright": "© OpenFront™ ve Katkıda Bulunanlar",
     "reddit": "Reddit",
     "play": "Oyna",
-    "news": "Haberler",
     "store": "Mağaza",
     "settings": "Seçenekler",
     "keys": "Tuşlar",
     "stats": "İstatistikler",
-    "account": "Hesap",
     "help": "Yardım",
     "menu": "Menü",
     "pick_pattern": "Desen seç!"
   },
   "news": {
-    "github_link": "GitHub'da",
-    "title": "Sürüm Notları"
+    "github_link": "GitHub'da"
   },
   "help_modal": {
     "hotkeys": "Kısayol Tuşları",
@@ -155,8 +142,6 @@
     "title": "Tekli",
     "random_spawn": "Rastgele doğma",
     "allow_alliances": "İttifaklara izin ver",
-    "toggle_achievements": "Başarımları aç/kapat",
-    "sign_in_for_achievements": "Başarımlar için oturum aç",
     "options_title": "Seçenekler",
     "bots": "Botlar",
     "bots_disabled": "Devre Dışı",
@@ -172,29 +157,6 @@
     "disable_nukes": "Nükleerleri Devre Dışı Bırak",
     "enables_title": "Ayarları Etkinleştir",
     "start": "Oyunu Başlat"
-  },
-  "token_login_modal": {
-    "title": "Giriş yapılıyor...",
-    "logging_in": "Oturum açılıyor...",
-    "success": "Başarıyla {email} olarak giriş yapıldı!"
-  },
-  "account_modal": {
-    "title": "Hesap",
-    "connected_as": "Şu olarak bağlandı",
-    "stats_overview": "İstatistiklere Genel Bakış",
-    "link_discord": "Discord Hesabı Bağla",
-    "log_out": "Çıkış Yap",
-    "sign_in_desc": "İstatistiklerini ve ilerlemeni kaydetmek için oturum aç",
-    "or": "YA DA",
-    "email_placeholder": "E-posta adresini gir",
-    "get_magic_link": "Sihirli Linkini Al",
-    "linked_account": "{account_name} olarak giriş yapıldı",
-    "fetching_account": "Hesap bilgisi alınıyor...",
-    "recovery_email_sent": "Kurtarma e-postası {email}'a gönderildi",
-    "not_found": "Bulunamadı",
-    "clear_session": "Oturumu Temizle",
-    "failed_to_send_recovery_email": "Kurtarma e-postası gönderimi başarısız",
-    "enter_email_address": "Lütfen bir e-posta adresi giriniz"
   },
   "stats_modal": {
     "title": "İstatistikler",
@@ -300,17 +262,9 @@
     "error": "Hata"
   },
   "private_lobby": {
-    "title": "Özel Lobiye Katıl",
-    "enter_id": "Lobi ID'sini Girin",
     "player": "Oyuncu",
     "players": "Oyuncular",
-    "join_lobby": "Lobiye katıl",
-    "checking": "Lobi kontrol ediliyor...",
-    "not_found": "Lobi bulunamadı. Lütfen ID'yi kontrol edip tekrar deneyin.",
-    "error": "Bir hata oluştu. Lütfen tekrar deneyin ya da destek ile iletişime geçin.",
-    "joined_waiting": "Lobiye katıldınız! Oda sahibinin başlatması bekleniyor...",
-    "version_mismatch": "Bu lobi oyunun başka bir sürümü ile oluşturuldu. Katılamazsın.",
-    "disabled_units": "Devre Dışı Bırakılmış Birimler"
+    "checking": "Lobi kontrol ediliyor..."
   },
   "public_lobby": {
     "join": "Sıradaki Oyuna Katıl",
@@ -318,20 +272,10 @@
     "teams_Duos": "{team_count} adet 2 kişilik takımlar (İkili)",
     "teams_Trios": "{team_count} adet 3 kişilik takımlar (Üçlü)",
     "teams_Quads": "{team_count} adet 4 kişilik takımlar (Dörtlü)",
-    "waiting_for_players": "Oyuncular bekleniyor",
-    "starting_game": "Oyun başlatılıyor…",
     "teams_hvn": "İnsanlar vs Ülkeler",
     "teams_hvn_detailed": "{num} İnsan vs {num} Ülke",
     "teams": "{num} takımlar",
-    "players_per_team": "{num}",
-    "started": "Başladı"
-  },
-  "matchmaking_modal": {
-    "title": "1v1 Aşamalı Eşleştirme (ALFA)",
-    "connecting": "Maç bulma sunucusuna bağlanılıyor...",
-    "searching": "Oyun aranıyor...",
-    "waiting_for_game": "Oyunun başlaması bekleniyor...",
-    "elo": "Senin ELO'n: {elo}"
+    "players_per_team": "{num}"
   },
   "username": {
     "enter_username": "Kullanıcı adınızı girin",
@@ -344,33 +288,15 @@
     "tag_invalid_chars": "Klan etiketi sadece harf ve sayı içerebilir."
   },
   "host_modal": {
-    "title": "Özel Lobi Oluştur",
     "label": "Özel",
-    "mode": "Mod",
-    "team_count": "Takım Sayısı",
     "team_type": "Takım Türü",
-    "options_title": "Seçenekler",
-    "bots": "Botları:",
-    "bots_disabled": "Devre Dışı",
-    "player_immunity_duration": "PVP bağışıklık süresi (dakika)",
-    "nations": "Ülkeler: ",
     "disable_nations": "Ulusları Devre Dışı Bırak",
-    "max_timer": "Oyun süresi (dakika)",
-    "mins_placeholder": "Dakika",
-    "instant_build": "Anında İnşa",
-    "infinite_gold": "Sınırsız Altın",
-    "donate_gold": "Altın bağışla",
-    "infinite_troops": "Sınırsız Asker",
-    "donate_troops": "Asker bağışla",
     "compact_map": "Sıkıştırılmış Harita",
-    "enables_title": "Ayarları Etkinleştir",
     "player": "Oyuncu",
     "players": "Oyuncular",
     "nation_players": "Ülkeler",
     "nation_player": "Millet",
-    "waiting": "Oyuncular bekleniyor...",
     "random_spawn": "Rastgele doğma",
-    "start": "Oyunu Başlat",
     "host_badge": "Host",
     "assigned_teams": "Atanmış Takımlar",
     "empty_teams": "Boş Takımlar",
@@ -838,7 +764,6 @@
     "multiplayer_game_paused": "Oyun Lobi Sahibi tarafından durduruldu"
   },
   "territory_patterns": {
-    "title": "Kaplamalar",
     "colors": "Renkler",
     "purchase": "Satın al",
     "show_only_owned": "Kaplamalarım",
@@ -851,8 +776,7 @@
     "pattern": {
       "default": "Varsayılan"
     },
-    "select_skin": "Kaplama Seç",
-    "selected": "seçildi"
+    "select_skin": "Kaplama Seç"
   },
   "flag_input": {
     "title": "Bayrak Seç",
@@ -943,11 +867,5 @@
     "mode_ffa": "Herkes Tek",
     "mode_team": "Takım",
     "no_stats": "Bu seçenek için veri kaydedilmedi."
-  },
-  "matchmaking_button": {
-    "play_ranked": "1v1 Aşamalı Eşleştirme",
-    "description": "(ALFA)",
-    "login_required": "Aşamalı oynamak için giriş yap!",
-    "must_login": "Aşamalı eşleştirme oynamak için giriş yapmanız gerek."
   }
 }

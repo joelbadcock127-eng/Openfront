@@ -8,7 +8,6 @@
   "common": {
     "close": "Tancar",
     "copy": "Copiar",
-    "paste": "Enganxar",
     "back": "Enrere",
     "available": "Disponible",
     "preset_max": "Màx",
@@ -22,38 +21,23 @@
     "target_dead_note": "No pots enviar recursos a un jugador eliminat.",
     "none": "Cap",
     "copied": "Copiat!",
-    "click_to_copy": "Clica per copiar",
-    "enabled": "Activat"
+    "click_to_copy": "Clica per copiar"
   },
   "main": {
     "title": "OpenFront (ALFA)",
-    "login_discord": "Inicia sessió amb Discord",
-    "sign_in": "Iniciar sessió",
-    "discord_avatar_alt": "Foto de perfil Discord",
-    "user_avatar_alt": "L'avatar de {username}",
-    "create": "Crear Aula",
-    "join": "Unir-se a l'Aula",
     "solo": "Sol",
     "game_info": "Informació del joc",
-    "wiki": "Wiki",
-    "privacy_policy": "Política de Privacitat",
-    "terms_of_service": "Condicions de Servei",
-    "copyright": "© OpenFront™ i Col·laboradors",
     "play": "Jugar",
-    "news": "Notícies",
     "store": "Botiga",
     "store_new_badge": "NOU",
     "settings": "Configuració",
-    "leaderboard": "Classificació",
-    "account": "Compte",
     "help": "Ajuda",
     "menu": "Menú",
     "troubleshooting": "Resolució de problemes",
     "go_to_troubleshooting": "Ves a la nostra pàgina per resolució problemes"
   },
   "news": {
-    "github_link": "a GitHub",
-    "title": "Notes de publicació"
+    "github_link": "a GitHub"
   },
   "troubleshooting": {
     "title": "Resolució de problemes",
@@ -181,8 +165,6 @@
   },
   "single_modal": {
     "random_spawn": "Punt de partida aleatori",
-    "toggle_achievements": "Activa o desactiva els assoliments",
-    "sign_in_for_achievements": "Inicia la sessió per rebre assoliments",
     "options_title": "Opcions",
     "bots": "Bots: ",
     "bots_disabled": "Desactivat",
@@ -196,58 +178,16 @@
     "max_timer_invalid": "Introduïu un valor vàlid per la duració màxima (1-120 minuts)",
     "enables_title": "Activa les configuracions",
     "start": "Iniciar Partida",
-    "options_changed_no_achievements": "Configuracions personalitzades – assoliments desactivats",
     "gold_multiplier": "Multiplicador d'or",
     "gold_multiplier_placeholder": "2,0x",
     "starting_gold": "Or inicial",
     "starting_gold_placeholder": "5000000"
   },
-  "token_login_modal": {
-    "title": "Iniciant la sessió...",
-    "logging_in": "Iniciant la sessió...",
-    "success": "Has iniciat la sessió com a {email}!"
-  },
   "account_modal": {
-    "title": "Compte",
-    "connected_as": "Connectat com a",
-    "stats_overview": "Visió general d'estadístiques",
-    "link_discord": "Enllaça compte de Discord",
-    "log_out": "Tanca la sessió",
-    "sign_in_desc": "Inicia la sessió per desar les teves estadístiques i el teu progrés",
-    "or": "O",
-    "email_placeholder": "Introdueix la teva adreça de correu electrònic",
-    "get_magic_link": "Obtén Magic Link",
-    "linked_account": "Has iniciat la sessió com a {account_name}",
-    "fetching_account": "Obtenint la informació del compte...",
-    "recovery_email_sent": "Correu electrònic de recuperació enviat a {email}",
-    "not_found": "No Trobat",
-    "clear_session": "Borra la Sessió",
-    "failed_to_send_recovery_email": "S'ha fallat l'enviament del correu electrònic de recuperació",
-    "enter_email_address": "Introduïu una adreça de correu electrònic",
     "personal_player_id": "ID de jugador personal:"
   },
   "leaderboard_modal": {
-    "title": "Taulell de classificació",
-    "ranked_tab": "1 contra 1 Classificat",
-    "clans_tab": "Clans",
-    "refresh_time": "Es refresca cada hora",
-    "loading": "S'està carregant...",
-    "error": "Error carregant classificació",
-    "no_stats": "No hi ha estadístiques disponibles",
-    "no_data_yet": "Encara sense dades",
-    "clan": "Clan",
-    "player": "Jugador",
-    "games": "Partides",
-    "elo": "ELO",
-    "win_score": "Puntuació Victòries",
-    "win_score_tooltip": "Victòries equilibrades basades en la participació del clan i la dificultat del partit",
-    "loss_score": "Puntuació Derrotes",
-    "loss_score_tooltip": "Victòries equilibrades basades en la participació del clan i la dificultat del partit",
-    "win_loss_ratio": "Victòries/Derrotes",
-    "ratio": "Ràtio",
-    "rank": "Posició",
-    "try_again": "Torneu-ho a provar",
-    "your_ranking": "La teva posició"
+    "try_again": "Torneu-ho a provar"
   },
   "game_info_modal": {
     "title": "Informació de la partida",
@@ -343,40 +283,15 @@
     "loading": "Carregant...",
     "error": "Error"
   },
-  "private_lobby": {
-    "title": "Uneix-te a una Aula privada",
-    "enter_id": "Introduïu l'ID de l'Aula",
-    "join_lobby": "Unir-se a l'Aula",
-    "not_found": "Aula no trobada. Comproveu el codi ID i torneu-ho a provar.",
-    "error": "S'ha produït un error. Torni a provar o contacti amb el servei d'assistència.",
-    "joined_waiting": "T'has afegit a l'aula! Esperant que l'amfitrió comenci la partida...",
-    "version_mismatch": "Aquesta partida s'ha creat amb una versió diferent. No et pots unir.",
-    "disabled_units": "Característiques desactivades"
-  },
   "public_lobby": {
-    "title": "Esperant l'inici de la partida...",
     "join": "Uneix-te a la pròxima partida",
     "teams_Duos": "{team_count} equips de 2 (Parelles)",
     "teams_Trios": "{team_count} equips de 3 (Trios)",
     "teams_Quads": "{team_count} equips de 4 (Quartets)",
-    "waiting_for_players": "Esperant jugadors",
-    "connecting": "Connectant a l'aula...",
-    "starting_in": "Comencem en {time}",
-    "starting_game": "Començant la partida…",
     "teams_hvn": "Humans contra Nacions",
     "teams_hvn_detailed": "{num} Humans contra {num} Nacions",
     "teams": "{num} equips",
-    "players_per_team": "de {num}",
-    "started": "Iniciat",
-    "status": "Estat",
-    "join_timeout": "No has entrat a la partida a temps."
-  },
-  "matchmaking_modal": {
-    "title": "Enfrontament Classificat 1 contra 1 (ALFA)",
-    "connecting": "Connectant-se al servidor de matchmaking...",
-    "searching": "Buscant partida...",
-    "waiting_for_game": "Esperant l'inici de la partida...",
-    "elo": "El teu ELO: {elo}"
+    "players_per_team": "de {num}"
   },
   "username": {
     "enter_username": "Escriu el teu nom d'usuari",
@@ -389,32 +304,15 @@
     "tag_invalid_chars": "L'etiqueta de clan només pot contenir lletres i números."
   },
   "host_modal": {
-    "title": "Crea una Aula Privada",
     "label": "Privat",
-    "mode": "Mode",
-    "team_count": "Quantitat d'Equips",
     "team_type": "Tipus d'Equip",
-    "options_title": "Opcions",
-    "bots": "Bots: ",
-    "bots_disabled": "Desactivat",
-    "player_immunity_duration": "Durada de la immunitat PVP (minuts)",
     "disable_nations": "Desactiva les Nacions",
-    "max_timer": "Durada de la partida (minuts)",
-    "mins_placeholder": "Minuts",
-    "instant_build": "Construcció instantània",
-    "infinite_gold": "Or infinit",
-    "donate_gold": "Dona or",
-    "infinite_troops": "Tropes infinites",
-    "donate_troops": "Envia tropes",
     "compact_map": "Mapa Compacte",
-    "enables_title": "Activa les configuracions",
     "player": "Jugador",
     "players": "Jugadors",
     "nation_players": "Nacions",
     "nation_player": "Nació",
-    "waiting": "Esperant jugadors...",
     "random_spawn": "Punt de partida aleatori",
-    "start": "Iniciar Partida",
     "host_badge": "Amfitrió",
     "assigned_teams": "Equips Assignats",
     "empty_teams": "Equips Buits",
@@ -424,7 +322,6 @@
     "teams_Trios": "Trios (equips de 3)",
     "teams_Quads": "Quartets (equips de 4)",
     "teams_Humans Vs Nations": "Humans contra Nacions",
-    "starting_gold": "Or inicial",
     "crowded": "Modificador atapeït"
   },
   "team_colors": {
@@ -853,7 +750,6 @@
     "catching_up": "Atrapant la partida..."
   },
   "territory_patterns": {
-    "title": "Aparences de Terreny",
     "colors": "Colors",
     "purchase": "Compra",
     "show_only_owned": "Les teves Aparences de Terreny",
@@ -869,8 +765,7 @@
     "trial_login_required": "Cal iniciar sessió per provar una Aparença",
     "reward_countdown": "Premi en {seconds} segons...",
     "steam_wishlist_prompt": "Dona suport a OpenFront afegint-lo a la teva llista de desitjos de Steam",
-    "select_skin": "Tria l'Aparença",
-    "selected": "seleccionat"
+    "select_skin": "Tria l'Aparença"
   },
   "flag_input": {
     "title": "Tria la Bandera",
@@ -951,11 +846,5 @@
     "mode_ffa": "Tots contra Tots",
     "mode_team": "Equip",
     "no_stats": "No s'han registrat estadístiques per a aquesta selecció."
-  },
-  "matchmaking_button": {
-    "play_ranked": "Enfrontament Classificat 1 contra 1",
-    "description": "(ALFA)",
-    "login_required": "Inicia sessió per jugar classificat!",
-    "must_login": "Has d'iniciar sessió per jugar a partides classificades."
   }
 }

@@ -9,7 +9,6 @@
     "not_logged_in": "Не си се вписал в профил",
     "close": "Затвори",
     "copy": "Копиране",
-    "paste": "Поставяне",
     "back": "Назад",
     "available": "Наличен",
     "preset_max": "Макс",
@@ -24,37 +23,22 @@
     "none": "Няма",
     "copied": "Копирано!",
     "click_to_copy": "Кликни, за да копираш",
-    "enabled": "Включено",
     "disabled": "Изключено",
     "map_default": "Карта по подразбиране"
   },
   "main": {
     "title": "OpenFront (АЛФА)",
-    "login_discord": "Влез с Discord",
-    "sign_in": "Вход",
-    "discord_avatar_alt": "Discord профилна снимка",
-    "user_avatar_alt": "Профилната снимка на {username}",
-    "create": "Създай частна игра",
-    "join": "Присъедини се към частна игра",
     "solo": "Самостоятелно",
     "game_info": "Информация за играта",
-    "wiki": "Wiki",
-    "privacy_policy": "Поверителност",
-    "terms_of_service": "Условия за ползване",
-    "copyright": "© OpenFront™ and Contributors",
     "play": "Играй",
-    "news": "Новини",
     "store": "Магазин",
     "settings": "Настройки",
-    "leaderboard": "Класация",
-    "account": "Акаунт",
     "help": "Помощ",
     "menu": "Меню",
     "troubleshooting": "Отстраняване на проблеми",
     "go_to_troubleshooting": "Отиди на страницата ни за отстраняване на проблеми"
   },
   "news": {
-    "title": "Бележки по изданието",
     "github_link": "в GitHub"
   },
   "troubleshooting": {
@@ -193,8 +177,6 @@
   },
   "single_modal": {
     "random_spawn": "Случайно появяване",
-    "toggle_achievements": "Превключване на постижения",
-    "sign_in_for_achievements": "Впиши се, за да получаваш постижения",
     "options_title": "Опции",
     "bots": "Племена: ",
     "bots_disabled": "Изключени",
@@ -211,58 +193,13 @@
     "max_timer_invalid": "Моля, въведи валидна максимална стойност на таймера (1-120 минути)",
     "enables_title": "Изключване на военни единици",
     "start": "Започване на игра",
-    "options_changed_no_achievements": "Персонализирани настройки – постиженията са деактивирани",
     "gold_multiplier": "Златен множител",
     "gold_multiplier_placeholder": "2.0x",
     "starting_gold": "Начално злато (Милиони)",
     "starting_gold_placeholder": "5"
   },
-  "token_login_modal": {
-    "title": "Вписване...",
-    "logging_in": "Вписване...",
-    "success": "Успешно се вписа като {email}!"
-  },
-  "account_modal": {
-    "title": "Акаунт",
-    "connected_as": "Вписан като",
-    "stats_overview": "Преглед на статистики",
-    "link_discord": "Свържи Discord акаунт",
-    "log_out": "Изход от профила",
-    "sign_in_desc": "Впиши се, за да запазиш статистиките и напредъка си",
-    "or": "ИЛИ",
-    "email_placeholder": "Въведи имейл адреса си",
-    "get_magic_link": "Използвай магически линк",
-    "linked_account": "Вписан като {account_name}",
-    "fetching_account": "Взима се информацията за профила...",
-    "recovery_email_sent": "Имейл за възстановяване бе изпратен на {email}",
-    "not_found": "Не е намерен",
-    "clear_session": "Изчисти сесията",
-    "failed_to_send_recovery_email": "Грешка при изпращането на имейл за възстановяване",
-    "enter_email_address": "Моля, въведи имейл адрес",
-    "public_player_id": "Публично ID на играча:"
-  },
   "leaderboard_modal": {
-    "title": "Класация",
-    "ranked_tab": "1v1 Ранково",
-    "clans_tab": "Кланове",
-    "refresh_time": "Опреснява се на всеки 1 час",
-    "loading": "Зареждане...",
-    "error": "Грешка при зареждането на класацията",
-    "no_stats": "Няма налични статистики",
-    "no_data_yet": "Все още няма данни",
-    "clan": "Клан",
-    "player": "Играч",
-    "games": "Игри",
-    "elo": "ЕЛО",
-    "win_score": "Резултат на победи",
-    "win_score_tooltip": "Претеглени победи въз основа на участието на клана и трудността на мача",
-    "loss_score": "Резултат на загуби",
-    "loss_score_tooltip": "Претеглени загуби въз основа на участието на клана и трудността на мача",
-    "win_loss_ratio": "П/З",
-    "ratio": "Съотношение",
-    "rank": "Ранк",
-    "try_again": "Опитай отново",
-    "your_ranking": "Твоето класиране"
+    "try_again": "Опитай отново"
   },
   "game_info_modal": {
     "title": "Информация за играта",
@@ -384,41 +321,11 @@
     "loading": "Зареждане...",
     "error": "Грешка"
   },
-  "private_lobby": {
-    "title": "Присъединяване към частна игра",
-    "enter_id": "Въведи ID на частната игра",
-    "join_lobby": "Присъединяване към частна игра",
-    "not_found": "Не е намерена частната игра. Моля, провери ID-то и опитай отново.",
-    "error": "Възникна грешка. Моля, опитай отново или се свържи с екипа за поддръжка.",
-    "joined_waiting": "Присъедини се към лобито! Чакаме хостът да започне...",
-    "version_mismatch": "Тази игра е създадена на различна версия. Не можеш да бъдеш присъединен.",
-    "disabled_units": "Изключване на военни единици",
-    "game_length": "Продължителност на играта",
-    "pvp_immunity": "Продължителност на военния имунитет",
-    "starting_gold": "Начално злато",
-    "host_cheats": "Чийтове за хоста"
-  },
   "public_lobby": {
-    "title": "Изчаква се да започне играта...",
-    "waiting_for_players": "Изчакване на играчи",
-    "connecting": "Свързване с играта...",
-    "starting_in": "Започва след {time}",
-    "starting_game": "Започване…",
     "teams_hvn": "Хора срещу Нации",
     "teams_hvn_detailed": "{num} Души vs {num} Нации",
     "teams": "{num} отбора",
-    "players_per_team": "по {num}",
-    "started": "Стартирана",
-    "status": "Състояние",
-    "join_timeout": "Не си влязъл в играта навреме."
-  },
-  "matchmaking_modal": {
-    "title": "1v1 Ранков мачмейкинг (АЛФА)",
-    "connecting": "Свързване със сървъра за мачмейкинг...",
-    "searching": "Търси се игра...",
-    "waiting_for_game": "Изчаква се да започне играта...",
-    "elo": "Твоето ЕЛО: {elo}",
-    "no_elo": "Още няма ELO"
+    "players_per_team": "по {num}"
   },
   "username": {
     "enter_username": "Въведи потребителско име",
@@ -431,33 +338,13 @@
     "tag_invalid_chars": "Клановият таг може да съдържа само букви и цифри."
   },
   "host_modal": {
-    "title": "Създай частна игра",
-    "mode": "Начин на игра",
-    "team_count": "Брой отбори",
-    "options_title": "Опции",
-    "bots": "Племена: ",
-    "bots_disabled": "Изключени",
-    "nations": "Нации: ",
-    "nations_disabled": "Изключени",
-    "player_immunity_duration": "Продължителност на военния имунитет (минути)",
-    "max_timer": "Продължителност на играта (в минути)",
-    "mins_placeholder": "Минути",
-    "instant_build": "Незабавно построяване",
-    "infinite_gold": "Безкрайно злато",
-    "donate_gold": "Даряване на злато",
-    "infinite_troops": "Безкрайна популация",
-    "donate_troops": "Даряване на войници",
     "compact_map": "Компактна карта",
     "disable_alliances": "Изключи съюзите",
-    "water_nukes": "Водни бомби",
-    "enables_title": "Изключване на военни единици",
     "player": "Играч",
     "players": "Играчи",
     "nation_players": "Нации",
     "nation_player": "Нация",
-    "waiting": "Изчакване на играчи...",
     "random_spawn": "Случайно появяване",
-    "start": "Започване на игра",
     "host_badge": "Хост",
     "assigned_teams": "Назначени отбори",
     "empty_teams": "Празни отбори",
@@ -469,12 +356,7 @@
     "teams_Humans Vs Nations": "Хора срещу Нации",
     "crowded": "Модификатор на претъпкване",
     "hard_nations": "Трудни нации",
-    "gold_multiplier": "Златен множител",
-    "gold_multiplier_placeholder": "2.0x",
-    "starting_gold": "Начално злато (Милиони)",
-    "starting_gold_placeholder": "5",
-    "host_cheats": "Чийтове за хоста",
-    "leave_confirmation": "Сигурен ли си, че искаш да излезеш от играта?"
+    "gold_multiplier": "Златен множител"
   },
   "team_colors": {
     "red": "Червен",
@@ -503,15 +385,6 @@
   "game_mode": {
     "ffa": "Всеки срещу всеки (FFA)",
     "teams": "Отбори"
-  },
-  "mode_selector": {
-    "teams_title": "Отбори",
-    "teams_count": "{teamCount} отбора",
-    "teams_of": "{teamCount} отбора по {playersPerTeam}",
-    "ranked_title": "Ранково",
-    "ranked_1v1_title": "1v1",
-    "ranked_2v2_title": "2v2",
-    "coming_soon": "Очаквайте скоро"
   },
   "public_game_modifier": {
     "random_spawn": "Случайно появяване",
@@ -962,14 +835,7 @@
     "catching_up": "Наваксва се..."
   },
   "store": {
-    "title": "Магазин",
-    "patterns": "Териториални шаблони",
-    "flags": "Знамена",
-    "packs": "Пакети",
-    "no_flags": "Няма налични знамена. Провери по-късно за нови артикули.",
-    "no_skins": "Няма налични шаблони. Провери по-късно за нови артикули.",
     "no_packs": "Няма налични пакети. Провери по-късно за нови артикули.",
-    "currency_pack_purchase_success": "Успешно закупуване на пакет с валута!",
     "checkout_failed": "Неуспешно създаване на сесия за плащане.",
     "login_required": "Трябва да си се вписал, за да купуваш с валута.",
     "not_enough_currency": "Нямаш достатъчно валута за тази покупка.",
@@ -977,14 +843,11 @@
     "purchase_success": "Покупката е успешна: {name}"
   },
   "territory_patterns": {
-    "title": "Териториални шаблони",
     "purchase": "Купуване",
     "pattern": {
       "default": "Стандартен"
     },
-    "select_skin": "Избери шаблон",
-    "selected": "е избран",
-    "search": "Търси..."
+    "select_skin": "Избери шаблон"
   },
   "cosmetics": {
     "artist_label": "Разработчик:",
@@ -1076,33 +939,12 @@
     "stats_games_played": "Изиграни игри",
     "no_stats": "Няма записани статистики за тази селекция."
   },
-  "matchmaking_button": {
-    "play_ranked": "1v1 Ранков мачмейкинг",
-    "description": "(АЛФА)",
-    "login_required": "Впиши се, за да играеш ранково!",
-    "must_login": "Трябва да си вписан в профила си, за да играеш ранков мачмейкинг."
-  },
   "news_box": {
     "tournament": "ТУРНИР",
     "tutorial": "НАРЪЧНИК",
     "news": "НОВИНИ",
     "warning": "ВНИМАНИЕ",
-    "dismiss": "Отхвърли",
-    "go_to_item": "Отиди на предмет {num}",
     "firefox_warning": "OpenFront.io не работи добре с [браузъри, базирани на Firefox](https://simple.wikipedia.org/wiki/Web_browsers_based_on_Firefox). Препоръчваме ти да ползваш [браузър, базиран на Chromium](https://en.wikipedia.org/wiki/Chromium_(web_browser)#Browsers_based_on_Chromium) за най-добро качество."
-  },
-  "ios_banner": {
-    "text": "За пълен екран, добави OpenFront към началния си екран",
-    "how": "Как",
-    "later": "По-късно",
-    "never": "Никога",
-    "modal_title": "Пълен екран на iOS",
-    "modal_desc": "Браузърът ти не поддържа цял екран, но можеш да добавиш OpenFront към началния си екран за по-завладяващо изживяване:",
-    "step_share": "Цъкни бутона „Споделяне“ в браузъра си",
-    "step_scroll_and_tap": "Скролни надолу и цъкни",
-    "step_add_to_home_label": "Добавяне към началния екран",
-    "step_open": "Отвори от началния екран — играта се стартира на цял екран без адресната лента",
-    "got_it": "Разбрано"
   },
   "fullscreen": {
     "enter": "Влез в цял екран",

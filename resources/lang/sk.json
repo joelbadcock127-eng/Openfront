@@ -11,7 +11,6 @@
   "main": {
     "title": "OpenFront (ALFA)",
     "join_discord": "Pridaj sa do Discordu!",
-    "login_discord": "Prihlás sa cez Discord",
     "checking_login": "Kontrolujem prihlásenie...",
     "logged_in": "Prihlásený/á!",
     "log_out": "Odhlásiť sa",
@@ -20,15 +19,11 @@
     "single_player": "Hra jedného hráča",
     "instructions": "Pokyny",
     "how_to_play": "Ako hrať",
-    "advertise": "Inzerovať",
-    "wiki": "Wiki",
-    "privacy_policy": "Zásady ochrany osobných údajov",
-    "terms_of_service": "Podmienky používania"
+    "advertise": "Inzerovať"
   },
   "news": {
     "see_all_releases": "Zobraziť všetky vydania",
-    "github_link": "na GitHube",
-    "title": "Zoznam zmien"
+    "github_link": "na GitHube"
   },
   "help_modal": {
     "hotkeys": "Skratky",
@@ -177,15 +172,9 @@
     "loading": "Načítavanie..."
   },
   "private_lobby": {
-    "title": "Pripojiť sa ku súkromnej miestnosti",
-    "enter_id": "Zadaj ID miestnosti",
     "player": "Hráč",
     "players": "Hráči",
-    "join_lobby": "Pripojiť sa k miestnosti",
-    "checking": "Kontrola miestnosti...",
-    "not_found": "Miestnosť nenájdená. Prosím, skontroluj ID, a skús znovu.",
-    "error": "Nastala chyba. Prosím, skús to znova.",
-    "joined_waiting": "Úspešne pripojené! Čakanie na začiatok hry…"
+    "checking": "Kontrola miestnosti..."
   },
   "public_lobby": {
     "join": "Pripojiť sa do ďalšej hry",
@@ -203,21 +192,9 @@
     "invalid_chars": "Používateľské meno smie obsahovať iba písmená, čísla, medzery, podčiarniky, a [hranaté zátvorky]."
   },
   "host_modal": {
-    "title": "Súkromná miestnosť",
-    "mode": "Režim",
-    "team_count": "Počet tímov",
-    "options_title": "Možnosti",
-    "bots": "Boti: ",
-    "bots_disabled": "Vypnuté",
     "disable_nations": "Vypnúť krajiny",
-    "instant_build": "Okamžite postaviť",
-    "infinite_gold": "Nekonečné zlato",
-    "infinite_troops": "Nekonečné vojská",
-    "enables_title": "Povoliť nastavenia",
     "player": "Hráč",
     "players": "Hráči",
-    "waiting": "Čakanie na hráčov…",
-    "start": "Spustiť hru",
     "host_badge": "Domáci"
   },
   "team_colors": {
@@ -547,7 +524,6 @@
     "choose_spawn": "Vyber začiatočnú polohu"
   },
   "territory_patterns": {
-    "title": "Vybrať územný vzorec",
     "purchase": "Kúpiť",
     "blocked": {
       "login": "Musíš byť prihlásená/ý na prístup k tomuto vzorcu.",

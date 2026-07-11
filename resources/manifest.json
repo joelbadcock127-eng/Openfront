@@ -14,12 +14,15 @@
     }
   ],
   "orientation": "portrait",
-  "display_override": ["fullscreen", "minimal-ui"],
+  "display_override": [
+    "fullscreen",
+    "minimal-ui"
+  ],
   "display": "standalone",
   "dir": "auto",
   "lang": "en",
-  "name": "OpenFront.io",
-  "short_name": "OpenFront",
+  "name": "Frontline Solo",
+  "short_name": "Frontline",
   "start_url": "/",
   "id": "/"
 }

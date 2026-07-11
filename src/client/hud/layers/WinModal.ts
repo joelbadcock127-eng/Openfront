@@ -1,24 +1,9 @@
-import { html, LitElement, TemplateResult } from "lit";
+import { html, LitElement } from "lit";
 import { customElement, state } from "lit/decorators.js";
-import {
-  getGamesPlayed,
-  isInIframe,
-  translateText,
-  TUTORIAL_VIDEO_URL,
-} from "../../../client/Utils";
+import { translateText } from "../../../client/Utils";
 import { EventBus } from "../../../core/EventBus";
-import { RankedType } from "../../../core/game/Game";
 import { GameUpdateType } from "../../../core/game/GameUpdates";
-import { getUserMe } from "../../Api";
-import "../../components/CosmeticButton";
 import { Controller } from "../../Controller";
-import {
-  fetchCosmetics,
-  purchaseCosmetic,
-  resolveCosmetics,
-} from "../../Cosmetics";
-import { crazyGamesSDK } from "../../CrazyGamesSDK";
-import { Platform } from "../../Platform";
 import { SendWinnerEvent } from "../../Transport";
 import { GameView } from "../../view";
 
@@ -38,15 +23,7 @@ export class WinModal extends LitElement implements Controller {
   @state()
   private isWin = false;
 
-  @state()
-  private isRankedGame = false;
-
-  @state()
-  private patternContent: TemplateResult | null = null;
-
   private _title: string;
-
-  private rand = Math.random();
 
   // Override to prevent shadow DOM creation
   createRenderRoot() {
@@ -80,17 +57,6 @@ export class WinModal extends LitElement implements Controller {
             translationKey="win_modal.exit"
             @click=${this._handleExit}
           ></o-button>
-          ${this.isRankedGame
-            ? html`
-                <o-button
-                  variant="primary"
-                  width="block"
-                  class="flex-1"
-                  translationKey="win_modal.requeue"
-                  @click=${this._handleRequeue}
-                ></o-button>
-              `
-            : null}
           <o-button
             variant="primary"
             width="block"
@@ -105,130 +71,14 @@ export class WinModal extends LitElement implements Controller {
     `;
   }
 
+  // Upstream rotated promos here (YouTube tutorial, Steam wishlist, Discord,
+  // cosmetic patterns). All external promotion is removed in this solo
+  // derivative.
   innerHtml() {
-    if (isInIframe()) {
-      return this.steamWishlist();
-    }
-
-    if (!this.isWin && getGamesPlayed() < 3) {
-      return this.renderYoutubeTutorial();
-    }
-    if (this.rand < 0.25) {
-      return this.steamWishlist();
-    } else if (this.rand < 0.5) {
-      return this.discordDisplay();
-    } else {
-      return this.renderPatternButton();
-    }
-  }
-
-  renderYoutubeTutorial() {
-    return html`
-      <div class="text-center mb-6 bg-black/30 p-2.5 rounded-sm">
-        <h3 class="text-xl font-semibold text-white mb-3">
-          ${translateText("win_modal.youtube_tutorial")}
-        </h3>
-        <!-- 56.25% = 9:16 -->
-        <div class="relative w-full pb-[56.25%]">
-          <iframe
-            class="absolute top-0 left-0 w-full h-full rounded-sm"
-            src="${this.isVisible ? TUTORIAL_VIDEO_URL : ""}"
-            title="YouTube video player"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen
-          ></iframe>
-        </div>
-      </div>
-    `;
-  }
-
-  renderPatternButton() {
-    return html`
-      <div class="text-center mb-6 bg-black/30 p-2.5 rounded-sm">
-        <h3 class="text-xl font-semibold text-white mb-3">
-          ${translateText("win_modal.support_openfront")}
-        </h3>
-        <p class="text-white mb-3">
-          ${translateText("win_modal.territory_pattern")}
-        </p>
-        <div class="flex justify-center">${this.patternContent}</div>
-      </div>
-    `;
-  }
-
-  async loadPatternContent() {
-    const me = await getUserMe();
-    const cosmetics = await fetchCosmetics();
-
-    const purchasable = resolveCosmetics(cosmetics, me, null).filter(
-      (r) => r.type === "pattern" && r.relationship === "purchasable",
-    );
-
-    if (purchasable.length === 0) {
-      this.patternContent = html``;
-      return;
-    }
-
-    // Shuffle the array and take patterns based on screen size
-    const shuffled = [...purchasable].sort(() => Math.random() - 0.5);
-    const maxPatterns = Platform.isMobileWidth ? 1 : 3;
-    const selected = shuffled.slice(0, Math.min(maxPatterns, shuffled.length));
-
-    this.patternContent = html`
-      <div class="flex gap-4 flex-wrap justify-start">
-        ${selected.map(
-          (r) => html`
-            <cosmetic-button
-              .resolved=${r}
-              .onPurchase=${purchaseCosmetic}
-            ></cosmetic-button>
-          `,
-        )}
-      </div>
-    `;
-  }
-
-  steamWishlist(): TemplateResult {
-    return html`<p class="m-0 mb-5 text-center bg-black/30 p-2.5 rounded-sm">
-      <a
-        href="https://store.steampowered.com/app/3560670"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="text-[#4a9eff] underline font-medium transition-colors duration-200 text-2xl hover:text-[#6db3ff]"
-      >
-        ${translateText("win_modal.wishlist")}
-      </a>
-    </p>`;
-  }
-
-  discordDisplay(): TemplateResult {
-    return html`
-      <div class="text-center mb-6 bg-black/30 p-2.5 rounded-sm">
-        <h3 class="text-xl font-semibold text-white mb-3">
-          ${translateText("win_modal.join_discord")}
-        </h3>
-        <p class="text-white mb-3">
-          ${translateText("win_modal.discord_description")}
-        </p>
-        <a
-          href="https://discord.com/invite/openfront"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="inline-block px-6 py-3 bg-indigo-600 text-white rounded-sm font-semibold transition-all duration-200 hover:bg-indigo-700 hover:-translate-y-px no-underline"
-        >
-          ${translateText("win_modal.join_server")}
-        </a>
-      </div>
-    `;
+    return html``;
   }
 
   async show() {
-    crazyGamesSDK.gameplayStop();
-    await this.loadPatternContent();
-    // Check if this is a ranked game
-    this.isRankedGame =
-      this.game.config().gameConfig().rankedType === RankedType.OneVOne;
     this.isVisible = true;
     this.requestUpdate();
     setTimeout(() => {
@@ -246,12 +96,6 @@ export class WinModal extends LitElement implements Controller {
   private _handleExit() {
     this.hide();
     window.location.href = "/";
-  }
-
-  private _handleRequeue() {
-    this.hide();
-    // Navigate to homepage and open matchmaking modal
-    window.location.href = "/?requeue";
   }
 
   init() {}
@@ -279,7 +123,6 @@ export class WinModal extends LitElement implements Controller {
         if (wu.winner[1] === this.game.myPlayer()?.team()) {
           this._title = translateText("win_modal.your_team");
           this.isWin = true;
-          crazyGamesSDK.happytime();
         } else {
           this._title = translateText("win_modal.other_team", {
             team: wu.winner[1],
@@ -309,7 +152,6 @@ export class WinModal extends LitElement implements Controller {
         ) {
           this._title = translateText("win_modal.you_won");
           this.isWin = true;
-          crazyGamesSDK.happytime();
         } else {
           this._title = translateText("win_modal.other_won", {
             player: winner.displayName(),

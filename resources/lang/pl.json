@@ -22,7 +22,6 @@
   "main": {
     "title": "OpenFront (ALPHA)",
     "join_discord": "Dołącz do Discord'a!",
-    "login_discord": "Zaloguj się przez Discorda",
     "checking_login": "Sprawdzanie logowania...",
     "logged_in": "Zalogowano!",
     "log_out": "Wyloguj się",
@@ -32,15 +31,11 @@
     "instructions": "Instrukcje",
     "how_to_play": "Jak grać",
     "advertise": "Reklamuj",
-    "wiki": "Wiki",
-    "privacy_policy": "Polityka prywatności",
-    "terms_of_service": "Regulamin",
     "reddit": "Reddit"
   },
   "news": {
     "see_all_releases": "Wyświetl wszystkie wersje",
-    "github_link": "na GitHub",
-    "title": "Informacje o wydaniu"
+    "github_link": "na GitHub"
   },
   "help_modal": {
     "hotkeys": "Skróty klawiszowe",
@@ -151,17 +146,9 @@
     "enables_title": "Włącz ustawienia",
     "start": "Rozpocznij Grę"
   },
-  "token_login_modal": {
-    "title": "Logowanie...",
-    "logging_in": "Logowanie...",
-    "success": "Pomyślnie zalogowano jako {email}!"
-  },
   "account_modal": {
-    "title": "Konto",
     "logged_in_as": "Zalogowany jako {email}",
-    "fetching_account": "Pobieranie informacji o koncie...",
-    "logged_in_with_discord": "Zalogowany przez Discord'a",
-    "recovery_email_sent": "Wysłano e-mail odzyskiwania na adres {email}"
+    "logged_in_with_discord": "Zalogowany przez Discord'a"
   },
   "map": {
     "map": "Mapa",
@@ -208,16 +195,9 @@
     "loading": "Ładowanie..."
   },
   "private_lobby": {
-    "title": "Dołącz do prywatnego Lobby",
-    "enter_id": "Wprowadź ID Lobby",
     "player": "Gracz",
     "players": "Gracze",
-    "join_lobby": "Dołącz do Lobby",
-    "checking": "Sprawdzanie lobby...",
-    "not_found": "Lobby nie zostało znalezione. Proszę sprawdzić ID i spróbować ponownie.",
-    "error": "Wystąpił błąd. Spróbuj ponownie lub skontaktuj się z pomocą techniczną.",
-    "joined_waiting": "Dołączono pomyślnie! Oczekiwanie na rozpoczęcie gry...",
-    "version_mismatch": "Ta gra została utworzona w innej wersji. Nie można dołączyć."
+    "checking": "Sprawdzanie lobby..."
   },
   "public_lobby": {
     "join": "Dołącz do następnej gry",
@@ -228,12 +208,6 @@
     "teams_hvn": "Ludzie Kontra Narody",
     "teams": "{num} drużyn"
   },
-  "matchmaking_modal": {
-    "title": "Wyszukiwanie meczy",
-    "connecting": "Łączenie z serwerem wyszukiwania meczów...",
-    "searching": "Wyszukiwanie gier...",
-    "waiting_for_game": "Oczekiwanie na rozpoczęcie gry..."
-  },
   "username": {
     "enter_username": "Wprowadź swoją nazwę użytkownika",
     "not_string": "Nazwa użytkownika musi być ciągiem znaków.",
@@ -242,27 +216,11 @@
     "invalid_chars": "Nazwa użytkownika może zawierać tylko litery, cyfry, spacje, podkreślenia i [nawiasy kwadratowe]."
   },
   "host_modal": {
-    "title": "Prywatne lobby",
-    "mode": "Tryb",
-    "team_count": "Liczba drużyn",
-    "options_title": "Opcje",
-    "bots": "Boty: ",
-    "bots_disabled": "Wyłączone",
-    "nations": "Narody: ",
     "disable_nations": "Wyłącz Państwa",
-    "max_timer": "Długość gry (minuty)",
-    "instant_build": "Natychmiastowa budowa",
-    "infinite_gold": "Nieskończone złoto",
-    "donate_gold": "Wyślij złoto",
-    "infinite_troops": "Nieskończone wojsko",
-    "donate_troops": "Wyślij jednostki",
     "compact_map": "Mini Mapa",
     "automatic_difficulty": "Automatyczna Trudność",
-    "enables_title": "Włącz ustawienia",
     "player": "Gracz",
     "players": "Gracze",
-    "waiting": "Oczekiwanie na graczy...",
-    "start": "Rozpocznij grę",
     "host_badge": "Host"
   },
   "team_colors": {
@@ -661,7 +619,6 @@
     "choose_spawn": "Wybierz lokalizację początkową"
   },
   "territory_patterns": {
-    "title": "Skórki",
     "colors": "Kolory",
     "purchase": "Kup",
     "blocked": {

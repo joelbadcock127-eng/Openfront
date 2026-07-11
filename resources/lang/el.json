@@ -22,7 +22,6 @@
   "main": {
     "title": "OpenFront (ALPHA)",
     "join_discord": "Βρες μας στο Discord!",
-    "login_discord": "Σύνδεση με Discord",
     "checking_login": "Έλεγχος σύνδεσης...",
     "logged_in": "Συνδέθηκε!",
     "log_out": "Αποσύνδεση",
@@ -32,15 +31,11 @@
     "instructions": "Οδηγίες",
     "how_to_play": "Πώς παίζεται",
     "advertise": "Διαφήμιση",
-    "wiki": "Wiki",
-    "privacy_policy": "Πολιτική Απορρήτου",
-    "terms_of_service": "Όροι Χρήσης",
     "reddit": "Reddit"
   },
   "news": {
     "see_all_releases": "Δες όλες τις εκδόσεις",
-    "github_link": "στο GitHub",
-    "title": "Σημειώσεις έκδοσης"
+    "github_link": "στο GitHub"
   },
   "help_modal": {
     "hotkeys": "Συντομεύσεις",
@@ -151,17 +146,9 @@
     "enables_title": "Ενεργοποίηση Ρυθμίσεων",
     "start": "Έναρξη Παιχνιδιού"
   },
-  "token_login_modal": {
-    "title": "Σύνδεση...",
-    "logging_in": "Σύνδεση...",
-    "success": "Επιτυχής σύνδεση ως {email}!"
-  },
   "account_modal": {
-    "title": "Λογαριασμός",
     "logged_in_as": "Συνδέθηκε ως {email}",
-    "fetching_account": "Λήψη πληροφοριών λογαριασμού...",
-    "logged_in_with_discord": "Συνδέθηκε με Discord",
-    "recovery_email_sent": "Το email ανάκτησης στάλθηκε στο {email}"
+    "logged_in_with_discord": "Συνδέθηκε με Discord"
   },
   "map": {
     "map": "Χάρτης",
@@ -208,16 +195,9 @@
     "loading": "Φορτώνει..."
   },
   "private_lobby": {
-    "title": "Μπες σε Ιδιωτικό Λόμπι",
-    "enter_id": "Εισαγωγή ID Λόμπι",
     "player": "Παίκτης",
     "players": "Παίκτες",
-    "join_lobby": "Μπες σε Λόμπι",
-    "checking": "Έλεγχος λόμπι...",
-    "not_found": "Το Λόμπι δεν βρέθηκε. Ελέγξτε το ID και προσπαθήστε ξανά.",
-    "error": "Προέκυψε σφάλμα. Παρακαλώ προσπάθησε ξανά ή επικοινώνησε με την υποστήριξη.",
-    "joined_waiting": "Σύνδεση επιτυχής! Αναμονή για έναρξη παιχνιδιού...",
-    "version_mismatch": "Αυτό το παιχνίδι δημιουργήθηκε με διαφορετική έκδοση. Δεν μπορείς να συμμετάσχεις."
+    "checking": "Έλεγχος λόμπι..."
   },
   "public_lobby": {
     "join": "Συμμετοχή στο επόμενο Παιχνίδι",
@@ -228,12 +208,6 @@
     "teams_hvn": "Άνθρωποι εναντίον Εθνών",
     "teams": "{num} ομάδες"
   },
-  "matchmaking_modal": {
-    "title": "Ταίριασμα",
-    "connecting": "Σύνδεση στο διακομιστή...",
-    "searching": "Αναζήτηση παιχνιδιού...",
-    "waiting_for_game": "Αναμονή για έναρξη παιχνιδιού..."
-  },
   "username": {
     "enter_username": "Γράψε το όνομα χρήστη σου",
     "not_string": "Το όνομα χρήστη πρέπει να είναι συμβολοσειρά.",
@@ -242,27 +216,11 @@
     "invalid_chars": "Το όνομα χρήστη μπορεί να περιέχει μόνο γράμματα, αριθμούς, κενά, κάτω παύλες και [αγκύλες]."
   },
   "host_modal": {
-    "title": "Ιδιωτικό Λόμπι",
-    "mode": "Λειτουργία",
-    "team_count": "Αριθμός ομάδων",
-    "options_title": "Επιλογές",
-    "bots": "Bots: ",
-    "bots_disabled": "Απενεργοποιημένο",
-    "nations": "Έθνη: ",
     "disable_nations": "Απενεργοποίηση Εθνών",
-    "max_timer": "Διάρκεια παιχνιδιού (λεπτά)",
-    "instant_build": "Άμεση κατασκευή",
-    "infinite_gold": "Άπειρος χρυσός",
-    "donate_gold": "Δωρεά χρυσού",
-    "infinite_troops": "Άπειρα στρατεύματα",
-    "donate_troops": "Δωρεά στρατευμάτων",
     "compact_map": "Μίνι Χάρτης",
     "automatic_difficulty": "Αυτόματη Δυσκολία",
-    "enables_title": "Ενεργοποίηση Ρυθμίσεων",
     "player": "Παίκτης",
     "players": "Παίκτες",
-    "waiting": "Αναμονή για παίκτες...",
-    "start": "Έναρξη Παιχνιδιού",
     "host_badge": "Οικοδεσπότης"
   },
   "team_colors": {
@@ -661,7 +619,6 @@
     "choose_spawn": "Επίλεξε μια αρχική τοποθεσία"
   },
   "territory_patterns": {
-    "title": "Σχέδιο",
     "colors": "Χρώματα",
     "purchase": "Αγορά",
     "blocked": {

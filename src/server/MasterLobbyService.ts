@@ -1,21 +1,14 @@
 import { Worker } from "cluster";
 import winston from "winston";
-import {
-  MAX_HOSTED_LOBBIES,
-  PublicGameType,
-  SCHEDULED_PUBLIC_GAME_TYPES,
-} from "../core/Schemas";
-import { generateID } from "../core/Util";
+import { MAX_HOSTED_LOBBIES, PublicGameType } from "../core/Schemas";
 import {
   InternalGameInfo,
   MasterCreateGame,
-  MasterLobbiesBroadcast,
   MasterUpdateGame,
   WorkerMessageSchema,
 } from "./IPCBridgeSchema";
 import { logger } from "./Logger";
 import { MapPlaylist } from "./MapPlaylist";
-import { startPolling } from "./PollingLoop";
 import { ServerEnv } from "./ServerEnv";
 
 export interface MasterLobbyServiceOptions {
@@ -83,9 +76,12 @@ export class MasterLobbyService {
     );
     if (this.readyWorkers.size === ServerEnv.numWorkers() && !this.started) {
       this.started = true;
-      this.log.info("All workers ready, starting game scheduling");
-      startPolling(async () => this.broadcastLobbies(), 500);
-      startPolling(async () => await this.maybeScheduleLobby(), 1000);
+      // Public-lobby scheduling is disabled in this solo derivative: the
+      // server only serves static assets and archives local solo games. The
+      // lobby broadcast loop stays off too — no client subscribes to it.
+      this.log.info(
+        "All workers ready (public game scheduling disabled in solo build)",
+      );
     }
   }
 
@@ -172,64 +168,6 @@ export class MasterLobbyService {
       );
     }
     return delist;
-  }
-
-  private broadcastLobbies() {
-    const { games, losers } = this.getAllLobbies();
-    const delist = this.delistGameIDs(losers);
-    const msg = {
-      type: "lobbiesBroadcast",
-      publicGames: {
-        serverTime: Date.now(),
-        games,
-      },
-      delistGameIDs: delist.length > 0 ? delist : undefined,
-    } satisfies MasterLobbiesBroadcast;
-    for (const [workerId, worker] of this.workers.entries()) {
-      worker.send(msg, (e) => {
-        if (e) {
-          this.log.error(
-            `Failed to send lobbies broadcast to worker ${workerId}, killing worker:`,
-            e,
-          );
-          worker.kill();
-        }
-      });
-    }
-  }
-
-  private async maybeScheduleLobby() {
-    const lobbiesByType = this.getAllLobbies().games;
-
-    // Scheduled types only: hosted lobbies are started by their host, never
-    // given a countdown or replaced by the master.
-    for (const type of SCHEDULED_PUBLIC_GAME_TYPES) {
-      const lobbies = lobbiesByType[type];
-
-      // Always ensure the next lobby has a timer, even if we already have 2+
-      // lobbies. This prevents a race where two lobbies are created before
-      // either receives a startsAt (IPC round-trip delay), leaving both stuck
-      // without a countdown.
-      const nextLobby = lobbies[0];
-      if (nextLobby && nextLobby.startsAt === undefined) {
-        this.sendMessageToWorker({
-          type: "updateLobby",
-          gameID: nextLobby.gameID,
-          startsAt: Date.now() + ServerEnv.gameCreationRate(),
-        });
-      }
-
-      if (lobbies.length >= 2) {
-        continue;
-      }
-
-      this.sendMessageToWorker({
-        type: "createGame",
-        gameID: generateID(),
-        gameConfig: await this.playlist.gameConfig(type),
-        publicGameType: type,
-      } satisfies MasterCreateGame);
-    }
   }
 
   private sendMessageToWorker(msg: MasterCreateGame | MasterUpdateGame): void {

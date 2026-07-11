@@ -11,7 +11,6 @@
   "main": {
     "title": "OpenFront (ALFA)",
     "join_discord": "Únete ó Discord!",
-    "login_discord": "Iniciar sesión con Discord",
     "checking_login": "Comprobando a sesión...",
     "logged_in": "Sesión iniciada!",
     "log_out": "Pechar sesión",
@@ -20,15 +19,11 @@
     "single_player": "Un xogador",
     "instructions": "Instrucións",
     "how_to_play": "Como xogar",
-    "advertise": "Promoción",
-    "wiki": "Wiki",
-    "privacy_policy": "Política de privacidade",
-    "terms_of_service": "Termos de servizo"
+    "advertise": "Promoción"
   },
   "news": {
     "see_all_releases": "Ver todas as versións",
-    "github_link": "en GitHub",
-    "title": "Notas da versión"
+    "github_link": "en GitHub"
   },
   "help_modal": {
     "hotkeys": "Atallos de teclado",
@@ -177,15 +172,9 @@
     "loading": "Cargando..."
   },
   "private_lobby": {
-    "title": "Unirse á sala privada",
-    "enter_id": "Introduce o código da sala",
     "player": "xogador",
     "players": "xogadores",
-    "join_lobby": "Unirse á sala",
-    "checking": "Verificando a sala...",
-    "not_found": "Non se atopou a sala. Por favor, revisa o código e téntao de novo.",
-    "error": "Produciuse un erro. Por favor, téntao de novo.",
-    "joined_waiting": "Unícheste con éxito! Agardando a que comece o xogo..."
+    "checking": "Verificando a sala..."
   },
   "public_lobby": {
     "join": "Entrar na vindeira partida",
@@ -203,21 +192,9 @@
     "invalid_chars": "O nome de usuario só pode ter letras, números, espazos, subliñados e [corchetes]."
   },
   "host_modal": {
-    "title": "Sala privada",
-    "mode": "Modo",
-    "team_count": "Número de equipos",
-    "options_title": "Opcións",
-    "bots": "Bots: ",
-    "bots_disabled": "Desactivado",
     "disable_nations": "Desactivar nacións",
-    "instant_build": "Construción instantánea",
-    "infinite_gold": "Ouro infinito",
-    "infinite_troops": "Tropas infinitas",
-    "enables_title": "Axustes de activación",
     "player": "Xogador",
     "players": "Xogadores",
-    "waiting": "Agardando polos xogadores...",
-    "start": "Comezar a partida",
     "host_badge": "Anfitrión"
   },
   "team_colors": {
@@ -547,7 +524,6 @@
     "choose_spawn": "Escolle o lugar de inicio"
   },
   "territory_patterns": {
-    "title": "Escolle o deseño territorial",
     "purchase": "Mercar",
     "blocked": {
       "login": "Debes iniciar sesión para acceder a este deseño.",

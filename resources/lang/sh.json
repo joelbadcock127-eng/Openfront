@@ -12,8 +12,7 @@
     "join_lobby": "Pridruži se čekaonici",
     "single_player": "Igraj sam",
     "instructions": "Instrukcije",
-    "how_to_play": "Kako igrati",
-    "wiki": "Wiki"
+    "how_to_play": "Kako igrati"
   },
   "help_modal": {
     "hotkeys": "Prečice",
@@ -124,15 +123,9 @@
     "europeclassic": "Evropa (klasika)"
   },
   "private_lobby": {
-    "title": "Pridruži se privatnoj čekaonici",
-    "enter_id": "Unesi identifikaciju čekaonice",
     "player": "Igrač",
     "players": "Igrači",
-    "join_lobby": "Pridruži se čekaonici",
-    "checking": "Proverava se čekaonica...",
-    "not_found": "Čekaonica nije pronađena. Provjeri identifikaciju i pokušaj ponovo, molim.",
-    "error": "Došlo je do greške. Pokušaj ponovo, molim.",
-    "joined_waiting": "Uspešan ulaz u čekaonicu. Čekamo početak partije..."
+    "checking": "Proverava se čekaonica..."
   },
   "public_lobby": {
     "join": "Pridruži se sledećoj partiji",
@@ -146,21 +139,10 @@
     "invalid_chars": "Korisničko ime može sadržati isključivo slova, cifre, prazne prostore, donje crte i [kockaste zagrade]."
   },
   "host_modal": {
-    "title": "Privatna čekaonica",
-    "mode": "Tip igre",
-    "team_count": "Broj timova",
-    "options_title": "Opcije",
-    "bots": "Botovi: ",
-    "bots_disabled": "Onemogućeni",
     "disable_nations": "Onemogući nacije",
-    "instant_build": "Neposredna izgradnja",
-    "infinite_gold": "Beskrajno zlato",
-    "infinite_troops": "Beskrajna vojska",
     "disable_nukes": "Onemogući nuklearna oružja",
     "player": "Igrač",
-    "players": "Igrači",
-    "waiting": "Čekamo igrače...",
-    "start": "Započni partiju"
+    "players": "Igrači"
   },
   "game_starting_modal": {
     "title": "Partija počinje...",

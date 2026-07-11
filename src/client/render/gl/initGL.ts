@@ -49,10 +49,45 @@ function readRenderer(gl: WebGL2RenderingContext): string {
  *   call on the same canvas returns the already-created context (ignoring
  *   attrs), so these must be the attributes the renderer wants.
  */
+/**
+ * Opt-in escape hatch: run on a software (SwiftShader/llvmpipe) WebGL2
+ * context anyway. Performance is poor (~1fps on large maps), but this keeps
+ * the game usable on GPU-less machines and lets automated browser tests run
+ * headless. Enable with `?softwareGL=1` or
+ * `localStorage.setItem("allowSoftwareGL", "1")`.
+ */
+function softwareGLAllowed(): boolean {
+  try {
+    return (
+      new URLSearchParams(window.location.search).has("softwareGL") ||
+      localStorage.getItem("allowSoftwareGL") === "1"
+    );
+  } catch {
+    return false;
+  }
+}
+
 export function initGL(
   canvas: HTMLCanvasElement,
   attrs: WebGLContextAttributes = {},
 ): GLResult {
+  if (softwareGLAllowed()) {
+    const soft = canvas.getContext("webgl2", attrs);
+    if (soft) {
+      const maxTextureSize = Number(soft.getParameter(soft.MAX_TEXTURE_SIZE));
+      if (maxTextureSize < REQUIRED_TEXTURE_SIZE) {
+        return {
+          gl: soft,
+          status: "limited",
+          renderer: readRenderer(soft),
+          maxTextureSize,
+        };
+      }
+      return { gl: soft, status: "ok" };
+    }
+    return { gl: null, status: "unsupported", renderer: "" };
+  }
+
   // 1. demand a GPU-accelerated context
   const accel = canvas.getContext("webgl2", {
     ...attrs,
@@ -103,23 +138,23 @@ export class GLUnavailableError extends Error {
 }
 
 /**
- * Report the WebGL2 GPU-init outcome to analytics (Google Tag). Fires on every
- * session so we can size the share of users on a software or missing WebGL2
- * context. `renderer` is the unmasked GPU string for non-ok outcomes, empty
- * otherwise.
+ * Upstream reported the WebGL2 GPU-init outcome to Google Analytics here.
+ * All telemetry is removed in this derivative; the outcome is only logged
+ * locally so failures remain diagnosable from the console.
  */
 export function trackGLInit(
   status: "ok" | "software" | "unsupported" | "limited",
   renderer: string,
   maxTextureSize?: number,
 ): void {
-  window.gtag?.("event", "gl_init", {
-    status,
-    renderer: status === "ok" ? "" : renderer,
-    ...(maxTextureSize !== undefined && {
-      max_texture_size: maxTextureSize,
-    }),
-  });
+  if (status !== "ok") {
+    console.warn(
+      `WebGL2 init: ${status}${renderer ? ` (${renderer})` : ""}` +
+        (maxTextureSize !== undefined
+          ? ` maxTextureSize=${maxTextureSize}`
+          : ""),
+    );
+  }
 }
 
 /**

@@ -11,7 +11,6 @@
   "main": {
     "title": "OpenFront (ALPHA)",
     "join_discord": "Liity Discordiin!",
-    "login_discord": "Kirjaudu sisään Discordilla",
     "checking_login": "Tarkistetaan sisäänkirjautumista...",
     "logged_in": "Kirjautuminen onnistui!",
     "log_out": "Kirjaudu ulos",
@@ -20,15 +19,11 @@
     "single_player": "Yksinpeli",
     "instructions": "Ohjeet",
     "how_to_play": "Kuinka pelata",
-    "advertise": "Mainosta",
-    "wiki": "Wiki",
-    "privacy_policy": "Tietosuojaseloste",
-    "terms_of_service": "Käyttöehdot"
+    "advertise": "Mainosta"
   },
   "news": {
     "see_all_releases": "Katso kaikki julkaisut",
-    "github_link": "GitHubissa",
-    "title": "Päivitystiedot"
+    "github_link": "GitHubissa"
   },
   "help_modal": {
     "hotkeys": "Pikanäppäimet",
@@ -137,16 +132,9 @@
     "enables_title": "Säädä asetuksia",
     "start": "Aloita peli"
   },
-  "token_login_modal": {
-    "title": "Kirjaudutaan...",
-    "logging_in": "Kirjaudutaan...",
-    "success": "Kirjauduttu onnistuneesti käyttäjällä {email}!"
-  },
   "account_modal": {
-    "title": "Tili",
     "logged_in_as": "Kirjauduttu käyttäjällä {email}",
-    "logged_in_with_discord": "Kirjauduttu sisään Discordilla",
-    "recovery_email_sent": "Palautussähköposti lähetetty kohteeseen {email}"
+    "logged_in_with_discord": "Kirjauduttu sisään Discordilla"
   },
   "map": {
     "map": "Kartta",
@@ -189,15 +177,9 @@
     "loading": "Ladataan..."
   },
   "private_lobby": {
-    "title": "Liity yksityiseen aulaan",
-    "enter_id": "Syötä aulan tunnus",
     "player": "Pelaaja",
     "players": "Pelaajat",
-    "join_lobby": "Liity aulaan",
-    "checking": "Tarkistetaan sisäänkirjautumista...",
-    "not_found": "Aulaa ei löytynyt. Ole hyvä ja tarkista tunnus ja yritä uudelleen.",
-    "error": "Tapahtui virhe. Ole hyvä, ja yritä uudelleen.",
-    "joined_waiting": "Liittyminen onnistui! Odotetaan pelin alkamista..."
+    "checking": "Tarkistetaan sisäänkirjautumista..."
   },
   "public_lobby": {
     "join": "Liity seuraavaan peliin",
@@ -215,23 +197,9 @@
     "invalid_chars": "Käyttäjänimi voi sisältää vain kirjaimia, numeroita, välilyöntejä, alaviivoja ja [hakasulkeita]."
   },
   "host_modal": {
-    "title": "Yksityinen aula",
-    "mode": "Pelimuoto",
-    "team_count": "Joukkueiden määrä",
-    "options_title": "Valinnat",
-    "bots": "Botit: ",
-    "bots_disabled": "Poissa käytöstä",
     "disable_nations": "Poista kansakunnat käytöstä",
-    "instant_build": "Välitön rakentaminen",
-    "infinite_gold": "Loputon kulta",
-    "donate_gold": "Lahjoita kultaa",
-    "infinite_troops": "Loputtomat joukot",
-    "donate_troops": "Lahjoita joukkoja",
-    "enables_title": "Säädä asetuksia",
     "player": "Pelaaja",
     "players": "pelaajaa",
-    "waiting": "Odotetaan pelaajia...",
-    "start": "Aloita peli",
     "host_badge": "Isäntä"
   },
   "team_colors": {
@@ -585,7 +553,6 @@
     "choose_spawn": "Valitse aloituspaikka"
   },
   "territory_patterns": {
-    "title": "Valitse aluekuvio",
     "purchase": "Osta",
     "blocked": {
       "login": "Sinun täytyy olla kirjautunut sisään saadaksesi tämän kuvion.",

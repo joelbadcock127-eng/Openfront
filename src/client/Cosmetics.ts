@@ -3,7 +3,6 @@ import { UserMeResponse } from "../core/ApiSchemas";
 import {
   ColorPalette,
   Cosmetics,
-  CosmeticsSchema,
   Effect,
   findEffectForSlot,
   Flag,
@@ -23,7 +22,6 @@ import {
 import {
   changeSubscriptionTier,
   createCheckoutSession,
-  getApiBase,
   getUserMe,
   invalidateUserMe,
   purchaseWithCurrency,
@@ -33,8 +31,8 @@ import { translateText } from "./Utils";
 export const TEMP_FLARE_OFFSET = 1 * 60 * 1000; // 1 minute
 
 let __cosmetics: Promise<Cosmetics | null> | null = null;
-let __cosmeticsHash: string | null = null;
-let __cosmeticsCache: Cosmetics | null = null;
+const __cosmeticsHash: string | null = null;
+const __cosmeticsCache: Cosmetics | null = null;
 
 /**
  * Synchronous accessor for the most recently resolved cosmetics. Returns null
@@ -194,46 +192,18 @@ export async function purchaseCosmetic(
   window.location.reload();
 }
 
-function simpleHash(str: string): string {
-  let hash = 0;
-  for (let i = 0; i < str.length; i++) {
-    const char = str.charCodeAt(i);
-    hash = (hash << 5) - hash + char;
-    hash = hash & hash;
-  }
-  return hash.toString(36);
-}
 
 export async function fetchCosmetics(): Promise<Cosmetics | null> {
+  // The cosmetics store is removed in this solo derivative; there is no
+  // catalogue to fetch. Every caller already handles null (no cosmetics), so
+  // returning early here guarantees no network request is made.
   if (__cosmetics !== null) {
     return __cosmetics;
   }
-  __cosmetics = (async () => {
-    try {
-      const response = await fetch(`${getApiBase()}/cosmetics.json`);
-      if (!response.ok) {
-        console.error(`HTTP error! status: ${response.status}`);
-        return null;
-      }
-      const result = CosmeticsSchema.safeParse(await response.json());
-      if (!result.success) {
-        console.error(`Invalid cosmetics: ${result.error.message}`);
-        return null;
-      }
-      const patternKeys = Object.keys(result.data.patterns).sort();
-      const hashInput = patternKeys
-        .map((k) => k + (result.data.patterns[k].product ? "sale" : ""))
-        .join(",");
-      __cosmeticsHash = simpleHash(hashInput);
-      __cosmeticsCache = result.data;
-      return result.data;
-    } catch (error) {
-      console.error("Error getting cosmetics:", error);
-      return null;
-    }
-  })();
+  __cosmetics = Promise.resolve(null);
   return __cosmetics;
 }
+
 
 export async function resolveFlagUrl(
   flagRef: string,

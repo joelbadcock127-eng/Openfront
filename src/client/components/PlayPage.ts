@@ -1,8 +1,8 @@
 import { LitElement, html } from "lit";
 import { customElement } from "lit/decorators.js";
-import { assetUrl } from "../../core/AssetUrls";
-import { crazyGamesSDK } from "../CrazyGamesSDK";
-import "./NewsBox";
+import { BRANDING } from "../../core/configuration/Branding";
+import { SinglePlayerModal } from "../SinglePlayerModal";
+import { UsernameInput } from "../UsernameInput";
 
 @customElement("play-page")
 export class PlayPage extends LitElement {
@@ -10,15 +10,22 @@ export class PlayPage extends LitElement {
     return this;
   }
 
+  private openSinglePlayerModal = () => {
+    const usernameInput = document.querySelector(
+      "username-input",
+    ) as UsernameInput | null;
+    if (usernameInput && !usernameInput.canPlay()) return;
+    (
+      document.querySelector("single-player-modal") as SinglePlayerModal
+    )?.open();
+  };
+
   render() {
     return html`
       <div
         id="page-play"
         class="flex flex-col gap-2 w-full px-0 lg:px-4 min-h-0"
       >
-        <token-login class="absolute"></token-login>
-        <rewards-modal class="absolute"></rewards-modal>
-
         <!-- Mobile: Fixed top bar -->
         <div
           class="lg:hidden fixed left-0 right-0 top-0 z-40 pt-[env(safe-area-inset-top)] bg-surface border-b border-white/10"
@@ -52,113 +59,73 @@ export class PlayPage extends LitElement {
             </button>
 
             <div
-              class="col-start-2 flex items-center justify-center text-malibu-blue min-w-0"
+              class="col-start-2 flex items-center justify-center min-w-0 text-white font-bold uppercase tracking-widest"
             >
-              <img
-                src=${assetUrl("images/OpenFrontLogo.svg")}
-                alt="OpenFront"
-                class="h-full w-auto"
-              />
+              ${BRANDING.gameName}
             </div>
 
-            ${crazyGamesSDK.isOnCrazyGames()
-              ? html`
-                  <button
-                    id="crazygames-account-btn"
-                    data-page="page-account"
-                    class="nav-menu-item col-start-3 justify-self-end h-10 shrink-0 flex items-center justify-center rounded-full overflow-hidden text-white/90 cursor-pointer"
-                    data-i18n-aria-label="main.account"
-                    data-i18n-title="main.account"
-                  >
-                    <img
-                      id="crazygames-account-avatar"
-                      class="hidden w-8 h-8 rounded-full object-cover"
-                      alt=""
-                      referrerpolicy="no-referrer"
-                    />
-                    <svg
-                      id="crazygames-account-icon"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      aria-hidden="true"
-                      class="w-7 h-7"
-                    >
-                      <path d="M20 21a8 8 0 0 0-16 0" />
-                      <path d="M12 13a4 4 0 1 0-4-4 4 4 0 0 0 4 4Z" />
-                    </svg>
-                  </button>
-                `
-              : html`
-                  <div
-                    aria-hidden="true"
-                    class="col-start-3 justify-self-end h-10 shrink-0 aspect-[4/3]"
-                  ></div>
-                `}
+            <div
+              aria-hidden="true"
+              class="col-start-3 justify-self-end h-10 shrink-0 aspect-[4/3]"
+            ></div>
           </div>
         </div>
 
-        <div
-          class="w-full pb-4 lg:pb-0 flex flex-col gap-4 sm:-mx-4 sm:w-[calc(100%+2rem)] lg:mx-0 lg:w-full lg:grid lg:grid-cols-[2fr_1fr] lg:gap-4"
-        >
+        <div class="w-full pb-4 lg:pb-0 flex flex-col gap-4">
           <!-- Mobile: spacer for fixed top bar -->
-          <div
-            class="lg:hidden h-[calc(env(safe-area-inset-top)+56px)] lg:col-span-2 -mb-4"
-          ></div>
+          <div class="lg:hidden h-[calc(env(safe-area-inset-top)+56px)]"></div>
 
-          <!-- News box above username -->
-          <news-box class="lg:col-span-2"></news-box>
+          <!-- Title / tagline -->
+          <div class="flex flex-col items-center gap-1 pt-4 lg:pt-8">
+            <h1
+              class="text-3xl lg:text-5xl font-bold text-white uppercase tracking-widest text-center"
+            >
+              ${BRANDING.gameName}
+            </h1>
+            <p class="text-white/60 text-sm lg:text-base text-center">
+              ${BRANDING.tagline}
+            </p>
+          </div>
 
-          <!-- Username: left col -->
+          <!-- Username + flag -->
           <div
-            class="px-2 py-2 bg-surface border-y border-white/10 overflow-visible lg:flex lg:items-center lg:gap-x-2 lg:h-[60px] lg:p-3 lg:relative lg:z-20 lg:border-y-0 lg:rounded-xl"
+            class="px-2 py-2 bg-surface border-y border-white/10 overflow-visible lg:flex lg:items-center lg:gap-x-2 lg:h-[60px] lg:p-3 lg:relative lg:z-20 lg:border-y-0 lg:rounded-xl lg:max-w-2xl lg:w-full lg:mx-auto"
           >
             <div class="flex items-center gap-2 min-w-0 w-full">
               <username-input
                 class="flex-1 min-w-0 h-10 lg:h-[50px]"
               ></username-input>
-              <pattern-input
-                id="pattern-input-mobile"
-                show-select-label
-                adaptive-size
-                class="shrink-0 lg:hidden"
-              ></pattern-input>
               <flag-input
-                id="flag-input-mobile"
+                id="flag-input-desktop"
                 show-select-label
-                class="shrink-0 lg:hidden h-10 w-10"
+                class="shrink-0 h-10 w-10 lg:h-[50px] lg:w-[50px]"
               ></flag-input>
-              <effects-input
-                id="effects-input-mobile"
-                class="shrink-0 lg:hidden h-10 w-10"
-              ></effects-input>
             </div>
           </div>
 
-          <!-- Skin + flag: right col -->
-          <div class="hidden lg:flex h-[60px] gap-2">
-            <pattern-input
-              id="pattern-input-desktop"
-              show-select-label
-              class="flex-1 h-full"
-            ></pattern-input>
-            <flag-input
-              id="flag-input-desktop"
-              show-select-label
-              class="flex-1 h-full"
-            ></flag-input>
-            <effects-input
-              id="effects-input-desktop"
-              class="flex-1 h-full"
-            ></effects-input>
+          <!-- Solo play button -->
+          <div class="px-4 lg:px-0 lg:max-w-2xl lg:w-full lg:mx-auto">
+            <button
+              id="solo-play-button"
+              @click=${this.openSinglePlayerModal}
+              class="relative flex items-center justify-center w-full h-16 lg:h-20 rounded-lg bg-malibu-blue hover:bg-aquarius active:bg-malibu-blue/80 hover:scale-y-105 hover:scale-x-[1.01] transition-all duration-200 text-lg lg:text-xl font-medium text-white uppercase tracking-wider text-center"
+              data-i18n="main.solo"
+            ></button>
           </div>
-        </div>
 
-        <game-mode-selector></game-mode-selector>
+          <!-- Derivative notice -->
+          <p class="text-center text-xs text-white/40 px-4">
+            ${BRANDING.gameName} is a modified derivative of
+            <a
+              href=${BRANDING.upstream.repoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="underline hover:text-white/70"
+              >${BRANDING.upstream.name}</a
+            >
+            and is not the official ${BRANDING.upstream.name} service.
+          </p>
+        </div>
       </div>
     `;
   }

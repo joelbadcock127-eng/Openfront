@@ -5,8 +5,7 @@
     "join_lobby": "Entrar na Sala",
     "single_player": "Um Jogador",
     "instructions": "Instruções",
-    "how_to_play": "Como Jogar",
-    "wiki": "Wiki"
+    "how_to_play": "Como Jogar"
   },
   "help_modal": {
     "hotkeys": "Atalhos",
@@ -115,15 +114,9 @@
     "knownworld": "Mundo Conhecido"
   },
   "private_lobby": {
-    "title": "Entrar na Sala Privada",
-    "enter_id": "Digite o ID da Sala",
     "player": "Jogador",
     "players": "Jogadores",
-    "join_lobby": "Entrar na Sala",
-    "checking": "Verificando sala...",
-    "not_found": "Sala não encontrada. Por favor, verifique o ID e tente novamente.",
-    "error": "Ocorreu um erro. Por favor, tente novamente.",
-    "joined_waiting": "Entrou com sucesso! Aguardando o jogo iniciar..."
+    "checking": "Verificando sala..."
   },
   "public_lobby": {
     "join": "Entrar no próximo Jogo",
@@ -137,20 +130,10 @@
     "invalid_chars": "O apelido só pode conter letras, números, espaços, sublinhados e [colchetes quadrados]."
   },
   "host_modal": {
-    "title": "Sala Privada",
-    "options_title": "Opções",
-    "bots": "Bots: ",
-    "bots_disabled": "Desativado",
     "disable_nations": "Desativar Nações",
-    "instant_build": "Construção instantânea",
-    "infinite_gold": "Ouro infinito",
-    "infinite_troops": "Tropas infinitas",
     "disable_nukes": "Desativar Bombas",
     "player": "Jogador",
-    "players": "Jogadores",
-    "waiting": "Aguardando jogadores...",
-    "start": "Iniciar o Jogo",
-    "mode": "Modo"
+    "players": "Jogadores"
   },
   "difficulty": {
     "Relaxed": "Relaxado",

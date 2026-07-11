@@ -11,7 +11,6 @@
   "main": {
     "title": "OpenFront (ALPHA)",
     "join_discord": "הצטרף לשרת הדיסקורד!",
-    "login_discord": "התחבר עם דיסקורד",
     "checking_login": "בודק התחברות...",
     "logged_in": "מחובר!",
     "log_out": "התנתק",
@@ -20,13 +19,11 @@
     "single_player": "שחקן יחיד",
     "instructions": "הוראות",
     "how_to_play": "כיצד לשחק",
-    "advertise": "פרסם",
-    "wiki": "ויקי"
+    "advertise": "פרסם"
   },
   "news": {
     "full_changelog": "ראה את פרטי הגרסה המלאים",
-    "github_link": "בגיטהאב",
-    "title": "פרטי הגרסה"
+    "github_link": "בגיטהאב"
   },
   "help_modal": {
     "hotkeys": "מקשי קיצור",
@@ -167,15 +164,9 @@
     "loading": "טוען..."
   },
   "private_lobby": {
-    "title": "הצטרף ללובי פרטי",
-    "enter_id": "הכנס ID של הלובי",
     "player": "שחקן",
     "players": "שחקנים",
-    "join_lobby": "הצטרף ללובי",
-    "checking": "בודק לובי...",
-    "not_found": "הלובי לא נמצא. בדוק את ה-ID ונסה שוב.",
-    "error": "אירעה שגיאה. נא לנסות שוב.",
-    "joined_waiting": "הצטרפת בהצלחה! מחכה שהמשחק יתחיל..."
+    "checking": "בודק לובי..."
   },
   "public_lobby": {
     "join": "הצטרף למשחק הבא",
@@ -193,21 +184,9 @@
     "invalid_chars": "שם המשתמש יכול להכיל רק אותיות, מספרים, רווחים, קו תחתון ו-[סוגריים מרובעים]."
   },
   "host_modal": {
-    "title": "לובי פרטי",
-    "mode": "מצב",
-    "team_count": "מספר קבוצות",
-    "options_title": "אפשרויות",
-    "bots": "בוטים:",
-    "bots_disabled": "מבוטל",
     "disable_nations": "בטל אומות",
-    "instant_build": "בניה מידית",
-    "infinite_gold": "זהב אינסופי",
-    "infinite_troops": "חיילים אינסופיים",
-    "enables_title": "אפשר הגדרות",
     "player": "שחקן",
-    "players": "שחקנים",
-    "waiting": "מחכה לשחקנים...",
-    "start": "התחל משחק"
+    "players": "שחקנים"
   },
   "team_colors": {
     "red": "אדום",
@@ -498,7 +477,6 @@
     "choose_spawn": "בחר מיקום התחלתי"
   },
   "territory_patterns": {
-    "title": "בחר דפוס שטח",
     "purchase": "קניה",
     "blocked": {
       "login": "אתה חייב להיות מחובר כדי להשתמש בדפוס הזה",

@@ -1,6 +1,6 @@
 import { html } from "lit";
-import { customElement, query, state } from "lit/decorators.js";
-import { translateText, TUTORIAL_VIDEO_URL } from "../client/Utils";
+import { customElement, state } from "lit/decorators.js";
+import { translateText } from "../client/Utils";
 import { assetUrl } from "../core/AssetUrls";
 import { UserSettings } from "../core/game/UserSettings";
 import { BaseModal } from "./components/BaseModal";
@@ -14,7 +14,6 @@ export class HelpModal extends BaseModal {
   protected routerName = "help";
 
   @state() private keybinds: Record<string, string> = this.getKeybinds();
-  @query("#tutorial-video-iframe") private videoIframe?: HTMLIFrameElement;
 
   private getKeybinds(): Record<string, string> {
     return new UserSettings().keybinds(Platform.isMac);
@@ -82,45 +81,6 @@ export class HelpModal extends BaseModal {
           [&_p]:text-gray-300 [&_p]:mb-3 [&_strong]:text-white [&_strong]:font-bold"
       >
           <!-- Video Tutorial Section -->
-          <div class="flex items-center gap-3 mb-3">
-            <div class="text-blue-400">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="w-5 h-5"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <polygon points="5 3 19 12 5 21 5 3"></polygon>
-              </svg>
-            </div>
-            <h3
-              class="text-xl font-bold uppercase tracking-widest text-white/90"
-            >
-              ${translateText("help_modal.video_tutorial")}
-            </h3>
-            <div
-              class="flex-1 h-px bg-gradient-to-r from-blue-500/50 to-transparent"
-            ></div>
-          </div>
-          <section
-            class="bg-white/5 rounded-xl border border-white/10 overflow-hidden mb-8"
-          >
-            <div class="relative w-full h-0 pb-[56.25%]">
-              <iframe
-                id="tutorial-video-iframe"
-                class="absolute top-0 left-0 w-full h-full"
-                src="${this.isModalOpen ? TUTORIAL_VIDEO_URL : ""}"
-                title="${translateText("help_modal.video_tutorial_title")}"
-                frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowfullscreen
-              ></iframe>
-            </div>
-          </section>
 
           <!-- Troubleshooting Section -->
           <div class="flex items-center gap-3 mb-3">
@@ -1248,16 +1208,5 @@ export class HelpModal extends BaseModal {
 
   protected onOpen(): void {
     this.keybinds = this.getKeybinds();
-    // Restore the video src when modal opens
-    if (this.videoIframe) {
-      this.videoIframe.src = TUTORIAL_VIDEO_URL;
-    }
-  }
-
-  protected onClose(): void {
-    // Clear the iframe src to stop video playback
-    if (this.videoIframe) {
-      this.videoIframe.src = "";
-    }
   }
 }

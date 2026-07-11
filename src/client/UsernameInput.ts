@@ -10,7 +10,6 @@ import {
   validateClanTag,
   validateUsername,
 } from "../core/validations/username";
-import { checkClanTagOwnership } from "./ClanApi";
 import { crazyGamesSDK } from "./CrazyGamesSDK";
 
 interface LangSelectorLike {
@@ -79,15 +78,12 @@ export class UsernameInput extends LitElement {
       this.clanCheck = Promise.resolve(null);
       return;
     }
-    this.clanCheckPending = true;
-    this.clanCheck = checkClanTagOwnership(tag).then((res) => {
-      if (gen === this.clanCheckGen) {
-        this.clanTagOwnershipError = res.error ?? "";
-        this.clanCheckPending = false;
-        this.emitValidity();
-      }
-      return res.tag;
-    });
+    // Clan ownership was verified against the upstream account API. Clans and
+    // accounts are removed in this solo derivative, so any syntactically valid
+    // tag is accepted as a purely cosmetic label - no network request is made.
+    void gen;
+    this.clanCheckPending = false;
+    this.clanCheck = Promise.resolve(tag);
   }
 
   connectedCallback() {

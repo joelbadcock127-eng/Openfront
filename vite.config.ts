@@ -111,9 +111,8 @@ export default defineConfig(({ mode }) => {
     jwtAudience: JSON.stringify(env.DOMAIN ?? "localhost"),
     instanceId: JSON.stringify(env.INSTANCE_ID ?? "DEV_ID"),
     manifestHref: buildAssetUrl("manifest.json", assetManifest, cdnBase),
-    faviconHref: buildAssetUrl("images/Favicon.svg", assetManifest, cdnBase),
-    gameplayScreenshotUrl: buildAssetUrl(
-      "images/GameplayScreenshot.png",
+    faviconHref: buildAssetUrl(
+      "images/FrontlineFavicon.svg",
       assetManifest,
       cdnBase,
     ),
@@ -122,12 +121,6 @@ export default defineConfig(({ mode }) => {
       assetManifest,
       cdnBase,
     ),
-    desktopLogoImageUrl: buildAssetUrl(
-      "images/OpenFront.png",
-      assetManifest,
-      cdnBase,
-    ),
-    mobileLogoImageUrl: buildAssetUrl("images/OF.png", assetManifest, cdnBase),
   };
 
   // Vite's HTML transform replaces the source <script src="/src/client/Main.ts">

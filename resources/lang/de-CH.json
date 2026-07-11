@@ -8,7 +8,6 @@
   "common": {
     "close": "Schliesse",
     "copy": "Kopiere",
-    "paste": "Ifüege",
     "back": "Zrügg",
     "available": "Verfüegbar",
     "preset_max": "Maximau",
@@ -23,37 +22,22 @@
     "none": "Nüt",
     "copied": "Kopiert!",
     "click_to_copy": "Klick zum Kopiere",
-    "enabled": "Igschaute",
     "map_default": "Kartestandard"
   },
   "main": {
     "title": "OpenFront (ALPHA)",
-    "login_discord": "Mäud di a mit Discord",
-    "sign_in": "Amäude",
-    "discord_avatar_alt": "Discord Profiubüud",
-    "user_avatar_alt": "{username}'s Profiubüud",
-    "create": "Lobby erstelle",
-    "join": "Lobby biträtte",
     "solo": "Elei",
     "game_info": "Spieuinfo",
-    "wiki": "Wiki",
-    "privacy_policy": "Dateschutzerklärig",
-    "terms_of_service": "Nutzigsbedingige",
-    "copyright": "©️ OpenFront™ und Mitwirkendi",
     "play": "Spiele",
-    "news": "Neuigkeite",
     "store": "Shop",
     "settings": "Isteuige",
-    "leaderboard": "Ranglischte",
-    "account": "Account",
     "help": "Hiuf",
     "menu": "Menü",
     "troubleshooting": "Fählerbehäbig",
     "go_to_troubleshooting": "Gang zu üsere Fehlerbehebigssitte"
   },
   "news": {
-    "github_link": "uf GitHub",
-    "title": "Versionshiwise"
+    "github_link": "uf GitHub"
   },
   "troubleshooting": {
     "title": "Fählerbehäbig",
@@ -184,8 +168,6 @@
   },
   "single_modal": {
     "random_spawn": "Zuefäuige Spawn",
-    "toggle_achievements": "Errungenschaften a/usschaute",
-    "sign_in_for_achievements": "Log di i für Errungeschafte",
     "options_title": "Optione",
     "bots": "Stämm: ",
     "bots_disabled": "Usgschaute",
@@ -201,58 +183,16 @@
     "max_timer_invalid": "Bitte gib e gültige maximale Zitwärt i (1-120 Minute)",
     "enables_title": "Aktivierti Istellige",
     "start": "Spieu starte",
-    "options_changed_no_achievements": "Benutzerdefinierte Istellige - Erfolge deaktiviert",
     "gold_multiplier": "Gold Multiplikator",
     "gold_multiplier_placeholder": "2.0x",
     "starting_gold": "Start-Gold (Millionen)",
     "starting_gold_placeholder": "5"
   },
-  "token_login_modal": {
-    "title": "Amäudig louft...",
-    "logging_in": "Amäude ...",
-    "success": "Erfolgrich agmäudet aus {email}!"
-  },
   "account_modal": {
-    "title": "Konto",
-    "connected_as": "Agmäudet aus",
-    "stats_overview": "Statistike Übersicht",
-    "link_discord": "Discord Konto verknüpfe",
-    "log_out": "Abmäude",
-    "sign_in_desc": "Mäud di a, um dini Statistike und Fortschritte z spichere",
-    "or": "ODER",
-    "email_placeholder": "Gib dini email adrässe i",
-    "get_magic_link": "Überchum e magische Link",
-    "linked_account": "Agmäudet aus {account_name}",
-    "fetching_account": "Kontoinformationen wärde glade...",
-    "recovery_email_sent": "Wiederherstelligs-E-Mail a {email} gesendet",
-    "not_found": "Nid gfunge",
-    "clear_session": "Sitzig lösche",
-    "failed_to_send_recovery_email": "Fehler bim Senden vor Wiederherstelligs E-Mail",
-    "enter_email_address": "Bitte gib e E-Mail Adresse a",
     "personal_player_id": "Persönlechi Spieler ID:"
   },
   "leaderboard_modal": {
-    "title": "Ranglischte",
-    "ranked_tab": "1v1 Bewertet",
-    "clans_tab": "Clans",
-    "refresh_time": "Aktualisiert jedi Stund",
-    "loading": "Laden...",
-    "error": "Bim Lade vor Rangliste isch e Fehler aufträtte",
-    "no_stats": "Kei Statistiken verfügbar",
-    "no_data_yet": "No keini Date hie",
-    "clan": "Clan",
-    "player": "Spieler",
-    "games": "Spiele",
-    "elo": "ELO",
-    "win_score": "Siegpunkte",
-    "win_score_tooltip": "Gewichtete Siege basierend auf Clan Beteiligung und Spielschwierigkeit",
-    "loss_score": "Niederlagenpunkte",
-    "loss_score_tooltip": "Gewichtete Niederlagen basierend auf Clan Beteiligung und Spielschwierigkeit",
-    "win_loss_ratio": "Sieg/Niederla",
-    "ratio": "Verhältnis",
-    "rank": "Rang",
-    "try_again": "Versuch's nomou",
-    "your_ranking": "Di Rang"
+    "try_again": "Versuch's nomou"
   },
   "game_info_modal": {
     "title": "Spieuinfo",
@@ -356,37 +296,11 @@
     "loading": "Laden...",
     "error": "Fehler"
   },
-  "private_lobby": {
-    "title": "Privater Lobby biträtte",
-    "enter_id": "Lobby ID eingeben",
-    "join_lobby": "Lobby biträtte",
-    "not_found": "Lobby nid gfungen. Bitte Lobby ID überprüefe und noeinisch versuche.",
-    "error": "Es isch e Fehler auftrette. Bitte versuche s nochmau oder wend di a Support.",
-    "joined_waiting": "Lobby biträtte! Warte uf e Gastgeber...",
-    "version_mismatch": "Das Spieu nutzt e angeri Version. Du chasch nid biträtte.",
-    "disabled_units": "Deaktivierti Einheite"
-  },
   "public_lobby": {
-    "title": "Wart uf Spielbeginn...",
-    "waiting_for_players": "Warte uf Spiler",
-    "connecting": "Mit Lobby verbinge...",
-    "starting_in": "Startet i {time}",
-    "starting_game": "Starte…",
     "teams_hvn": "Mönsche gäge Natione",
     "teams_hvn_detailed": "{num} Mönsche gäge {num} Natione",
     "teams": "{num} teams",
-    "players_per_team": "vo {num}",
-    "started": "Gstartet",
-    "status": "Status",
-    "join_timeout": "Du bisch am Spiu nid rechtzetig biträtte."
-  },
-  "matchmaking_modal": {
-    "title": "1gägä1 Ranglischte-Matchmaking (ALPHA)",
-    "connecting": "Verbinge mit em Server...",
-    "searching": "Spiel wird gsuecht...",
-    "waiting_for_game": "Wart ufe Spielbeginn...",
-    "elo": "Dini ELO: {elo}",
-    "no_elo": "No kei ELO"
+    "players_per_team": "vo {num}"
   },
   "username": {
     "enter_username": "Gib e Benutzername i",
@@ -399,32 +313,13 @@
     "tag_invalid_chars": "Clan-Tag darf nume us Buchstaben und Zahlen bestoh."
   },
   "host_modal": {
-    "title": "Privati Lobby erstellen",
-    "mode": "Modus",
-    "team_count": "Teamazau",
-    "options_title": "Optione",
-    "bots": "Stämm: ",
-    "bots_disabled": "Usgschaute",
-    "nations": "Natione: ",
-    "nations_disabled": "Usgschaute",
-    "player_immunity_duration": "PVP Immunitätsdur (Minute)",
-    "max_timer": "Spieulängi (minute)",
-    "mins_placeholder": "Minute",
-    "instant_build": "Sofort boue",
-    "infinite_gold": "Unendlech gold",
-    "donate_gold": "Gold spenden",
-    "infinite_troops": "Unändlech truppene",
-    "donate_troops": "Truppe spende",
     "compact_map": "Kompakti Karte",
     "disable_alliances": "Allianze deaktiviere",
-    "enables_title": "Aktivierti Istellige",
     "player": "Spieler",
     "players": "Spieler",
     "nation_players": "Natione",
     "nation_player": "Nation",
-    "waiting": "Warte uf Spiler...",
     "random_spawn": "Zuefäuige Spawn",
-    "start": "Spieu starte",
     "host_badge": "Host",
     "assigned_teams": "Zuegwiseni Teams",
     "empty_teams": "Leeri Teams",
@@ -437,10 +332,6 @@
     "crowded": "Überfüut Modifikator",
     "hard_nations": "Schweeri Natione",
     "gold_multiplier": "Gold Multiplikator",
-    "gold_multiplier_placeholder": "2.0x",
-    "starting_gold": "Start-Gold (Millionen)",
-    "starting_gold_placeholder": "5",
-    "leave_confirmation": "Bisch du dir würklech sicher, dass du s Spieu wosch verlasse?",
     "team_type": "Team Typ"
   },
   "team_colors": {
@@ -470,15 +361,6 @@
   "game_mode": {
     "ffa": "Jede gäge jede",
     "teams": "Teams"
-  },
-  "mode_selector": {
-    "teams_title": "Teams",
-    "teams_count": "{teamCount} teams",
-    "teams_of": "{teamCount} teams vo {playersPerTeam}",
-    "ranked_title": "Bewärtet",
-    "ranked_1v1_title": "1v1",
-    "ranked_2v2_title": "2v2",
-    "coming_soon": "Chunt gli"
   },
   "public_game_modifier": {
     "random_spawn": "Zuefäuige Spawn",
@@ -899,13 +781,11 @@
     "catching_up": "Ufhole..."
   },
   "territory_patterns": {
-    "title": "Gebietsmuschter",
     "purchase": "Choufe",
     "pattern": {
       "default": "Normau"
     },
     "select_skin": "Skin uswähle",
-    "selected": "usgwäut",
     "colors": "Farbene",
     "show_only_owned": "Mini Designs",
     "all_owned": "Du besitztisch aui Skins! Lueg später wieder ine für neui Artikle.",
@@ -986,11 +866,5 @@
     "stats_wlr": "Sieg/Niederlage-Verhäutnis",
     "stats_games_played": "Spiel Gspüut",
     "no_stats": "Kei Statistike für die Uswau ufzeichnet."
-  },
-  "matchmaking_button": {
-    "play_ranked": "1gägä1 Ranglischte-Matchmaking",
-    "description": "(ALPHA)",
-    "login_required": "Mäud di a um Ranked z spiele!",
-    "must_login": "Du muesch igloggt si, um Ranked Matchmaking z spiele."
   }
 }

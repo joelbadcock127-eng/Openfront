@@ -22,7 +22,6 @@
   "main": {
     "title": "OpenFront (ALPHA)",
     "join_discord": "Discord",
-    "login_discord": "Anmelden mit Discord",
     "checking_login": "Überprüfe Login...",
     "logged_in": "Angemeldet!",
     "log_out": "Abmelden",
@@ -30,15 +29,11 @@
     "join_lobby": "Lobby beitreten",
     "single_player": "Einzelspieler",
     "instructions": "Anleitung",
-    "wiki": "Wiki",
-    "privacy_policy": "Datenschutzerklärung",
-    "terms_of_service": "Nutzungsbedingungen",
     "reddit": "Reddit"
   },
   "news": {
     "see_all_releases": "Alle Versionen ansehen",
-    "github_link": "auf GitHub",
-    "title": "Versionshinweise"
+    "github_link": "auf GitHub"
   },
   "help_modal": {
     "hotkeys": "Tastaturbelegungen",
@@ -149,17 +144,9 @@
     "enables_title": "Aktiviere Einstellungen",
     "start": "Spiel starten"
   },
-  "token_login_modal": {
-    "title": "Anmeldung läuft...",
-    "logging_in": "Anmeldung läuft...",
-    "success": "Erfolgreich angemeldet als {email}!"
-  },
   "account_modal": {
-    "title": "Konto",
     "logged_in_as": "Angemeldet als {email}",
-    "fetching_account": "Kontoinformationen werden geladen...",
-    "logged_in_with_discord": "Angemeldet mit Discord",
-    "recovery_email_sent": "Wiederherstellungs-E-Mail an {email} gesendet"
+    "logged_in_with_discord": "Angemeldet mit Discord"
   },
   "stats_modal": {
     "title": "Statistiken",
@@ -221,16 +208,9 @@
     "loading": "Lädt..."
   },
   "private_lobby": {
-    "title": "Privater Lobby beitreten",
-    "enter_id": "Lobby ID eingeben",
     "player": "Spieler",
     "players": "Spieler",
-    "join_lobby": "Lobby beitreten",
-    "checking": "Überprüfe Lobby...",
-    "not_found": "Lobby nicht gefunden. Bitte Lobby ID überprüfen und erneut versuchen.",
-    "error": "Es ist ein Fehler aufgetreten. Bitte versuche es nochmal oder wende dich an den Support.",
-    "joined_waiting": "Erfolgreich beigetreten! Warte auf den Start des Spiels...",
-    "version_mismatch": "Dieses Spiel nutzt eine andere Version. Du kannst nicht beitreten."
+    "checking": "Überprüfe Lobby..."
   },
   "public_lobby": {
     "join": "Nächstem Spiel beitreten",
@@ -242,12 +222,6 @@
     "teams": "{num} Teams",
     "players_per_team": "von {num}"
   },
-  "matchmaking_modal": {
-    "title": "Spielersuche",
-    "connecting": "Verbinde mit Server...",
-    "searching": "Spiel wird gesucht...",
-    "waiting_for_game": "Das Spiel startet in Kürze..."
-  },
   "username": {
     "enter_username": "Benutzernamen eingeben",
     "not_string": "Benutzername muss ein Text sein.",
@@ -256,29 +230,13 @@
     "invalid_chars": "Benutzername darf nur Buchstaben, Zahlen, Leerzeichen, Unterstriche und [eckige Klammer] enthalten."
   },
   "host_modal": {
-    "title": "Private Lobby",
-    "mode": "Modus",
-    "team_count": "Teamanzahl",
-    "options_title": "Optionen",
-    "bots": "Bots:",
-    "bots_disabled": "Deaktiviert",
-    "nations": "Nationen: ",
     "disable_nations": "Nationen deaktivieren",
-    "max_timer": "Spiellänge (Minuten)",
-    "instant_build": "Sofortiges Bauen",
-    "infinite_gold": "Unendlich Gold",
-    "donate_gold": "Gold spenden",
-    "infinite_troops": "Unendlich Truppen",
-    "donate_troops": "Truppen spenden",
     "compact_map": "Kompakte Karte",
-    "enables_title": "Aktiviere Einstellungen",
     "player": "Spieler",
     "players": "Spieler",
     "nation_players": "Nationen",
     "nation_player": "Nation",
-    "waiting": "Warte auf Spieler...",
     "random_spawn": "Zufälliger Spawn",
-    "start": "Spiel starten",
     "host_badge": "Host",
     "assigned_teams": "Zugewiesene Teams",
     "empty_teams": "Leere Teams",
@@ -705,7 +663,6 @@
     "random_spawn": "Zufälliger Spawn ist aktiviert. Startposition wird ausgewählt..."
   },
   "territory_patterns": {
-    "title": "Gebietsmuster",
     "colors": "Farben",
     "purchase": "Kaufen",
     "show_only_owned": "Meine Designs",

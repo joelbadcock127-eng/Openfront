@@ -11,7 +11,6 @@
   "main": {
     "title": "OpenFront (ALPHA)",
     "join_discord": "Junte-se no Discord!",
-    "login_discord": "Inicie a sessão com Discord",
     "checking_login": "A verificar a sessão...",
     "logged_in": "Conectado!",
     "log_out": "Sair da sessão",
@@ -20,15 +19,11 @@
     "single_player": "Um Jogador",
     "instructions": "Instruções",
     "how_to_play": "Como Jogar",
-    "advertise": "Anuncie",
-    "wiki": "Documentação (Wiki)",
-    "privacy_policy": "Política de Privacidade",
-    "terms_of_service": "Termos de Serviço"
+    "advertise": "Anuncie"
   },
   "news": {
     "see_all_releases": "Ver todas as versões",
-    "github_link": "no GitHub",
-    "title": "Notas da versão"
+    "github_link": "no GitHub"
   },
   "help_modal": {
     "hotkeys": "Atalhos",
@@ -177,15 +172,9 @@
     "loading": "A carregar..."
   },
   "private_lobby": {
-    "title": "Entrar numa sala privada",
-    "enter_id": "Inserir ID de uma sala",
     "player": "Jogador",
     "players": "Jogadores",
-    "join_lobby": "Entrar numa sala",
-    "checking": "A verificar sala...",
-    "not_found": "Sala não encontrada. Por favor, verifique o ID e tente novamente.",
-    "error": "Ocorreu um erro. Por favor, tente novamente.",
-    "joined_waiting": "Entrou com sucesso! À espera que o jogo comece..."
+    "checking": "A verificar sala..."
   },
   "public_lobby": {
     "join": "Entrar no próximo Jogo",
@@ -203,21 +192,9 @@
     "invalid_chars": "O nome de utilizador pode conter apenas letras, números, espaços, sublinhados e [pressentis retos]."
   },
   "host_modal": {
-    "title": "Sala Privada",
-    "mode": "Modo",
-    "team_count": "Número de equipas",
-    "options_title": "Opções",
-    "bots": "Robôs: ",
-    "bots_disabled": "Desabilitado",
     "disable_nations": "Desabilitar as Nações",
-    "instant_build": "Construção instantânea",
-    "infinite_gold": "Ouro infinito",
-    "infinite_troops": "Tropas infinitas",
-    "enables_title": "Ativar Configurações",
     "player": "Jogador",
     "players": "Jogadores",
-    "waiting": "Aguardando jogadores...",
-    "start": "Iniciar jogo",
     "host_badge": "Servidor"
   },
   "team_colors": {
@@ -547,7 +524,6 @@
     "choose_spawn": "Escolha um local de início"
   },
   "territory_patterns": {
-    "title": "Selecione padrão do território",
     "purchase": "Comprar",
     "blocked": {
       "login": "Deve estar com a sessão iniciada para aceder a esta página.",

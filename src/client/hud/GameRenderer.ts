@@ -29,11 +29,8 @@ import { GameRightSidebar } from "./layers/GameRightSidebar";
 import { GraphicsSettingsModal } from "./layers/GraphicsSettingsModal";
 import { HeadsUpMessage } from "./layers/HeadsUpMessage";
 import { ImmunityTimer } from "./layers/ImmunityTimer";
-import { InGamePromo } from "./layers/InGamePromo";
 import { Leaderboard } from "./layers/Leaderboard";
 import { MainRadialMenu } from "./layers/MainRadialMenu";
-import { MultiTabModal } from "./layers/MultiTabModal";
-import { NewLobbyPrompt } from "./layers/NewLobbyPrompt";
 import { PerformanceOverlay } from "./layers/PerformanceOverlay";
 import { PlayerInfoOverlay } from "./layers/PlayerInfoOverlay";
 import { PlayerPanel } from "./layers/PlayerPanel";
@@ -170,15 +167,6 @@ export function createRenderer(
   winModal.eventBus = eventBus;
   winModal.game = game;
 
-  const newLobbyPrompt = document.querySelector(
-    "new-lobby-prompt",
-  ) as NewLobbyPrompt;
-  if (!(newLobbyPrompt instanceof NewLobbyPrompt)) {
-    console.error("new lobby prompt not found");
-  }
-  newLobbyPrompt.eventBus = eventBus;
-  newLobbyPrompt.game = game;
-
   const replayPanel = document.querySelector("replay-panel") as ReplayPanel;
   if (!(replayPanel instanceof ReplayPanel)) {
     console.error("replay panel not found");
@@ -239,14 +227,6 @@ export function createRenderer(
   chatModal.g = game;
   chatModal.initEventBus(eventBus);
 
-  const multiTabModal = document.querySelector(
-    "multi-tab-modal",
-  ) as MultiTabModal;
-  if (!(multiTabModal instanceof MultiTabModal)) {
-    console.error("multi-tab modal not found");
-  }
-  multiTabModal.game = game;
-
   const headsUpMessage = document.querySelector(
     "heads-up-message",
   ) as HeadsUpMessage;
@@ -287,12 +267,6 @@ export function createRenderer(
   immunityTimer.game = game;
   immunityTimer.eventBus = eventBus;
 
-  const inGamePromo = document.querySelector("in-game-promo") as InGamePromo;
-  if (!(inGamePromo instanceof InGamePromo)) {
-    console.error("in-game promo not found");
-  }
-  inGamePromo.game = game;
-
   const layers: Controller[] = [
     new WarshipSelectionController(game, eventBus, transformHandler, view),
     new BuildPreviewController(
@@ -332,15 +306,12 @@ export function createRenderer(
     controlPanel,
     playerInfo,
     winModal,
-    newLobbyPrompt,
     replayPanel,
     settingsModal,
     graphicsSettingsModal,
     teamStats,
     playerPanel,
     headsUpMessage,
-    multiTabModal,
-    inGamePromo,
     alertFrame,
     performanceOverlay,
   ];
