@@ -41,6 +41,7 @@ Legend — Status: ✅ working · ➖ intentionally removed · Test coverage:
 | Settings (graphics, keybinds, sound) | ✅ | ✅ | ✅ | manual | Stored locally |
 | Mobile layout / touch controls | ✅ | ✅ | ✅ | manual (viewport) | Upstream HUD breakpoints kept |
 | Deterministic sim (same seed ⇒ same outcome) | ✅ | ✅ | ✅ | unit (extensive) | Web Worker, seeded PRNG |
+| Continuous streamed world map (local↔globe, one match) | ➖ (separate fixed maps) | ✅ (world plan) | ✅ Stage 2 | unit (20 world tests), manual | This fork's flagship addition; see docs/WORLD_MAP_ARCHITECTURE.md |
 | Public/private multiplayer, matchmaking, ranked | ✅ | ➖ | ➖ | e2e asserts absence | Removed |
 | Accounts / profiles / friends / clans | ✅ | ➖ | ➖ | e2e asserts absence | Removed (clan tag = cosmetic text) |
 | Store / cosmetics / purchases | ✅ | ➖ | ➖ | — | Removed |

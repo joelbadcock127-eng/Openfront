@@ -38,9 +38,7 @@ export function geometryToPolygons(
     return [rings.map(projectRing)];
   }
   if (geometry.type === "MultiPolygon") {
-    const polys = geometry.coordinates as Array<
-      Array<Array<[number, number]>>
-    >;
+    const polys = geometry.coordinates as Array<Array<Array<[number, number]>>>;
     return polys.map((rings) => rings.map(projectRing));
   }
   return [];

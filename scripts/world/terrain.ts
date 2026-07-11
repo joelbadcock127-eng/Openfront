@@ -28,7 +28,10 @@ export function isLand(v: number): boolean {
  * Flood-fill the ocean bit over all water reachable (4-neighbour) from the
  * seed cells. Unreached water remains lake (water, non-ocean).
  */
-export function floodOcean(grid: TerrainGrid, seeds: Array<[number, number]>): void {
+export function floodOcean(
+  grid: TerrainGrid,
+  seeds: Array<[number, number]>,
+): void {
   const { width, height, data } = grid;
   let frontier: number[] = [];
   for (const [x, y] of seeds) {
@@ -136,9 +139,11 @@ export function computeShoreAndMagnitude(
       if (km <= PLAINS_KM) {
         mag = Math.max(1, Math.round((km / PLAINS_KM) * 9));
       } else if (km <= HIGHLAND_KM) {
-        mag = 10 + Math.floor(((km - PLAINS_KM) / (HIGHLAND_KM - PLAINS_KM)) * 6);
+        mag =
+          10 + Math.floor(((km - PLAINS_KM) / (HIGHLAND_KM - PLAINS_KM)) * 6);
       } else if (km <= UPPER_KM) {
-        mag = 16 + Math.floor(((km - HIGHLAND_KM) / (UPPER_KM - HIGHLAND_KM)) * 4);
+        mag =
+          16 + Math.floor(((km - HIGHLAND_KM) / (UPPER_KM - HIGHLAND_KM)) * 4);
       } else {
         // Mountain band, but never 31 (impassable in the engine).
         mag = Math.min(24, 20 + Math.floor((km - UPPER_KM) / 400));

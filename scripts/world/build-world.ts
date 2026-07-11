@@ -235,7 +235,11 @@ function terrainToRgb(g: TerrainGrid): Uint8Array {
     const mag = v & 0x1f;
     let c: readonly number[];
     if (land) {
-      c = shore ? PALETTE.shoreLand : mag > 12 ? PALETTE.highland : PALETTE.land;
+      c = shore
+        ? PALETTE.shoreLand
+        : mag > 12
+          ? PALETTE.highland
+          : PALETTE.land;
     } else {
       c = shore ? PALETTE.shoreWater : ocean ? PALETTE.ocean : PALETTE.lake;
     }
@@ -269,7 +273,10 @@ function cropView(
   const h = Math.max(1, y1 - y0);
   const out = new Uint8Array(w * h);
   for (let y = 0; y < h; y++) {
-    out.set(g.data.subarray((y0 + y) * g.width + x0, (y0 + y) * g.width + x0 + w), y * w);
+    out.set(
+      g.data.subarray((y0 + y) * g.width + x0, (y0 + y) * g.width + x0 + w),
+      y * w,
+    );
   }
   return { width: w, height: h, data: out };
 }
@@ -367,7 +374,11 @@ function emitWindowMap(
 
   // Mini maps: engine's map4x halves each axis; map16x quarters each axis.
   const toFinished = (land: TerrainGrid, lod: number): TerrainGrid => {
-    const g = { width: land.width, height: land.height, data: land.data.slice() };
+    const g = {
+      width: land.width,
+      height: land.height,
+      data: land.data.slice(),
+    };
     // Ocean: seed from every border water cell whose world LOD2 cell is ocean.
     const seeds: Array<[number, number]> = [];
     const worldFromLocal = (x: number, y: number): [number, number] => [
@@ -380,7 +391,10 @@ function emitWindowMap(
     for (const [x, y] of border) {
       if (isLand(g.data[y * g.width + x])) continue;
       const [wx, wy] = worldFromLocal(x, y);
-      if ((globalBase.data[wy * globalBase.width + wx] & TERRAIN_OCEAN_BIT) !== 0) {
+      if (
+        (globalBase.data[wy * globalBase.width + wx] & TERRAIN_OCEAN_BIT) !==
+        0
+      ) {
         seeds.push([x, y]);
       }
     }
@@ -471,7 +485,13 @@ function snapToLand(
   y: number,
   radius: number,
 ): [number, number] | null {
-  if (x >= 0 && y >= 0 && x < g.width && y < g.height && isLand(g.data[y * g.width + x])) {
+  if (
+    x >= 0 &&
+    y >= 0 &&
+    x < g.width &&
+    y < g.height &&
+    isLand(g.data[y * g.width + x])
+  ) {
     return [x, y];
   }
   for (let r = 1; r <= radius; r++) {
@@ -537,7 +557,11 @@ function main(): void {
     }
   }
   // Direct strait navigability probes (BFS through the carved strait).
-  const straitProbes: Array<{ name: string; a: [number, number]; b: [number, number] }> = [
+  const straitProbes: Array<{
+    name: string;
+    a: [number, number];
+    b: [number, number];
+  }> = [
     { name: "Gibraltar", a: [-6.5, 35.9], b: [-4.5, 36.2] },
     { name: "Bosporus chain", a: [28.0, 43.0], b: [25.0, 39.0] },
     { name: "Øresund/Belts", a: [11.0, 56.5], b: [19.0, 58.0] },
@@ -552,7 +576,9 @@ function main(): void {
   }
   if (failures.length > 0) {
     for (const f of failures) console.error(`[world] VALIDATION FAILED: ${f}`);
-    throw new Error(`world build validation failed (${failures.length} issues)`);
+    throw new Error(
+      `world build validation failed (${failures.length} issues)`,
+    );
   }
   log("global validations passed (islands, water bodies, straits)");
 
@@ -584,7 +610,9 @@ function main(): void {
   const ry1 = Math.ceil(Math.max(...corners.map((c) => c.y)) / ALIGN) * ALIGN;
   const rw = rx1 - rx0;
   const rh = ry1 - ry0;
-  log(`detail region ${DETAIL_REGION.id}: LOD0 rect ${rw}x${rh} at (${rx0},${ry0})`);
+  log(
+    `detail region ${DETAIL_REGION.id}: LOD0 rect ${rw}x${rh} at (${rx0},${ry0})`,
+  );
 
   const detail: Grid = { width: rw, height: rh, data: new Uint8Array(rw * rh) };
   const proj0 = projectorForLod(0);
@@ -594,19 +622,29 @@ function main(): void {
   };
   log("rasterizing detail region at LOD0…");
   rasterizeFeatures(detail, land.features, projRegion, TERRAIN_LAND_BIT);
-  rasterizeFeatures(detail, minorIslands.features, projRegion, TERRAIN_LAND_BIT);
+  rasterizeFeatures(
+    detail,
+    minorIslands.features,
+    projRegion,
+    TERRAIN_LAND_BIT,
+  );
   rasterizeFeatures(detail, lakes.features, projRegion, 0);
 
   // Finished detail terrain for the world layer (ocean seeded from region
   // border cells that are ocean at the global base).
-  const detailFinished: TerrainGrid = { width: rw, height: rh, data: detail.data.slice() };
+  const detailFinished: TerrainGrid = {
+    width: rw,
+    height: rh,
+    data: detail.data.slice(),
+  };
   {
     const seeds: Array<[number, number]> = [];
     const pushIfOcean = (x: number, y: number) => {
       if (isLand(detailFinished.data[y * rw + x])) return;
       const wx = (rx0 + x) >> GLOBAL_BASE_LOD;
       const wy = (ry0 + y) >> GLOBAL_BASE_LOD;
-      if ((base.data[wy * base.width + wx] & TERRAIN_OCEAN_BIT) !== 0) seeds.push([x, y]);
+      if ((base.data[wy * base.width + wx] & TERRAIN_OCEAN_BIT) !== 0)
+        seeds.push([x, y]);
     };
     for (let x = 0; x < rw; x++) {
       pushIfOcean(x, 0);
@@ -620,7 +658,11 @@ function main(): void {
     computeShoreAndMagnitude(detailFinished, cellKmAt(0));
   }
 
-  const detail1Land = downsampleLand({ width: rw, height: rh, data: detail.data });
+  const detail1Land = downsampleLand({
+    width: rw,
+    height: rh,
+    data: detail.data,
+  });
   const detail1: TerrainGrid = {
     width: detail1Land.width,
     height: detail1Land.height,
@@ -631,17 +673,19 @@ function main(): void {
     for (let x = 0; x < detail1.width; x++) {
       for (const y of [0, detail1.height - 1]) {
         if (isLand(detail1.data[y * detail1.width + x])) continue;
-        const wx = ((rx0 >> 1) + x) << 1 >> GLOBAL_BASE_LOD;
-        const wy = ((ry0 >> 1) + y) << 1 >> GLOBAL_BASE_LOD;
-        if ((base.data[wy * base.width + wx] & TERRAIN_OCEAN_BIT) !== 0) seeds.push([x, y]);
+        const wx = (((rx0 >> 1) + x) << 1) >> GLOBAL_BASE_LOD;
+        const wy = (((ry0 >> 1) + y) << 1) >> GLOBAL_BASE_LOD;
+        if ((base.data[wy * base.width + wx] & TERRAIN_OCEAN_BIT) !== 0)
+          seeds.push([x, y]);
       }
     }
     for (let y = 0; y < detail1.height; y++) {
       for (const x of [0, detail1.width - 1]) {
         if (isLand(detail1.data[y * detail1.width + x])) continue;
-        const wx = ((rx0 >> 1) + x) << 1 >> GLOBAL_BASE_LOD;
-        const wy = ((ry0 >> 1) + y) << 1 >> GLOBAL_BASE_LOD;
-        if ((base.data[wy * base.width + wx] & TERRAIN_OCEAN_BIT) !== 0) seeds.push([x, y]);
+        const wx = (((rx0 >> 1) + x) << 1) >> GLOBAL_BASE_LOD;
+        const wy = (((ry0 >> 1) + y) << 1) >> GLOBAL_BASE_LOD;
+        if ((base.data[wy * base.width + wx] & TERRAIN_OCEAN_BIT) !== 0)
+          seeds.push([x, y]);
       }
     }
     floodOcean(detail1, seeds);
@@ -656,19 +700,25 @@ function main(): void {
     const { file, index } = packLod(g, k);
     fs.writeFileSync(path.join(outDir, index.pack), file);
     indexLods[String(k)] = index;
-    log(`LOD${k}: ${Object.keys(index.chunks).length} chunks, ${(file.length / 1024).toFixed(0)} KiB`);
+    log(
+      `LOD${k}: ${Object.keys(index.chunks).length} chunks, ${(file.length / 1024).toFixed(0)} KiB`,
+    );
   }
   {
     const { file, index } = packLod(detailFinished, 0, undefined, rx0, ry0);
     fs.writeFileSync(path.join(outDir, index.pack), file);
     indexLods["0"] = index;
-    log(`LOD0 (detail): ${Object.keys(index.chunks).length} chunks, ${(file.length / 1024).toFixed(0)} KiB`);
+    log(
+      `LOD0 (detail): ${Object.keys(index.chunks).length} chunks, ${(file.length / 1024).toFixed(0)} KiB`,
+    );
   }
   {
     const { file, index } = packLod(detail1, 1, undefined, rx0 >> 1, ry0 >> 1);
     fs.writeFileSync(path.join(outDir, index.pack), file);
     indexLods["1"] = index;
-    log(`LOD1 (detail): ${Object.keys(index.chunks).length} chunks, ${(file.length / 1024).toFixed(0)} KiB`);
+    log(
+      `LOD1 (detail): ${Object.keys(index.chunks).length} chunks, ${(file.length / 1024).toFixed(0)} KiB`,
+    );
   }
 
   const worldIndex = {
@@ -697,14 +747,26 @@ function main(): void {
 
   // --- Diagnostics ----------------------------------------------------------
   writeDiag("world-lod5", lods.get(5)!);
-  writeDiag("tasmania-bassstrait", cropView(base, GLOBAL_BASE_LOD, 141, -36, 151, -45));
-  writeDiag("italy-mediterranean", cropView(base, GLOBAL_BASE_LOD, 5, 48, 20, 35));
+  writeDiag(
+    "tasmania-bassstrait",
+    cropView(base, GLOBAL_BASE_LOD, 141, -36, 151, -45),
+  );
+  writeDiag(
+    "italy-mediterranean",
+    cropView(base, GLOBAL_BASE_LOD, 5, 48, 20, 35),
+  );
   writeDiag("britain-channel", cropView(base, GLOBAL_BASE_LOD, -11, 61, 3, 49));
   writeDiag("japan", cropView(base, GLOBAL_BASE_LOD, 128, 46, 146, 30));
-  writeDiag("indonesia-malacca", cropView(base, GLOBAL_BASE_LOD, 94, 8, 120, -9));
+  writeDiag(
+    "indonesia-malacca",
+    cropView(base, GLOBAL_BASE_LOD, 94, 8, 120, -9),
+  );
   writeDiag("panama", cropView(base, GLOBAL_BASE_LOD, -84, 11, -76, 6));
   writeDiag("bosporus", cropView(base, GLOBAL_BASE_LOD, 25, 42.5, 30.5, 39.5));
-  writeDiag("bering-dateline", cropView(base, GLOBAL_BASE_LOD, -180, 68, -160, 60));
+  writeDiag(
+    "bering-dateline",
+    cropView(base, GLOBAL_BASE_LOD, -180, 68, -160, 60),
+  );
   writeDiag("dateline-west", cropView(base, GLOBAL_BASE_LOD, 170, 68, 180, 60));
 
   log(`done in ${((Date.now() - t0) / 1000).toFixed(1)}s`);

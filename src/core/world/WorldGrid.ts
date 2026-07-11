@@ -20,7 +20,11 @@
  * Terrain byte layout matches the game engine (src/core/game/GameMap.ts):
  * bit 7 land, bit 6 shoreline, bit 5 ocean, bits 0–4 magnitude.
  */
-import { equalEarthExtent, equalEarthForward, equalEarthInvert } from "./EqualEarth";
+import {
+  equalEarthExtent,
+  equalEarthForward,
+  equalEarthInvert,
+} from "./EqualEarth";
 
 export const CHUNK_SIZE = 256;
 

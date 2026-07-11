@@ -115,6 +115,21 @@ S3/CloudFront, or any static file server. Set `DOMAIN` at build time to
 control the JWT audience label if you care about it (auth is guest-only, so
 it is otherwise cosmetic).
 
+## The continuous world map
+
+The flagship mode (**World: Bass Strait**) plays on one continuous,
+streamed model of the real Earth: spawn near Devonport, fight for Tasmania
+and southern Victoria at ~0.6 km/cell detail, and zoom out — mid-match,
+with no loading screen — until the whole planet is on screen. Terrain
+streams in 256²-cell chunks over HTTP Range requests across a 7-level LOD
+pyramid built from Natural Earth 10m data in an Equal Earth projection.
+
+- Architecture: [docs/WORLD_MAP_ARCHITECTURE.md](docs/WORLD_MAP_ARCHITECTURE.md)
+- Data sources & licences: [docs/GEOGRAPHIC_DATA.md](docs/GEOGRAPHIC_DATA.md)
+- Benchmarks: [docs/WORLD_PERFORMANCE.md](docs/WORLD_PERFORMANCE.md)
+- Staged roadmap & honest status: [docs/WORLD_ROADMAP.md](docs/WORLD_ROADMAP.md)
+- Rebuild the world from source data: `npm run gen-world`
+
 ## Architecture (solo build)
 
 The upstream architecture is preserved — see

@@ -81,6 +81,10 @@ export class WorldBackdrop {
     } catch {
       // ignore
     }
+    if (this.debug) {
+      // Benchmark/diagnostic introspection (dev only; see WORLD_PERFORMANCE.md).
+      (window as unknown as Record<string, unknown>).__worldBackdrop = this;
+    }
 
     // Preload the coarsest LOD so the full world is drawable immediately.
     const maxLod = this.store.index.grid.maxLod;
@@ -202,22 +206,38 @@ export class WorldBackdrop {
 
     // Visible world rect in LOD-0 cells (world = game + origin).
     const worldLeft =
-      (0 - this.mapWidth / 2) / t.scale + t.offsetX + this.mapWidth / 2 + this.originX;
+      (0 - this.mapWidth / 2) / t.scale +
+      t.offsetX +
+      this.mapWidth / 2 +
+      this.originX;
     const worldTop =
-      (0 - this.mapHeight / 2) / t.scale + t.offsetY + this.mapHeight / 2 + this.originY;
+      (0 - this.mapHeight / 2) / t.scale +
+      t.offsetY +
+      this.mapHeight / 2 +
+      this.originY;
     const worldRight = worldLeft + viewW / t.scale;
     const worldBottom = worldTop + viewH / t.scale;
 
     // Prefetch margin: one chunk all around plus one more chunk in the
     // direction of camera motion (predictive loading).
     const margin = chunkSpanLod0;
-    const velX = this.velocity.x > 0 ? margin : this.velocity.x < 0 ? -margin : 0;
-    const velY = this.velocity.y > 0 ? margin : this.velocity.y < 0 ? -margin : 0;
+    const velX =
+      this.velocity.x > 0 ? margin : this.velocity.x < 0 ? -margin : 0;
+    const velY =
+      this.velocity.y > 0 ? margin : this.velocity.y < 0 ? -margin : 0;
 
-    const c0x = Math.floor((worldLeft - margin + Math.min(0, velX)) / chunkSpanLod0);
-    const c0y = Math.floor((worldTop - margin + Math.min(0, velY)) / chunkSpanLod0);
-    const c1x = Math.floor((worldRight + margin + Math.max(0, velX)) / chunkSpanLod0);
-    const c1y = Math.floor((worldBottom + margin + Math.max(0, velY)) / chunkSpanLod0);
+    const c0x = Math.floor(
+      (worldLeft - margin + Math.min(0, velX)) / chunkSpanLod0,
+    );
+    const c0y = Math.floor(
+      (worldTop - margin + Math.min(0, velY)) / chunkSpanLod0,
+    );
+    const c1x = Math.floor(
+      (worldRight + margin + Math.max(0, velX)) / chunkSpanLod0,
+    );
+    const c1y = Math.floor(
+      (worldBottom + margin + Math.max(0, velY)) / chunkSpanLod0,
+    );
 
     const maxCx = this.grid.chunkCols(lod) - 1;
     const maxCy = this.grid.chunkRows(lod) - 1;
@@ -302,7 +322,9 @@ export class WorldBackdrop {
       ctx.fillStyle = "rgba(0,0,0,0.45)";
       ctx.fillRect(x, y - 16 * lines.length - 4, 340, 16 * lines.length + 2);
       ctx.fillStyle = "rgba(160,220,255,0.9)";
-      lines.forEach((l, i) => ctx.fillText(l, x + pad, y - 16 * (lines.length - i) - 1));
+      lines.forEach((l, i) =>
+        ctx.fillText(l, x + pad, y - 16 * (lines.length - i) - 1),
+      );
     }
   }
 

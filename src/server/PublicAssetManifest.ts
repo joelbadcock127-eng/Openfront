@@ -21,6 +21,8 @@ const HASHED_PUBLIC_ASSET_GLOBS = [
   "maps/**/*",
   "sounds/**/*",
   "sprites/**/*",
+  // Continuous-world terrain packs + index (scripts/world/build-world.ts).
+  "world/**/*",
 ] as const;
 
 const ROOT_PUBLIC_FILES = new Set([
