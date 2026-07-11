@@ -28,9 +28,7 @@ import type { GameServer } from "./GameServer";
 import { getUserMe, verifyClientToken } from "./jwt";
 import { logger } from "./Logger";
 
-import { MapPlaylist } from "./MapPlaylist";
 import { setNoStoreHeaders } from "./NoStoreHeaders";
-import { startPolling } from "./PollingLoop";
 import { PrivilegeRefresher } from "./PrivilegeRefresher";
 import { ServerEnv } from "./ServerEnv";
 import { applyStaticAssetCacheControl } from "./StaticAssetCache";
@@ -40,7 +38,6 @@ import { initWorkerMetrics } from "./WorkerMetrics";
 
 const workerId = ServerEnv.workerId() ?? 0;
 const log = logger.child({ comp: `w_${workerId}` });
-const playlist = new MapPlaylist();
 
 // Worker setup
 export async function startWorker() {
@@ -62,12 +59,8 @@ export async function startWorker() {
   // Initialize lobby service (handles WebSocket upgrade routing)
   const lobbyService = new WorkerLobbyService(server, wss, gm, log);
 
-  setTimeout(
-    () => {
-      startMatchmakingPolling(gm);
-    },
-    1000 + Math.random() * 2000,
-  );
+  // Matchmaking check-in polling removed: this solo build has no
+  // matchmaking API to report to.
 
   if (ServerEnv.otelEnabled()) {
     initWorkerMetrics(gm);
@@ -80,7 +73,10 @@ export async function startWorker() {
     ServerEnv.jwtIssuer() + "/reserved_clan_tags",
     log,
   );
-  privilegeRefresher.start();
+  // The privilege refresher polled the account API for the cosmetics
+  // catalogue, profanity list and reserved clan tags. Those services are
+  // removed in the solo build; the refresher's fail-open checker is used
+  // as-is, so no polling is started.
 
   // Middleware to handle /wX path prefix
   app.use((req, res, next) => {
@@ -699,68 +695,6 @@ export async function startWorker() {
   });
 }
 
-async function startMatchmakingPolling(gm: GameManager) {
-  startPolling(
-    async () => {
-      try {
-        const url = `${ServerEnv.jwtIssuer() + "/matchmaking/checkin"}`;
-        const gameId = ServerEnv.generateGameIdForWorker(workerId);
-        if (gameId === null) {
-          log.warn(`Failed to generate game ID for worker ${workerId}`);
-          return;
-        }
-
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 20000);
-        const response = await fetch(url, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "x-api-key": ServerEnv.apiKey(),
-          },
-          body: JSON.stringify({
-            id: workerId,
-            gameId: gameId,
-            ccu: gm.activeClients(),
-            instanceId: process.env.INSTANCE_ID,
-          }),
-          signal: controller.signal,
-        });
-
-        clearTimeout(timeoutId);
-
-        if (!response.ok) {
-          log.warn(
-            `Failed to poll lobby: ${response.status} ${response.statusText}`,
-          );
-          return;
-        }
-
-        const data = await response.json();
-        log.info(`Lobby poll successful:`, data);
-
-        if (data.assignment) {
-          const game = gm.createGame(
-            gameId,
-            playlist.get1v1Config(),
-            undefined,
-            Date.now() + 7000,
-          );
-          if (game === null) {
-            log.warn(`Failed to create matchmaking game ${gameId}`);
-          }
-        }
-      } catch (error) {
-        if (error instanceof Error && error.name === "AbortError") {
-          // Abort is expected if no game is scheduled on this worker.
-          return;
-        }
-        log.error(`Error polling lobby:`, error);
-      }
-    },
-    5000 + Math.random() * 1000,
-  );
-}
 
 function getClientIp(req: http.IncomingMessage): string {
   const cfIp = req.headers["cf-connecting-ip"];

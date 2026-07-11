@@ -42,11 +42,9 @@ describe("ServerEnv.turnstileSiteKey", () => {
     expect(ServerEnv.turnstileSiteKey()).toBe("site-key");
   });
 
-  test("throws when unset", () => {
+  test("defaults to empty when unset (Turnstile removed in solo build)", () => {
     vi.stubEnv("TURNSTILE_SITE_KEY", "");
-    expect(() => ServerEnv.turnstileSiteKey()).toThrow(
-      /TURNSTILE_SITE_KEY not set/,
-    );
+    expect(ServerEnv.turnstileSiteKey()).toBe("");
   });
 });
 

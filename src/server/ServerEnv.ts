@@ -53,11 +53,9 @@ export class ServerEnv {
     return n;
   }
   static turnstileSiteKey(): string {
-    const v = process.env.TURNSTILE_SITE_KEY;
-    if (!v) {
-      throw new Error("TURNSTILE_SITE_KEY not set");
-    }
-    return v;
+    // Cloudflare Turnstile was removed with the multiplayer matchmaking flow;
+    // the key is only injected into BOOTSTRAP_CONFIG for compatibility.
+    return process.env.TURNSTILE_SITE_KEY ?? "";
   }
   static jwtAudience(): string {
     const v = process.env.DOMAIN;

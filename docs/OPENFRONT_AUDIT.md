@@ -153,6 +153,53 @@ with their callers or short-circuited before any fetch. Verified by
 session — zero non-localhost requests (previously youtube.com from the
 tutorial embed; now none).
 
+## Server changes for standalone self-hosting
+
+- `TURNSTILE_SITE_KEY` is no longer required (defaults to empty).
+- The worker's matchmaking check-in polling and the privilege refresher's
+  cosmetics/profanity/reserved-clan-tag polling (all against the removed
+  account API) are disabled; the fail-open privilege checker is used.
+- The map-loading Web Worker now absolutizes asset URLs against the page
+  origin, fixing self-hosted production deploys that run without a CDN
+  base (upstream production always sets `CDN_BASE`, masking this).
+
+## Browser play-test record (what was actually verified)
+
+Verified end-to-end in a Playwright-driven Chromium session against both
+the dev server and the production build (`build-prod` + Node server),
+using the software-WebGL escape hatch (this environment has no GPU):
+
+- Main menu loads solo-only UI; no multiplayer/account/store controls
+- Solo setup: single World map card, difficulty cards, options (incl.
+  instant build / starting gold toggles), Start Game
+- Spawn selection by clicking land; spawn countdown; game goes live
+- HUD: leaderboard with live rank/territory %/gold/troops, population and
+  gold counters, troop and attack-percentage sliders (changed both)
+- Expansion into neutral territory (wilderness attacks visible in the
+  attacks display; territory visibly grows; leaderboard % rises)
+- Attacking AI opponents and capturing bot territory (player reached #1
+  on the leaderboard in one session)
+- Low-troop warning feedback; unaffordable-structure cost feedback
+  (city ghost showing 125K cost against 2.2K gold)
+- Building a city (gold deducted 5M → 4.87M, city icon rendered on the
+  map, build-bar count incremented, placement-radius ring shown)
+- Radial action menu opens on right click and closes on Escape
+- Pause and resume; exit back to the main menu; starting a fresh match
+- Zero console errors and zero non-localhost network requests across
+  entire sessions (request log recorded)
+
+Verified by automated unit/integration tests rather than visually in the
+browser (blind headless coordinate-clicking proved unreliable for these):
+
+- Port placement, transport-ship and warship movement/combat
+  (`tests/` TransportShip/Warship/Port/TradeShip suites)
+- Victory and defeat detection (`tests/core/executions/WinCheckExecution.test.ts`
+  and WinModal logic); a defeat was *provoked* in-browser (troops drained
+  to double digits among hostile nations) but the eliminating attack did
+  not land within the session budget
+- Deterministic replays / identical outcomes from identical seeds
+  (extensive upstream suites)
+
 ## Remaining legal / attribution notes
 
 - Keep the footer attribution ("modified derivative of OpenFront…",

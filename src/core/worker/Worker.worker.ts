@@ -17,7 +17,12 @@ import {
 const ctx: Worker = self as any;
 globalThis.__ASSET_MANIFEST__ = __ASSET_MANIFEST__;
 let gameRunner: Promise<GameRunner> | null = null;
-const mapLoader = new FetchGameMapLoader((path) => assetUrl(`maps/${path}`));
+// Absolutize against the creating page's origin: with no CDN base configured
+// (self-hosted deploys) assetUrl returns a root-relative path, which fetch()
+// cannot resolve inside a blob-URL worker.
+const mapLoader = new FetchGameMapLoader((path) =>
+  new URL(assetUrl(`maps/${path}`), self.location.origin).toString(),
+);
 // Yield threshold; not a backlog cap. Used to avoid monopolizing the worker task
 // and flooding the main thread with messages during catch-up.
 const MAX_TICKS_BEFORE_YIELD = 4;
