@@ -32,6 +32,19 @@ export class TransformHandler {
   public offsetY: number = -200;
   private lastGoToCallTime: number | null = null;
 
+  /**
+   * Optional extended camera bounds in game coordinates, set by the
+   * continuous-world mode so the player can pan/zoom beyond the playable
+   * window across the whole streamed Earth. Null = classic behaviour
+   * (bounds are the game map itself).
+   */
+  private extendedBounds: {
+    minX: number;
+    minY: number;
+    maxX: number;
+    maxY: number;
+  } | null = null;
+
   private target: Cell | null;
   private targetScale: number | null = null;
   private intervalID: NodeJS.Timeout | null = null;
@@ -53,6 +66,28 @@ export class TransformHandler {
 
   public updateCanvasBoundingRect() {
     this._boundingRect = this.canvas.getBoundingClientRect();
+  }
+
+  /** Enable (or clear) extended world bounds — see `extendedBounds`. */
+  public setExtendedBounds(
+    bounds: { minX: number; minY: number; maxX: number; maxY: number } | null,
+  ) {
+    this.extendedBounds = bounds;
+  }
+
+  /**
+   * Minimum zoom: classic maps clamp at 0.2; with extended world bounds the
+   * camera may zoom out until the full world fits on screen.
+   */
+  private minScale(): number {
+    if (this.extendedBounds === null) return 0.2;
+    const b = this.extendedBounds;
+    const rect = this.boundingRect();
+    const fit = Math.min(
+      rect.width / (b.maxX - b.minX),
+      rect.height / (b.maxY - b.minY),
+    );
+    return Math.min(0.2, fit * 0.9);
   }
 
   boundingRect(): DOMRect {
@@ -299,7 +334,7 @@ export class TransformHandler {
     this.scale /= zoomFactor;
 
     // Clamp the scale to prevent extreme zooming
-    this.scale = Math.max(0.2, Math.min(20, this.scale));
+    this.scale = Math.max(this.minScale(), Math.min(20, this.scale));
 
     const canvasCoords = this.screenToCanvasCoordinates(event.x, event.y);
 
@@ -326,19 +361,29 @@ export class TransformHandler {
     const gameH = this.game.height();
     const scale = this.scale;
 
-    // Allow panning so that up to half of the viewport can be outside the map on each side.
-    // This lets a map corner be placed at the screen center, but no further.
-    // Derivation (X axis):
-    //   gameLeftX = -gameWidth/(2*scale) + offsetX + gameWidth/2 >= -vw/2
-    //   gameRightX = (canvasWidth - gameWidth/2)/scale + offsetX + gameWidth/2 <= gameWidth + vw/2
-    // Solving gives:
-    //   minOffsetX = -gameWidth/2 + (gameWidth - canvasWidth) / (2*scale)
-    //   maxOffsetX =  gameWidth/2 + (gameWidth - canvasWidth) / (2*scale)
-    const minOffsetX = -gameWidth / 2 + (gameWidth - canvasWidth) / (2 * scale);
-    const maxOffsetX = gameWidth / 2 + (gameWidth - canvasWidth) / (2 * scale);
+    // Pannable rectangle in game coordinates. Classic maps use the map
+    // itself; the continuous-world mode extends it to the whole Earth.
+    const bounds = this.extendedBounds ?? {
+      minX: 0,
+      minY: 0,
+      maxX: gameWidth,
+      maxY: gameH,
+    };
 
-    const minOffsetY = -gameH / 2 + (gameH - canvasHeight) / (2 * scale);
-    const maxOffsetY = gameH / 2 + (gameH - canvasHeight) / (2 * scale);
+    // Allow panning so a bounds corner can reach the screen center, but no
+    // further. Generalised from the classic derivation (which had
+    // minX=0/maxX=gameWidth):
+    //   canvasX(b) = (b - gameWidth/2 - offsetX)*scale + gameWidth/2
+    //   require canvasX(maxX) >= canvasWidth/2 and canvasX(minX) <= canvasWidth/2
+    const minOffsetX =
+      bounds.minX - gameWidth / 2 + (gameWidth - canvasWidth) / (2 * scale);
+    const maxOffsetX =
+      bounds.maxX - gameWidth / 2 + (gameWidth - canvasWidth) / (2 * scale);
+
+    const minOffsetY =
+      bounds.minY - gameH / 2 + (gameH - canvasHeight) / (2 * scale);
+    const maxOffsetY =
+      bounds.maxY - gameH / 2 + (gameH - canvasHeight) / (2 * scale);
 
     // Clamp offsets within computed bounds on each axis
     if (this.offsetX < minOffsetX) {

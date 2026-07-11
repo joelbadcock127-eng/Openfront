@@ -14,6 +14,7 @@ import {
 import { createPartialGameRecord, findClosestBy, replacer } from "../core/Util";
 import {
   BuildableUnit,
+  GameMapType,
   PlayerType,
   Structures,
   UnitType,
@@ -645,6 +646,56 @@ async function createClientGame(
       view,
     );
 
+    // Declared ahead of the world-backdrop async setup below, which checks
+    // it to avoid attaching to an already-disposed game.
+    let rendererDisposed = false;
+
+    // Continuous-world mode: for playable-window maps, stream the rest of
+    // the Earth around the game map so the match is one continuous world —
+    // the camera zooms from local tactics out to the full globe with no
+    // transition. The window's origin registers game tiles into stable
+    // world coordinates; camera bounds extend to the whole Earth.
+    let worldBackdrop: import("./world/WorldBackdrop").WorldBackdrop | null =
+      null;
+    if (lobbyConfig.gameStartInfo.config.gameMap === GameMapType.WorldWindow) {
+      void (async () => {
+        try {
+          const [{ WorldChunkStore }, { WorldBackdrop }] = await Promise.all([
+            import("./world/WorldChunkStore"),
+            import("./world/WorldBackdrop"),
+          ]);
+          const store = await WorldChunkStore.load(() =>
+            worldBackdrop?.onChunkLoaded(),
+          );
+          const region = store.index.detailRegions.find(
+            (r) => r.gameMap === "WorldWindow",
+          );
+          if (!region) {
+            console.error("world index has no WorldWindow region");
+            return;
+          }
+          if (rendererDisposed) return;
+          worldBackdrop = new WorldBackdrop(
+            store,
+            gameRenderer.transformHandler,
+            gameView.width(),
+            gameView.height(),
+            region.lod0Rect.x,
+            region.lod0Rect.y,
+            glCanvas,
+          );
+          gameRenderer.transformHandler.setExtendedBounds({
+            minX: -region.lod0Rect.x,
+            minY: -region.lod0Rect.y,
+            maxX: -region.lod0Rect.x + store.index.grid.w0,
+            maxY: -region.lod0Rect.y + store.index.grid.h0,
+          });
+        } catch (err) {
+          console.error("failed to start world backdrop", err);
+        }
+      })();
+    }
+
     const { builder: webglBuilder, stopFrameLoop } = mountWebGLFrameLoop(
       gameMap,
       view,
@@ -659,10 +710,12 @@ async function createClientGame(
     // a game (e.g. joining another without a page reload) leaks the WebGL
     // context, canvas and input overlay — a few games and mobile browsers hit
     // their WebGL context limit. Idempotent: stop() may be called more than once.
-    let rendererDisposed = false;
     const disposeRenderer = (): void => {
       if (rendererDisposed) return;
       rendererDisposed = true;
+      worldBackdrop?.dispose();
+      worldBackdrop = null;
+      gameRenderer.transformHandler.setExtendedBounds(null);
       stopFrameLoop();
       view.dispose();
       glCanvas.remove();

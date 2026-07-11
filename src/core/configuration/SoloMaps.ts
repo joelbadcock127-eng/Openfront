@@ -12,7 +12,12 @@ import { GameMapType, MapInfo, maps } from "../game/Game";
  * oceans, coastal areas, islands and chokepoints, so every gameplay system
  * (land expansion, naval invasions, ports/trade, missiles) can be exercised.
  */
-export const ENABLED_SOLO_MAPS: readonly GameMapType[] = [GameMapType.World];
+export const ENABLED_SOLO_MAPS: readonly GameMapType[] = [
+  // The continuous-world experience: play in the Bass Strait high-detail
+  // window while the whole streamed Earth stays visible around it.
+  GameMapType.WorldWindow,
+  GameMapType.World,
+];
 
 export const DEFAULT_SOLO_MAP: GameMapType = ENABLED_SOLO_MAPS[0];
 
