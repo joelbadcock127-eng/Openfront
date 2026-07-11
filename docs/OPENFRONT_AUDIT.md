@@ -163,6 +163,31 @@ tutorial embed; now none).
   origin, fixing self-hosted production deploys that run without a CDN
   base (upstream production always sets `CDN_BASE`, masking this).
 
+## Static (server-less) deploy support
+
+The solo game runs entirely client-side, so it can ship as a static site.
+Two build-time additions make this work without the Node server:
+
+- `scripts/render-static-html.ts` renders the production `index.html` EJS
+  template in place (mirroring `src/server/RenderHtml.ts`) with static
+  values — empty CDN base (assets stay root-relative), a single simulated
+  worker, no Turnstile — reading the same `static/asset-manifest.json` the
+  server reads at runtime. Run via `npm run build:static`.
+- `vercel.json` points Vercel at `static/` (its default is `dist/`), sets
+  the build/install commands, and adds an SPA rewrite so client routes like
+  `/solo` resolve to `index.html`.
+- `LocalServer.endGame()` no longer POSTs finished games to the removed
+  `/api/archive_singleplayer_game` endpoint (online replay history is in the
+  scope-to-remove list); it still assembles and validates the record as the
+  extension point for a future local export/replay feature. This also keeps
+  the browser console clean on a static deploy.
+
+Verified: `npm run build:static` produces a `static/index.html` with zero
+unresolved EJS placeholders and root-relative `/assets/` + `/_assets/`
+references; served from a plain static file host (no Node server), a full
+Playwright-driven solo session ran with zero console errors and zero
+non-localhost requests.
+
 ## Browser play-test record (what was actually verified)
 
 Verified end-to-end in a Playwright-driven Chromium session against both

@@ -16,7 +16,6 @@ import {
 import {
   createPartialGameRecord,
   decompressGameRecord,
-  replacer,
 } from "../core/Util";
 import { getPersistentID } from "./Auth";
 import { LobbyConfig } from "./ClientGameRunner";
@@ -297,58 +296,10 @@ export class LocalServer {
       console.error("Error parsing game record", error);
       return;
     }
-    const workerPath = ClientEnv.workerPath(
-      this.lobbyConfig.gameStartInfo.gameID,
-    );
-
-    const jsonString = JSON.stringify(result.data, replacer);
-
-    compress(jsonString)
-      .then((compressedData) => {
-        return fetch(`/${workerPath}/api/archive_singleplayer_game`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Content-Encoding": "gzip",
-          },
-          body: compressedData,
-          keepalive: true, // Ensures request completes even if page unloads
-        });
-      })
-      .catch((error) => {
-        console.error("Failed to archive singleplayer game:", error);
-      });
+    // Upstream POSTed the finished record to the server's
+    // /api/archive_singleplayer_game endpoint for online replay history.
+    // That backend is removed in this solo build (and would 404 on a static
+    // deploy), so the validated record is simply not shipped anywhere. This
+    // is the extension point for any future local replay/export feature.
   }
-}
-
-async function compress(data: string): Promise<ArrayBuffer> {
-  const stream = new CompressionStream("gzip");
-  const writer = stream.writable.getWriter();
-  const reader = stream.readable.getReader();
-
-  // Write the data to the compression stream
-  writer.write(new TextEncoder().encode(data));
-  writer.close();
-
-  // Read the compressed data
-  const chunks: Uint8Array[] = [];
-  let done = false;
-  while (!done) {
-    const { value, done: readerDone } = await reader.read();
-    done = readerDone;
-    if (value) {
-      chunks.push(value);
-    }
-  }
-
-  // Combine all chunks into a single Uint8Array
-  const totalLength = chunks.reduce((acc, chunk) => acc + chunk.length, 0);
-  const compressedData = new Uint8Array(totalLength);
-  let offset = 0;
-  for (const chunk of chunks) {
-    compressedData.set(chunk, offset);
-    offset += chunk.length;
-  }
-
-  return compressedData.buffer;
 }

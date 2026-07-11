@@ -92,6 +92,29 @@ npm run build-prod  # typecheck + vite build → static/
 npm run tunnel      # production build + serve it with the Node server
 ```
 
+## Deploying (static hosting)
+
+Because the solo game runs entirely in the browser, it deploys as a plain
+static site — no Node server required. The static build renders the
+`index.html` template at build time (filling the values the game server
+normally injects per request) so any static host can serve it:
+
+```bash
+npm run build:static   # production build + render static/index.html in place
+# then serve the `static/` directory on any static host
+```
+
+**Vercel**: this repo ships a [`vercel.json`](vercel.json) that sets the
+build command to `npm run build:static`, the output directory to `static`,
+and an SPA rewrite so client routes (e.g. `/solo`) resolve to `index.html`.
+Importing the repo into Vercel deploys it as-is. (Vercel's default expects a
+`dist/` directory; the config points it at `static/` instead.)
+
+The same `static/` output works on Netlify, GitHub Pages, Cloudflare Pages,
+S3/CloudFront, or any static file server. Set `DOMAIN` at build time to
+control the JWT audience label if you care about it (auth is guest-only, so
+it is otherwise cosmetic).
+
 ## Architecture (solo build)
 
 The upstream architecture is preserved — see

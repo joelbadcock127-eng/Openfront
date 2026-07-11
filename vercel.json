@@ -1,0 +1,12 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "npm run build:static",
+  "installCommand": "npm ci --ignore-scripts",
+  "outputDirectory": "static",
+  "rewrites": [
+    {
+      "source": "/((?!assets/|_assets/).*)",
+      "destination": "/index.html"
+    }
+  ]
+}
