@@ -480,8 +480,6 @@
     "not_enough_money": "Nicht genug Geld"
   },
   "win_modal": {
-    "support_openfront": "Unterstütze OpenFront!",
-    "territory_pattern": "Kaufe ein Gebietsmuster, um werbefrei zu spielen!",
     "died": "Du bist gestorben",
     "your_team": "Dein Team hat gewonnen!",
     "other_team": "Team {team} hat gewonnen!",
@@ -490,14 +488,9 @@
     "exit": "Spiel verlassen",
     "keep": "Weiterspielen",
     "spectate": "Zuschauen",
-    "wishlist": "Zur Steam-Wunschliste hinzufügen!",
     "ofm_winter": "OpenFront Masters Winterturnier!",
     "ofm_winter_description": "Nimm am Wettbewerbsturnier teil und tritt gegen die besten Spieler an",
-    "join_tournament": "Turnier beitreten",
-    "join_discord": "Tritt unserer Discord-Community bei!",
-    "discord_description": "Vernetze dich mit anderen Spielern, erhalte Updates und tausche Strategien aus",
-    "join_server": "Server beitreten",
-    "youtube_tutorial": "Brauchst du Hilfe?"
+    "join_tournament": "Turnier beitreten"
   },
   "leaderboard": {
     "title": "Rangliste",

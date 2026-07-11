@@ -68,8 +68,6 @@
     "canvas_2d_no_gpu": "Canvas 2D (ilma GPU-ta)"
   },
   "help_modal": {
-    "video_tutorial": "Videoõpetus",
-    "video_tutorial_title": "OpenFront.io õpetus",
     "hotkeys": "Kiirklahvid",
     "table_key": "Klahv",
     "table_action": "Tegevus",
@@ -578,8 +576,6 @@
     "not_enough_money": "Pole piisavalt raha"
   },
   "win_modal": {
-    "support_openfront": "Toeta OpenFront'i!",
-    "territory_pattern": "Osta territooriumi skin, et minna reklaami-vabaks!",
     "died": "Sa said surma",
     "your_team": "Sinu tiim võitis!",
     "other_team": "{team} tiim võitis!",
@@ -588,13 +584,7 @@
     "nation_won": "Robot-riik {nation} võitis!",
     "exit": "Välju Mängust",
     "keep": "Jätka mängu",
-    "spectate": "Hakka pealtvaatajaks",
-    "requeue": "Mängi uuesti",
-    "wishlist": "Pane soovilisti Steam'is!",
-    "join_discord": "Ühine meie Discordi kogukonnaga!",
-    "discord_description": "Liitu teiste mängijatega, avasta uusi fuktsioone ja võida auhindu!",
-    "join_server": "Mine serverisse",
-    "youtube_tutorial": "Vajad abi?"
+    "spectate": "Hakka pealtvaatajaks"
   },
   "leaderboard": {
     "hide": "Peida",

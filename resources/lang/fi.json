@@ -429,16 +429,13 @@
     "not_enough_money": "Ei tarpeeksi rahaa"
   },
   "win_modal": {
-    "support_openfront": "Tue OpenFrontia!",
-    "territory_pattern": "Osta aluekuvio tukeaksesi OpenFrontia!",
     "died": "Sinä kuolit",
     "your_team": "Joukkueesi voitti!",
     "other_team": "{team} joukkue on voittanut!",
     "you_won": "Sinä voitit!",
     "other_won": "{player} on voittanut!",
     "exit": "Poistu pelistä",
-    "keep": "Jatka pelaamista",
-    "wishlist": "Aseta toivelistalle Steamissa!"
+    "keep": "Jatka pelaamista"
   },
   "leaderboard": {
     "title": "Pistetaulukko",

@@ -186,6 +186,8 @@ export default defineConfig(({ mode }) => {
       globals: true,
       environment: "jsdom",
       setupFiles: "./tests/setup.ts",
+      // Playwright browser tests run via `npm run test:e2e`, not vitest.
+      exclude: ["**/node_modules/**", "tests/e2e/**"],
     },
     root: "./",
     base: "/",

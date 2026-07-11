@@ -563,9 +563,7 @@
     "ui_playeroverlay_desc": "When you hover over a country, the Player info overlay appears. It shows the player type (Human, Nation, or Tribe), a Nation's attitude toward you (Hostile to Friendly), defending troops, gold, and the number of Warships and buildings they have.",
     "ui_section": "Game UI",
     "ui_wilderness": "Wilderness",
-    "ui_your_team": "Your team:",
-    "video_tutorial": "Video Tutorial",
-    "video_tutorial_title": "OpenFront.io Tutorial"
+    "ui_your_team": "Your team:"
   },
   "host_modal": {
     "assigned_teams": "Assigned Teams",
@@ -1203,22 +1201,14 @@
   },
   "win_modal": {
     "died": "You died",
-    "discord_description": "Connect with players, discover new features, and win prizes!",
     "exit": "Exit Game",
-    "join_discord": "Join Our Discord Community!",
-    "join_server": "Join Server",
     "keep": "Keep Playing",
     "nation_won": "Nation {nation} has won!",
     "new_lobby": "New Lobby",
     "other_team": "{team} team has won!",
     "other_won": "{player} has won!",
-    "requeue": "Play Again",
     "spectate": "Spectate",
-    "support_openfront": "Support OpenFront!",
-    "territory_pattern": "Purchase a territory skin to go ad-free!",
-    "wishlist": "Wishlist on Steam!",
     "you_won": "You Won!",
-    "your_team": "Your team won!",
-    "youtube_tutorial": "Need some help?"
+    "your_team": "Your team won!"
   }
 }

@@ -466,9 +466,7 @@
     "ui_playeroverlay_desc": "Amikor egy ország fölé viszed az egeret, megjelenik a Játékosinformációk ablaka. Megmutatja a játékos típusát (ember, nemzet vagy törzs), a nemzet hozzád való hozzáállását (ellenséges vagy barátságos), a védekező csapatait, az aranyát, valamint a hadihajóinak és épületeinek számát.",
     "ui_section": "Játékfelület",
     "ui_wilderness": "Vadvidék",
-    "ui_your_team": "Saját csapat:",
-    "video_tutorial": "Videó bemutató",
-    "video_tutorial_title": "OpenFront.io bemutató"
+    "ui_your_team": "Saját csapat:"
   },
   "host_modal": {
     "assigned_teams": "Hozzárendelt csapatok",
@@ -1050,21 +1048,13 @@
   },
   "win_modal": {
     "died": "Meghaltál",
-    "discord_description": "Lépj kapcsolatba a játékosokkal, fedezz fel új funkciókat, és nyerj díjakat!",
     "exit": "Kilépés a játékból",
-    "join_discord": "Csatlakozz a Discord közösségünkhöz!",
-    "join_server": "Csatlakozás szerverhez",
     "keep": "Játék folytatása",
     "nation_won": "{nemzet} nemzet győzött!",
     "other_team": "A(z) {team} csapat győzött!",
     "other_won": "{player} nyert!",
-    "requeue": "Új játék",
     "spectate": "Megfigyel",
-    "support_openfront": "Támogasd az OpenFrontot!",
-    "territory_pattern": "Vásárolj egy territoriális mintát, hogy reklámmentes legyél!",
-    "wishlist": "Tedd a kívánságlistádra a Steam-en!",
     "you_won": "Nyertél!",
-    "your_team": "A csapatod nyert!",
-    "youtube_tutorial": "Segítségre van szükséged?"
+    "your_team": "A csapatod nyert!"
   }
 }

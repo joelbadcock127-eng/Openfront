@@ -460,8 +460,6 @@
     "not_enough_money": "Za mało złota"
   },
   "win_modal": {
-    "support_openfront": "Wesprzyj OpenFront!",
-    "territory_pattern": "Kup skórkę na terytorium, aby zwolnić z reklam!",
     "died": "Nie żyjesz",
     "your_team": "Twoja drużyna wygrała!",
     "other_team": "Drużyna {team} wygrała!",
@@ -469,8 +467,7 @@
     "other_won": "{player} wygrał!",
     "exit": "Wyjdź z gry",
     "keep": "Graj dalej",
-    "spectate": "Obserwuj",
-    "wishlist": "Dodaj do listy życzeń na Steam!"
+    "spectate": "Obserwuj"
   },
   "leaderboard": {
     "title": "Ranking",

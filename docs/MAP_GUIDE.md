@@ -1,0 +1,94 @@
+# Map guide
+
+How maps work in this solo build, and how to add another one.
+
+## Which maps are enabled
+
+The solo build ships the full upstream map data but enables a single
+polished map. The registry is
+[`src/core/configuration/SoloMaps.ts`](../src/core/configuration/SoloMaps.ts):
+
+```ts
+export const ENABLED_SOLO_MAPS: readonly GameMapType[] = [GameMapType.World];
+```
+
+Add any `GameMapType` value to this array and it appears in the solo setup
+map grid — nothing else needs to change. `DEFAULT_SOLO_MAP` (the first
+entry) is pre-selected in the setup screen.
+
+## Map file structure
+
+Each map lives in `resources/maps/<id>/`:
+
+| File | Purpose |
+| --- | --- |
+| `manifest.json` | Metadata: id, name, translation key, categories, dimensions & land-tile counts per size, and the nation list (name, flag, spawn coordinates) |
+| `map.bin` | Full-resolution terrain, one byte per tile |
+| `map4x.bin` | Quarter-resolution terrain (used for the "compact map" option) |
+| `map16x.bin` | 1/16-resolution terrain (used for mini previews) |
+| `thumbnail.webp` | Image shown on the map card in the setup screen |
+
+The `GameMapType` enum and the `maps` info list are **generated** into
+`src/core/game/Maps.gen.ts` from `map-generator/assets/maps/<id>/info.json`
+by the Go map generator (`npm run gen-maps`). Do not edit `Maps.gen.ts` by
+hand.
+
+## Terrain representation
+
+Terrain is one byte per tile (see `src/core/game/GameMap.ts`):
+
+- **bit 7** — land (set) vs. water (clear)
+- **bit 6** — shoreline (land adjacent to water, or water adjacent to land)
+- **bit 5** — ocean (water connected to the map's main body of water;
+  non-ocean water is lakes, which transport ships cannot cross)
+- **bits 0–4** — magnitude: for land, elevation class (plains/highland/
+  mountain rendering and movement cost); magnitude 31 marks **impassable**
+  land. For water, distance from shore.
+
+At runtime `GameMap` exposes `isLand`, `isShore`, `isOcean`, `neighbors`
+etc.; tiles are addressed as `TileRef = y * width + x`. Neighbour lookups
+are simple ±1/±width index math, which is why terrain ships as a flat
+binary rather than JSON.
+
+## Water and land / navigability
+
+Transport ships and warships path across **ocean** tiles only. When
+designing a map, make sure the water you want navigable is connected to
+the largest water body, otherwise it is classified as lake. Coastal areas
+(shoreline bits) are where ports can be built and where boats launch/land.
+
+## Spawn points and nations
+
+Player spawns are chosen by clicking any valid land tile during the spawn
+phase (validity is computed from the terrain, not a whitelist). AI
+**nations** spawn at the coordinates listed in the manifest's `nations`
+array; **bots** spawn procedurally on valid land. The number of nations
+and bots is configurable in the solo setup screen up to the map's nation
+count / 400 bots.
+
+## Validation
+
+- `tests/` includes map-loading and terrain tests that run against the
+  shipped binaries.
+- `SoloMaps.ts` throws at startup if an enabled map is missing from the
+  generated registry, and `tests/SoloConfig.test.ts` asserts the registry
+  is consistent.
+- The manifest's `num_land_tiles` must match the binary; the loader
+  verifies dimensions when instantiating the map.
+
+## Creating a brand-new map
+
+1. Create `map-generator/assets/maps/<id>/` with an `image.png` (terrain
+   image; the generator derives land/water/elevation from it) and an
+   `info.json` (id, name, translation key, categories, nations with spawn
+   coordinates — copy an existing map as a template).
+2. Run `npm run gen-maps` (requires Go). This regenerates
+   `src/core/game/Maps.gen.ts` and writes the binaries + manifest under
+   `resources/maps/<id>/`.
+3. Add a translation key for the map name in `resources/lang/en.json`
+   (`map.<id>`).
+4. Enable it in `src/core/configuration/SoloMaps.ts`.
+5. Design guidance for solo play: include large contiguous land for
+   expansion, coastal areas and connected ocean for ports/navy, and
+   chokepoints (straits, isthmuses) for defensive play, so all unit types
+   are useful.

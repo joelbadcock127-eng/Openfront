@@ -466,9 +466,7 @@
     "ui_playeroverlay_desc": "プレイヤーにカーソルを合わせると表示されます。ここにはプレイヤーの種類 (人間 / 国家 / 部族) ・軍隊の規模・最大兵力・軍隊の増加速度・資金・ユニット数が表示されます。また、国家ボットの場合はあなたに対する友好度も表示されます。",
     "ui_section": "ゲーム内で表示される要素",
     "ui_wilderness": "荒野",
-    "ui_your_team": "あなたのチーム :",
-    "video_tutorial": "チュートリアル動画",
-    "video_tutorial_title": "OpenFront.io チュートリアル"
+    "ui_your_team": "あなたのチーム :"
   },
   "host_modal": {
     "assigned_teams": "チーム編成",
@@ -1050,21 +1048,13 @@
   },
   "win_modal": {
     "died": "あなたは死んでしまった",
-    "discord_description": "プレイヤーとつながり、新しい機能を発見し、賞品を獲得しましょう！",
     "exit": "ゲームから退出",
-    "join_discord": "Discordコミュニティに参加しよう！",
-    "join_server": "サーバに入る",
     "keep": "観戦する",
     "nation_won": "国家 {nation} が勝利しました！",
     "other_team": "{team}チームが勝利しました。",
     "other_won": "{player}の勝利！",
-    "requeue": "もう一度プレイする",
     "spectate": "観戦する",
-    "support_openfront": "OpenFront を支援！",
-    "territory_pattern": "広告を見て領土スキンを手に入れよう！",
-    "wishlist": "Steamでウィッシュリストに追加して下さい！",
     "you_won": "勝利！",
-    "your_team": "あなたのチームの勝利！",
-    "youtube_tutorial": "ヘルプが必要ですか？"
+    "your_team": "あなたのチームの勝利！"
   }
 }

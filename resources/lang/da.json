@@ -415,8 +415,7 @@
     "you_won": "Du Vandt!",
     "other_won": "{player} har vundet!",
     "exit": "Afslut Spil",
-    "keep": "Fortsæt Spillet",
-    "wishlist": "Føj til ønskelisten på Steam!"
+    "keep": "Fortsæt Spillet"
   },
   "leaderboard": {
     "title": "Rangliste",

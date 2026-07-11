@@ -70,8 +70,6 @@
     "canvas_2d_no_gpu": "Canvas 2D (无 GPU)"
   },
   "help_modal": {
-    "video_tutorial": "视频教程",
-    "video_tutorial_title": "OpenFront.io 教程",
     "hotkeys": "快捷键",
     "table_key": "键",
     "table_action": "动作",
@@ -650,8 +648,6 @@
     "not_enough_money": "金钱不足"
   },
   "win_modal": {
-    "support_openfront": "支持 OpenFront！",
-    "territory_pattern": "购买皮肤即可去除广告！",
     "died": "你已经死了",
     "your_team": "你的队伍获胜了！",
     "other_team": "{team} 队获胜了！",
@@ -660,13 +656,7 @@
     "nation_won": "国家 {nation} 获胜了！",
     "exit": "退出游戏",
     "keep": "继续游戏",
-    "spectate": "观战",
-    "requeue": "再玩一次",
-    "wishlist": "将游戏加入 Steam 愿望单！",
-    "join_discord": "加入我们的 Discord 社区！",
-    "discord_description": "与玩家交流，发现新功能，并赢取奖品！",
-    "join_server": "加入服务器",
-    "youtube_tutorial": "需要帮助吗？"
+    "spectate": "观战"
   },
   "leaderboard": {
     "player": "玩家",

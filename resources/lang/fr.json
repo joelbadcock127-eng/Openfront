@@ -466,9 +466,7 @@
     "ui_playeroverlay_desc": "Lorsque que vous survolez un territoire, l'affichage des informations de Joueur sont affichées. Cela montre le type de joueur (Humain, Nation ou Tribu), l'attitude d'une Nation envers vous (d'Hostile à Amicale), ainsi que les troupes en défense, l'or, et le nombre de structures et vaisseaux de guerre possédées par le joueur.",
     "ui_section": "IU du jeu",
     "ui_wilderness": "Région sauvage",
-    "ui_your_team": "Votre équipe :",
-    "video_tutorial": "Tutoriel vidéo",
-    "video_tutorial_title": "Tutoriel OpenFront.io"
+    "ui_your_team": "Votre équipe :"
   },
   "host_modal": {
     "assigned_teams": "Équipes Attribuées",
@@ -1050,21 +1048,13 @@
   },
   "win_modal": {
     "died": "Vous êtes mort·e.",
-    "discord_description": "Parlez avec des joueurs, découvrez de nouvelles fonctionnalités et gagnez des prix !",
     "exit": "Quitter la partie",
-    "join_discord": "Rejoignez notre communauté Discord !",
-    "join_server": "Rejoindre le Serveur",
     "keep": "Continuer à jouer",
     "nation_won": "La nation {nation} a gagné !",
     "other_team": "L'équipe {team} a gagné !",
     "other_won": "{player} a gagné !",
-    "requeue": "Rejouer",
     "spectate": "Regarder",
-    "support_openfront": "Soutenir OpenFront!",
-    "territory_pattern": "Achetez une décoration de territoire pour retirer les publicités !",
-    "wishlist": "Liste de souhaits sur Steam !",
     "you_won": "Vous avez gagné !",
-    "your_team": "Votre équipe a gagné !",
-    "youtube_tutorial": "Besoin d'aide ?"
+    "your_team": "Votre équipe a gagné !"
   }
 }

@@ -68,8 +68,6 @@
     "canvas_2d_no_gpu": "2D-Linwang (keini GPU)"
   },
   "help_modal": {
-    "video_tutorial": "Video-Aleitig",
-    "video_tutorial_title": "OpenFront.io Aleitig",
     "hotkeys": "Tastaturbelegige",
     "table_key": "Schlüssu",
     "table_action": "Aktion",
@@ -599,8 +597,6 @@
     "not_enough_money": "Nid gnue Gäud"
   },
   "win_modal": {
-    "support_openfront": "Ungerstütz OpenFront!",
-    "territory_pattern": "Chouf es Gebietsmuster, um werbefrei z spiele!",
     "died": "Du bisch gstorbe",
     "your_team": "Dis team het gwunne!",
     "other_team": "Team {team} het gwunne!",
@@ -609,13 +605,7 @@
     "nation_won": "Nation {nation} het gwunne!",
     "exit": "Spieu verloh",
     "keep": "Witerspile",
-    "spectate": "Zueluege",
-    "requeue": "No einisch spiele",
-    "wishlist": "Zur Steam-Wunschliste hinzufüege!",
-    "join_discord": "Tritt üsere Discord-Community bi!",
-    "discord_description": "Verbind di mit Spieler, entdeck neui Features und gwinn Prise!",
-    "join_server": "Server biträtte",
-    "youtube_tutorial": "Bruchsch hüuf?"
+    "spectate": "Zueluege"
   },
   "leaderboard": {
     "hide": "Verstecke",

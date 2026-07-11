@@ -33,6 +33,7 @@ export default [
             "__mocks__/fileMock.js",
             "eslint.config.js",
             "scripts/sync-assets.mjs",
+            "playwright.config.ts",
           ],
         },
         tsconfigRootDir: import.meta.dirname,

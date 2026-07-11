@@ -68,8 +68,6 @@
     "canvas_2d_no_gpu": "캔버스 2D (GPU 없음)"
   },
   "help_modal": {
-    "video_tutorial": "동영상 튜토리얼",
-    "video_tutorial_title": "오픈프론트 튜토리얼",
     "hotkeys": "단축키",
     "table_key": "키",
     "table_action": "동작",
@@ -578,8 +576,6 @@
     "not_enough_money": "돈이 부족합니다"
   },
   "win_modal": {
-    "support_openfront": "OpenFront를 후원해주세요!",
-    "territory_pattern": "영토 스킨을 구매하고 광고 없이 플레이하세요!",
     "died": "죽었습니다",
     "your_team": "우리팀이 승리했습니다!",
     "other_team": "{team} 팀이 이겼습니다!",
@@ -588,13 +584,7 @@
     "nation_won": "{nation} 국가가 승리했습니다!",
     "exit": "게임 나가기",
     "keep": "계속 플레이하기",
-    "spectate": "관전하기",
-    "requeue": "다시 하기",
-    "wishlist": "Steam에서 찜하기!",
-    "join_discord": "저희 디스코드 커뮤니티에 참여하세요!",
-    "discord_description": "플레이어와 연결하고, 새로운 기능을 발견하고, 상품을 획득하세요!",
-    "join_server": "서버 참가",
-    "youtube_tutorial": "도움이 필요하신가요?"
+    "spectate": "관전하기"
   },
   "leaderboard": {
     "hide": "숨기기",

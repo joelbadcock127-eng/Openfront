@@ -403,8 +403,7 @@
     "you_won": "Du vann!",
     "other_won": "{player} har vunnit!",
     "exit": "Avsluta spelet",
-    "keep": "Fortsätt spela",
-    "wishlist": "Lägg till i önskelistan på Steam!"
+    "keep": "Fortsätt spela"
   },
   "leaderboard": {
     "title": "Topplista",

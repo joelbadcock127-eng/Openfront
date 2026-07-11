@@ -433,16 +433,13 @@
     "not_enough_money": "Ni dovolj denarja"
   },
   "win_modal": {
-    "support_openfront": "Podprite OpenFront!",
-    "territory_pattern": "Kupite vzorec teritorija, da podprete OpenFront!",
     "died": "Umrl si",
     "your_team": "Vaša ekipa je zmagala!",
     "other_team": "Ekipa {team} je zmagala!",
     "you_won": "Zmagal si!",
     "other_won": "{player} je zmagal/a!",
     "exit": "Zapri Igro",
-    "keep": "Nadaljuj z igro",
-    "wishlist": "Dodaj na seznam želja na Steamu!"
+    "keep": "Nadaljuj z igro"
   },
   "leaderboard": {
     "title": "Lestvica vodilnih",

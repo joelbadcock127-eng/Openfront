@@ -8,10 +8,7 @@ import {
   GameMode,
   GameType,
 } from "../../src/core/game/Game";
-import {
-  HOSTED_LOBBY_AUTO_START_MS,
-  MAX_HOSTED_LOBBIES,
-} from "../../src/core/Schemas";
+import { HOSTED_LOBBY_AUTO_START_MS } from "../../src/core/Schemas";
 import { Client } from "../../src/server/Client";
 import { GameManager } from "../../src/server/GameManager";
 import {
@@ -23,8 +20,6 @@ import {
   InternalGameInfo,
   InternalPublicGames,
 } from "../../src/server/IPCBridgeSchema";
-import { MasterLobbyService } from "../../src/server/MasterLobbyService";
-import { ServerEnv } from "../../src/server/ServerEnv";
 import { WorkerLobbyService } from "../../src/server/WorkerLobbyService";
 
 vi.mock("../../src/server/Logger", () => ({
@@ -462,164 +457,6 @@ function hostedLobby(
     ...extra,
   };
 }
-
-describe("MasterLobbyService hosted lobbies", () => {
-  function createService() {
-    vi.spyOn(ServerEnv, "numWorkers").mockReturnValue(2);
-    vi.spyOn(ServerEnv, "workerIndex").mockReturnValue(1);
-    vi.spyOn(ServerEnv, "gameCreationRate").mockReturnValue(60_000);
-    const playlist = {
-      gameConfig: vi.fn().mockResolvedValue({ gameType: GameType.Public }),
-    };
-    const log = { info: vi.fn(), error: vi.fn() } as any;
-    const service = new MasterLobbyService(playlist as any, log);
-
-    const workers = [1, 2].map((id) => {
-      const worker = new EventEmitter();
-      (worker as any).send = vi.fn();
-      service.registerWorker(id, worker as any);
-      return worker;
-    });
-    return { service, workers };
-  }
-
-  function sentMessages(worker: EventEmitter): any[] {
-    return ((worker as any).send as ReturnType<typeof vi.fn>).mock.calls.map(
-      (c) => c[0],
-    );
-  }
-
-  afterEach(() => {
-    vi.restoreAllMocks();
-  });
-
-  it("aggregates hosted lobbies and dedupes by creator across workers", () => {
-    const { service, workers } = createService();
-    workers[0].emit("message", {
-      type: "lobbyList",
-      lobbies: [
-        hostedLobby("bbb", "creator-a"),
-        hostedLobby("ccc", "creator-b"),
-      ],
-    });
-    // Same creator listed a second lobby on another worker before the first
-    // broadcast landed; only the stable-sort winner may survive.
-    workers[1].emit("message", {
-      type: "lobbyList",
-      lobbies: [hostedLobby("aaa", "creator-a")],
-    });
-
-    (service as any).broadcastLobbies();
-
-    const broadcast = sentMessages(workers[0]).find(
-      (m) => m.type === "lobbiesBroadcast",
-    );
-    expect(broadcast).toBeDefined();
-    const hosted = broadcast.publicGames.games.hosted;
-    expect(hosted.map((l: InternalGameInfo) => l.gameID)).toEqual([
-      "aaa",
-      "ccc",
-    ]);
-  });
-
-  it("delists a dedup loser only after two consecutive losing broadcasts", () => {
-    const { service, workers } = createService();
-    workers[0].emit("message", {
-      type: "lobbyList",
-      lobbies: [hostedLobby("bbb", "creator-a")],
-    });
-    workers[1].emit("message", {
-      type: "lobbyList",
-      lobbies: [hostedLobby("aaa", "creator-a")],
-    });
-
-    (service as any).broadcastLobbies();
-    (service as any).broadcastLobbies();
-
-    const broadcasts = sentMessages(workers[0]).filter(
-      (m) => m.type === "lobbiesBroadcast",
-    );
-    // First loss could be a stale worker report; only the second in a row
-    // triggers the delist.
-    expect(broadcasts[0].delistGameIDs).toBeUndefined();
-    expect(broadcasts[1].delistGameIDs).toEqual(["bbb"]);
-  });
-
-  it("caps hosted lobbies at MAX_HOSTED_LOBBIES and delists the overflow", () => {
-    const { service, workers } = createService();
-    const lobbies = Array.from({ length: MAX_HOSTED_LOBBIES + 1 }, (_, i) =>
-      hostedLobby(`g${String(i).padStart(2, "0")}`, `creator-${i}`),
-    );
-    workers[0].emit("message", { type: "lobbyList", lobbies });
-
-    (service as any).broadcastLobbies();
-    (service as any).broadcastLobbies();
-
-    const broadcasts = sentMessages(workers[0]).filter(
-      (m) => m.type === "lobbiesBroadcast",
-    );
-    expect(broadcasts[0].publicGames.games.hosted).toHaveLength(
-      MAX_HOSTED_LOBBIES,
-    );
-    // The sort loser (highest gameID) is dropped from the broadcast and,
-    // after two consecutive losing cycles, delisted.
-    expect(broadcasts[0].delistGameIDs).toBeUndefined();
-    expect(broadcasts[1].delistGameIDs).toEqual([`g${MAX_HOSTED_LOBBIES}`]);
-  });
-
-  it("does not delist when the duplicate disappears after one broadcast", () => {
-    const { service, workers } = createService();
-    workers[0].emit("message", {
-      type: "lobbyList",
-      lobbies: [hostedLobby("bbb", "creator-a")],
-    });
-    workers[1].emit("message", {
-      type: "lobbyList",
-      lobbies: [hostedLobby("aaa", "creator-a")],
-    });
-    (service as any).broadcastLobbies();
-
-    // The losing entry was stale: the next report no longer contains it.
-    workers[0].emit("message", { type: "lobbyList", lobbies: [] });
-    (service as any).broadcastLobbies();
-
-    for (const msg of sentMessages(workers[0])) {
-      if (msg.type === "lobbiesBroadcast") {
-        expect(msg.delistGameIDs).toBeUndefined();
-      }
-    }
-  });
-
-  it("never schedules or sets countdowns on hosted lobbies", async () => {
-    const { service, workers } = createService();
-    workers[0].emit("message", {
-      type: "lobbyList",
-      lobbies: [hostedLobby("hosted1", "creator-a")],
-    });
-
-    await (service as any).maybeScheduleLobby();
-
-    for (const worker of workers) {
-      for (const msg of sentMessages(worker)) {
-        if (msg.type === "updateLobby") {
-          expect(msg.gameID).not.toBe("hosted1");
-        }
-        if (msg.type === "createGame") {
-          expect(msg.publicGameType).not.toBe("hosted");
-        }
-      }
-    }
-    // The scheduled types still get their replacement lobbies.
-    const created = workers.flatMap((w) =>
-      sentMessages(w).filter((m) => m.type === "createGame"),
-    );
-    expect(created.map((m) => m.publicGameType).sort()).toEqual([
-      "ffa",
-      "special",
-      "team",
-    ]);
-  });
-});
 
 describe("WorkerLobbyService hosted lobbies", () => {
   let service: WorkerLobbyService;

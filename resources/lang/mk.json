@@ -429,16 +429,13 @@
     "not_enough_money": "Нема доволно пари"
   },
   "win_modal": {
-    "support_openfront": "Поддржи го OpenFront!",
-    "territory_pattern": "Купи шаблон за територија за да го поддржиш OpenFront!",
     "died": "Умре",
     "your_team": "Твојот тим победи!",
     "other_team": "Тимот {team} победи!",
     "you_won": "Победи!",
     "other_won": "{player} победи!",
     "exit": "Излез од игра",
-    "keep": "Продолжи да играш",
-    "wishlist": "Додај во листата на желби на Steam!"
+    "keep": "Продолжи да играш"
   },
   "leaderboard": {
     "title": "Листа на најдобри",

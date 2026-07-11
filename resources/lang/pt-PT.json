@@ -415,8 +415,7 @@
     "you_won": "Venceu!",
     "other_won": "{player} venceu!",
     "exit": "Sair do jogo",
-    "keep": "Continuar a jogar",
-    "wishlist": "Adicione na Lista de desejos da Steam!"
+    "keep": "Continuar a jogar"
   },
   "leaderboard": {
     "title": "Tabela de classificação",

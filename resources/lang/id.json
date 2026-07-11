@@ -68,8 +68,6 @@
     "canvas_2d_no_gpu": "Canvas 2D (tanpa GPU)"
   },
   "help_modal": {
-    "video_tutorial": "Video Panduan",
-    "video_tutorial_title": "Panduan OpenFront.io",
     "hotkeys": "Tombol pintas",
     "table_key": "Kunci",
     "table_action": "Tindakan",
@@ -599,8 +597,6 @@
     "not_enough_money": "Uang tidak cukup"
   },
   "win_modal": {
-    "support_openfront": "Dukung OpenFront!",
-    "territory_pattern": "Beli skin wilayah untuk bebas iklan!",
     "died": "Anda meninggal",
     "your_team": "Tim Anda menang!",
     "other_team": "tim {team} menang!",
@@ -609,13 +605,7 @@
     "nation_won": "Negara {nation} menang!",
     "exit": "Keluar Game",
     "keep": "Terus Main",
-    "spectate": "Menonton",
-    "requeue": "Main lagi",
-    "wishlist": "Wishlist di Steam!",
-    "join_discord": "Gabung Komunitas Discord Kami!",
-    "discord_description": "Terhubung dengan pemain lain, temukan fitur baru, dan menangkan hadiah!",
-    "join_server": "Bergabung dengan Server",
-    "youtube_tutorial": "Butuh bantuan?"
+    "spectate": "Menonton"
   },
   "leaderboard": {
     "hide": "Sembunyikan",

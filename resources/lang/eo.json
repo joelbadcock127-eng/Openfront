@@ -466,9 +466,7 @@
     "ui_playeroverlay_desc": "Kiam vi pasigas la muson super lando, la supermetita fenestro de ludanto-informoj aperas sub Opcioj. Ĝi montras la tipon de ludanto: Homo, Nacio, aŭ Tribo. Ĝi montras sintenon de Nacio al vi, intervalante de Malamika ĝis Amika. Krome, ĝi montras la nombron de defendaj trupoj, oron, kaj la nombron de Militŝipoj kaj diversaj konstruaĵoj, kiujn la ludanto posedas.",
     "ui_section": "Ludo uzantinterfaco",
     "ui_wilderness": "Sovaĝejo",
-    "ui_your_team": "Via teamo:",
-    "video_tutorial": "Lernila Filmeto",
-    "video_tutorial_title": "OpenFront.io Lernilo"
+    "ui_your_team": "Via teamo:"
   },
   "host_modal": {
     "assigned_teams": "Asignitaj Teamoj",
@@ -1050,21 +1048,13 @@
   },
   "win_modal": {
     "died": "Vi mortis",
-    "discord_description": "Diskutu kun ludantoj, malkovru novajn ludtrajtojn, kaj gajnu rekompencojn!",
     "exit": "Eliri el la ludo",
-    "join_discord": "Aliĝu al Nia Diskorda Komunumo!",
-    "join_server": "Aliĝi al la Servilo",
     "keep": "Daŭrigu ludi",
     "nation_won": "Nacio {nation} venkis!",
     "other_team": "{team} teamo venkis!",
     "other_won": "{player} venkis!",
-    "requeue": "Reludi",
     "spectate": "Spekti",
-    "support_openfront": "Subtenu OpenFront!",
-    "territory_pattern": "Aĉetu teritorian haŭton por ludi sen reklamoj!",
-    "wishlist": "Dezirlistu ĉe Steam!",
     "you_won": "Vi venkis!",
-    "your_team": "Via teamo venkis!",
-    "youtube_tutorial": "Ĉu vi bezonas helpon?"
+    "your_team": "Via teamo venkis!"
   }
 }

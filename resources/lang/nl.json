@@ -559,8 +559,6 @@
     "not_enough_money": "Niet genoeg goud"
   },
   "win_modal": {
-    "support_openfront": "Steun OpenFront!",
-    "territory_pattern": "Koop een skin om advertentievrij te gaan!",
     "died": "Je bent dood",
     "your_team": "Je team heeft gewonnen!",
     "other_team": "{team} team heeft gewonnen!",
@@ -570,14 +568,9 @@
     "exit": "Verlaat spel",
     "keep": "Blijf spelen",
     "spectate": "Toekijken",
-    "wishlist": "Op je Verlanglijst op Steam!",
     "ofm_winter": "OpenFront Masters Wintertoernooi!",
     "ofm_winter_description": "Doe mee met het competitieve toernooi en concurreer met de beste spelers",
-    "join_tournament": "Toernooi toetreden",
-    "join_discord": "Word lid van onze Discord-gemeenschap!",
-    "discord_description": "Maak contact met spelers, ontdek nieuwe functies en win prijzen!",
-    "join_server": "Word lid van server",
-    "youtube_tutorial": "Wat hulp nodig?"
+    "join_tournament": "Toernooi toetreden"
   },
   "leaderboard": {
     "title": "Leidersbord",

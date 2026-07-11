@@ -68,8 +68,6 @@
     "canvas_2d_no_gpu": "Canvas 2D (no GPU)"
   },
   "help_modal": {
-    "video_tutorial": "Vídeo Tutorial",
-    "video_tutorial_title": "Tutorial de OpenFront.io",
     "hotkeys": "Tecles d'accés ràpid",
     "table_key": "Clau",
     "table_action": "Acció",
@@ -578,8 +576,6 @@
     "not_enough_money": "No tens prou diners"
   },
   "win_modal": {
-    "support_openfront": "Dona suport a OpenFront!",
-    "territory_pattern": "Compra un Aspecte de Territori per eliminar els anuncis!",
     "died": "Has mort",
     "your_team": "El teu equip ha guanyat!",
     "other_team": "L'equip {team} ha guanyat!",
@@ -588,13 +584,7 @@
     "nation_won": "La Nació {nation} ha guanyat!",
     "exit": "Surt de la Partida",
     "keep": "Segueix Jugant",
-    "spectate": "Mira com a espectador",
-    "requeue": "Torna a Jugar",
-    "wishlist": "Afegeix-ho a la llista de desitjos a Steam!",
-    "join_discord": "Uneix-te a la nostra comunitat de Discord!",
-    "discord_description": "Connecta amb jugadors, descobreix noves funcions i guanya premis!",
-    "join_server": "Uneix-te al Servidor",
-    "youtube_tutorial": "Necessites ajuda?"
+    "spectate": "Mira com a espectador"
   },
   "leaderboard": {
     "hide": "Amaga",

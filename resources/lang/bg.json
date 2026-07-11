@@ -70,8 +70,6 @@
     "canvas_2d_no_gpu": "Canvas 2D (без видеокарта)"
   },
   "help_modal": {
-    "video_tutorial": "Видео урок за игра",
-    "video_tutorial_title": "Урок за игра на OpenFront.io",
     "hotkeys": "Бързи клавиши",
     "table_key": "Бутон",
     "table_action": "Действие",
@@ -650,8 +648,6 @@
     "not_enough_money": "Няма достатъчно пари"
   },
   "win_modal": {
-    "support_openfront": "Подкрепи OpenFront!",
-    "territory_pattern": "Закупете териториален шаблон, за да се освободите от рекламите!",
     "died": "Ти умря",
     "your_team": "Твоят отбор спечели!",
     "other_team": "{team} отбор спечели!",
@@ -660,13 +656,7 @@
     "nation_won": "Нацията {nation} спечели!",
     "exit": "Напускане на играта",
     "keep": "Продължаване на играта",
-    "spectate": "Наблюдаване",
-    "requeue": "Играй отново",
-    "wishlist": "Добавяне към списъка с желания в Steam!",
-    "join_discord": "Присъедини се към общността ни в Discord!",
-    "discord_description": "Свържи се с играчи, открий нови функции и спечели награди!",
-    "join_server": "Влез в сървъра",
-    "youtube_tutorial": "Нужда от помощ?"
+    "spectate": "Наблюдаване"
   },
   "leaderboard": {
     "player": "Играч",
