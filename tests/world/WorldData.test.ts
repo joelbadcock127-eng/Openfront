@@ -248,89 +248,110 @@ describe("Oceania detail coverage at LOD 0", () => {
   });
 });
 
-describe("playable windows ↔ world consistency", () => {
+describe("playable window ↔ world consistency (one Oceania map)", () => {
   const mapsDir = path.join(__dirname, "..", "..", "resources", "maps");
+  const win = index.windows.find((w) => w.id === "worldoceania")!;
+  const mapDir = path.join(mapsDir, "worldoceania");
+  const manifest = JSON.parse(
+    fs.readFileSync(path.join(mapDir, "manifest.json"), "utf8"),
+  );
+  const mapBin: Buffer = fs.readFileSync(path.join(mapDir, "map.bin"));
 
-  test("all five Oceania windows are registered", () => {
-    expect(index.windows.map((w) => w.id).sort()).toEqual([
-      "eastaustralia",
-      "newzealandnorth",
-      "newzealandsouth",
-      "torresstrait",
-      "worldwindow",
-    ]);
+  test("Oceania is registered as ONE playable window covering the region", () => {
+    expect(index.windows.map((w) => w.id)).toEqual(["worldoceania"]);
+    const region = index.detailRegions.find((r) => r.id === "oceania")!;
+    // One world: the playable map covers the entire detail region.
+    expect(win.lod0Rect).toEqual(region.lod0Rect);
   });
 
-  for (const win of index.windows) {
-    describe(`window ${win.id}`, () => {
-      const mapDir = path.join(mapsDir, win.id);
-      const manifest = JSON.parse(
-        fs.readFileSync(path.join(mapDir, "manifest.json"), "utf8"),
+  test("map dimensions match the registered rect at the window LOD", () => {
+    expect(manifest.map.width).toBe(win.lod0Rect.width >> win.lod);
+    expect(manifest.map.height).toBe(win.lod0Rect.height >> win.lod);
+    expect(mapBin.length).toBe(manifest.map.width * manifest.map.height);
+  });
+
+  test("game tiles and world LOD cells agree on land/water", () => {
+    // The playable map is emitted at LOD `win.lod` from the same grid as
+    // the world packs ⇒ land bits must match the LOD pack cell-for-cell
+    // (sampled).
+    for (let i = 0; i < 3000; i++) {
+      const x = (i * 2654435761) % manifest.map.width;
+      const y = (i * 1013904223) % manifest.map.height;
+      const mapV = mapBin[y * manifest.map.width + x];
+      const worldV = cellAt(
+        win.lod,
+        (win.lod0Rect.x >> win.lod) + x,
+        (win.lod0Rect.y >> win.lod) + y,
       );
-      const mapBin: Buffer = fs.readFileSync(path.join(mapDir, "map.bin"));
+      expect(land(mapV)).toBe(land(worldV));
+    }
+  });
 
-      test("map dimensions match the registered LOD-0 rect", () => {
-        expect(manifest.map.width).toBe(win.lod0Rect.width);
-        expect(manifest.map.height).toBe(win.lod0Rect.height);
-        expect(mapBin.length).toBe(win.lod0Rect.width * win.lod0Rect.height);
-      });
-
-      test("game tiles and world LOD-0 cells agree on land/water", () => {
-        // Same source grid ⇒ the playable map's land bit must equal the
-        // world LOD-0 chunk data across the window (sampled).
-        for (let i = 0; i < 2000; i++) {
-          const x = (i * 2654435761) % win.lod0Rect.width;
-          const y = (i * 1013904223) % win.lod0Rect.height;
-          const mapV = mapBin[y * manifest.map.width + x];
-          const worldV = cellAt(0, win.lod0Rect.x + x, win.lod0Rect.y + y);
-          expect(land(mapV)).toBe(land(worldV));
-        }
-      });
-
-      test("nations exist and sit on land cells", () => {
-        expect(manifest.nations.length).toBeGreaterThan(0);
-        for (const n of manifest.nations) {
-          const [x, y] = n.coordinates;
-          expect(land(mapBin[y * manifest.map.width + x]), n.name).toBe(true);
-        }
-      });
-    });
-  }
-
-  test("Devonport spawn area is land and coastal (Bass Strait window)", () => {
-    const win = index.windows.find((w) => w.id === "worldwindow")!;
-    const mapDir = path.join(mapsDir, "worldwindow");
-    const manifest = JSON.parse(
-      fs.readFileSync(path.join(mapDir, "manifest.json"), "utf8"),
-    );
-    const mapBin: Buffer = fs.readFileSync(path.join(mapDir, "map.bin"));
-    const w = grid.geoToWorld(146.35, -41.18);
-    const x = Math.floor(w.x) - win.lod0Rect.x;
-    const y = Math.floor(w.y) - win.lod0Rect.y;
-    expect(x).toBeGreaterThan(0);
-    expect(y).toBeGreaterThan(0);
-    // Land within a couple of cells of the geographic point.
-    let foundLand = false;
-    for (let dy = -3; dy <= 3 && !foundLand; dy++) {
-      for (let dx = -3; dx <= 3 && !foundLand; dx++) {
-        if (land(mapBin[(y + dy) * manifest.map.width + (x + dx)])) {
-          foundLand = true;
+  test("the map spans the whole of Oceania (WA, NT, SA, NZ, PNG on-map land)", () => {
+    const landmarks: Array<[string, number, number]> = [
+      ["Perth (Western Australia)", 115.86, -31.95],
+      ["Darwin (Northern Territory)", 130.84, -12.46],
+      ["Adelaide (South Australia)", 138.6, -34.93],
+      ["Devonport (Tasmania)", 146.35, -41.18],
+      ["Auckland (New Zealand)", 174.76, -36.85],
+      ["Port Moresby (New Guinea)", 147.18, -9.44],
+      ["Suva (Fiji)", 178.44, -18.14],
+    ];
+    for (const [name, lon, lat] of landmarks) {
+      const w = grid.geoToWorld(lon, lat);
+      const x = (Math.floor(w.x) - win.lod0Rect.x) >> win.lod;
+      const y = (Math.floor(w.y) - win.lod0Rect.y) >> win.lod;
+      expect(x, name).toBeGreaterThan(0);
+      expect(y, name).toBeGreaterThan(0);
+      expect(x, name).toBeLessThan(manifest.map.width);
+      expect(y, name).toBeLessThan(manifest.map.height);
+      // Land within a couple of tiles of the geographic point.
+      let foundLand = false;
+      for (let dy = -3; dy <= 3 && !foundLand; dy++) {
+        for (let dx = -3; dx <= 3 && !foundLand; dx++) {
+          if (land(mapBin[(y + dy) * manifest.map.width + (x + dx)])) {
+            foundLand = true;
+          }
         }
       }
+      expect(foundLand, name).toBe(true);
     }
-    expect(foundLand).toBe(true);
   });
 
-  test("flagship nations are present (Melbourne/Hobart, Auckland, Sydney)", () => {
-    const names = (id: string): string[] =>
-      JSON.parse(
-        fs.readFileSync(path.join(mapsDir, id, "manifest.json"), "utf8"),
-      ).nations.map((n: { name: string }) => n.name);
-    expect(names("worldwindow")).toContain("Melbourne");
-    expect(names("worldwindow")).toContain("Hobart");
-    expect(names("newzealandnorth")).toContain("Auckland");
-    expect(names("newzealandsouth")).toContain("Christchurch");
-    expect(names("eastaustralia")).toContain("Sydney");
-    expect(names("torresstrait")).toContain("Port Moresby");
+  test("straits are water on the playable map (one connected ocean theatre)", () => {
+    for (const [name, lon, lat] of [
+      ["Bass Strait", 146.0, -39.5],
+      ["Cook Strait", 174.5, -41.4],
+      ["Torres Strait", 142.6, -9.95],
+    ] as Array<[string, number, number]>) {
+      const w = grid.geoToWorld(lon, lat);
+      const x = (Math.floor(w.x) - win.lod0Rect.x) >> win.lod;
+      const y = (Math.floor(w.y) - win.lod0Rect.y) >> win.lod;
+      const v = mapBin[y * manifest.map.width + x];
+      expect(land(v), name).toBe(false);
+      expect(ocean(v), `${name} ocean bit`).toBe(true);
+    }
+  });
+
+  test("nations span the continent and sit on land tiles", () => {
+    const names = manifest.nations.map((n: { name: string }) => n.name);
+    for (const expected of [
+      "Sydney",
+      "Melbourne",
+      "Perth", // Western Australia
+      "Adelaide", // South Australia
+      "Darwin", // Northern Territory
+      "Hobart", // Tasmania
+      "Auckland",
+      "Wellington",
+      "Port Moresby",
+    ]) {
+      expect(names).toContain(expected);
+    }
+    expect(manifest.nations.length).toBeGreaterThanOrEqual(15);
+    for (const n of manifest.nations) {
+      const [x, y] = n.coordinates;
+      expect(land(mapBin[y * manifest.map.width + x]), n.name).toBe(true);
+    }
   });
 });

@@ -18,11 +18,16 @@ export interface WorldDetailRegion {
   lod0Rect: { x: number; y: number; width: number; height: number };
 }
 
-/** A playable OpenFront map cut from the detail region's LOD-0 grid. */
+/** A playable OpenFront map cut from the detail region's grid. */
 export interface WorldWindowRef {
   id: string;
-  /** GameMapType key of the playable window map (e.g. "WorldWindow"). */
+  /** GameMapType key of the playable window map (e.g. "WorldOceania"). */
   gameMap: string;
+  /**
+   * Resolution the game map was emitted at: one game tile covers
+   * 2^lod LOD-0 world cells (0 = full detail).
+   */
+  lod: number;
   /** Window rectangle in LOD-0 world cells (its origin in the world). */
   lod0Rect: { x: number; y: number; width: number; height: number };
 }

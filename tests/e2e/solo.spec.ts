@@ -55,9 +55,9 @@ test("main menu loads with solo-only navigation", async () => {
 
 test("solo setup shows the enabled maps and starts a match", async () => {
   await page.locator("#solo-play-button").click();
-  // Exactly the enabled solo maps (5 continuous-world windows + classic
+  // Exactly the enabled solo maps (the one-world Oceania map + classic
   // World).
-  await expect(page.locator("map-display")).toHaveCount(6);
+  await expect(page.locator("map-display")).toHaveCount(2);
   await expect(page.locator("text=/impossible/i").first()).toBeVisible();
   await page
     .locator("button:visible", { hasText: /start game/i })
@@ -72,12 +72,12 @@ test("solo setup shows the enabled maps and starts a match", async () => {
 test("spawn selection and HUD", async () => {
   // Give the map render a moment, then click land to request a spawn.
   await page.waitForTimeout(8_000);
-  // Land points on the Bass Strait window (Devonport & Victoria; computed
-  // from geo coordinates via WorldGrid).
+  // Land points on the Oceania map (Sydney & Brisbane; computed from geo
+  // coordinates via WorldGrid).
   for (const [x, y] of [
-    [683, 442],
-    [767, 215],
-    [686, 445],
+    [750, 665],
+    [810, 588],
+    [750, 665],
   ]) {
     await page.mouse.click(x, y);
     await page.waitForTimeout(1_000);
@@ -106,10 +106,10 @@ test("expand into neutral territory and adjust sliders", async () => {
 
   // Click neutral land near the spawn to launch expansion attacks.
   for (const [x, y] of [
-    [700, 445],
-    [665, 450],
-    [690, 470],
-    [683, 442],
+    [758, 660],
+    [742, 670],
+    [750, 652],
+    [750, 665],
   ]) {
     await page.mouse.click(x, y);
     await page.waitForTimeout(1_500);
@@ -124,7 +124,7 @@ test("expand into neutral territory and adjust sliders", async () => {
 
 test("radial menu opens and build menu shows structures", async () => {
   // Right-click on own territory opens the radial action menu.
-  await page.mouse.click(683, 442, { button: "right" });
+  await page.mouse.click(750, 665, { button: "right" });
   const radial = page.locator(".radial-menu-container");
   await expect(radial).toBeVisible({ timeout: 15_000 });
   await page.screenshot({

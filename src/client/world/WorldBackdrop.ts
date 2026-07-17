@@ -6,8 +6,8 @@
  * view out to the full globe with no loading screen or match transition.
  *
  * Rendering strategy (scale-dependent, no blank areas):
- *  - The camera transform is shared with the game (TransformHandler); world
- *    LOD-0 cells and game tiles are the same units, offset by the window's
+ *  - The camera transform is shared with the game (TransformHandler); a game
+ *    tile covers `cellsPerTile` LOD-0 world cells, offset by the window's
  *    origin, so the window and the world can never disagree about position.
  *  - Every frame draws up to three passes, coarse → fine: the coarsest LOD
  *    (fully resident, 8 chunks) guarantees the whole visible world is always
@@ -51,7 +51,7 @@ export class WorldBackdrop {
   constructor(
     private store: WorldChunkStore,
     private transform: TransformHandler,
-    /** Playable window dimensions in game tiles (= LOD-0 cells). */
+    /** Playable window dimensions in game tiles. */
     private mapWidth: number,
     private mapHeight: number,
     /** Window origin in LOD-0 world cells. */
@@ -59,6 +59,11 @@ export class WorldBackdrop {
     private originY: number,
     /** Element the canvas is inserted after (the game's WebGL canvas). */
     anchor: HTMLElement,
+    /**
+     * LOD-0 world cells per game tile (2^windowLod). 1 when the game map is
+     * emitted at full LOD-0 detail; 2 for a LOD-1 map, etc.
+     */
+    private cellsPerTile: number = 1,
   ) {
     this.grid = new WorldGrid({
       w0: store.index.grid.w0,
@@ -164,10 +169,14 @@ export class WorldBackdrop {
     ctx.fillRect(0, 0, viewW, viewH);
 
     const scale = this.transform.scale;
-    // Finest LOD whose cells are ≥ ~1 screen px.
+    // Finest LOD whose cells are ≥ ~1 screen px. One world cell renders at
+    // scale/cellsPerTile px (the transform's unit is the game tile).
     const idealLod = Math.max(
       0,
-      Math.min(this.store.index.grid.maxLod, Math.ceil(Math.log2(1 / scale))),
+      Math.min(
+        this.store.index.grid.maxLod,
+        Math.ceil(Math.log2(this.cellsPerTile / scale)),
+      ),
     );
     this.stats.lod = idealLod;
 
@@ -203,20 +212,19 @@ export class WorldBackdrop {
     const t = this.transform;
     const cellsPerLod0 = 1 << lod;
     const chunkSpanLod0 = CHUNK_SIZE * cellsPerLod0;
+    const cpt = this.cellsPerTile;
 
-    // Visible world rect in LOD-0 cells (world = game + origin).
+    // Visible world rect in LOD-0 cells (world = game·cellsPerTile + origin).
     const worldLeft =
-      (0 - this.mapWidth / 2) / t.scale +
-      t.offsetX +
-      this.mapWidth / 2 +
+      ((0 - this.mapWidth / 2) / t.scale + t.offsetX + this.mapWidth / 2) *
+        cpt +
       this.originX;
     const worldTop =
-      (0 - this.mapHeight / 2) / t.scale +
-      t.offsetY +
-      this.mapHeight / 2 +
+      ((0 - this.mapHeight / 2) / t.scale + t.offsetY + this.mapHeight / 2) *
+        cpt +
       this.originY;
-    const worldRight = worldLeft + viewW / t.scale;
-    const worldBottom = worldTop + viewH / t.scale;
+    const worldRight = worldLeft + (viewW / t.scale) * cpt;
+    const worldBottom = worldTop + (viewH / t.scale) * cpt;
 
     // Prefetch margin: one chunk all around plus one more chunk in the
     // direction of camera motion (predictive loading).
@@ -266,8 +274,11 @@ export class WorldBackdrop {
         ) {
           continue;
         }
-        const p = this.gameToCanvas(wx - this.originX, wy - this.originY);
-        const size = chunkSpanLod0 * t.scale;
+        const p = this.gameToCanvas(
+          (wx - this.originX) / cpt,
+          (wy - this.originY) / cpt,
+        );
+        const size = (chunkSpanLod0 / cpt) * t.scale;
         ctx.drawImage(chunk.bitmap, p.x, p.y, size, size);
         drawn++;
       }
@@ -295,7 +306,10 @@ export class WorldBackdrop {
 
   private drawOverlay(viewW: number, viewH: number): void {
     const ctx = this.ctx;
-    const kmAcross = (viewW / this.transform.scale) * this.grid.kmPerCell();
+    const kmAcross =
+      (viewW / this.transform.scale) *
+      this.cellsPerTile *
+      this.grid.kmPerCell();
     const label =
       kmAcross >= 100
         ? `≈ ${Math.round(kmAcross).toLocaleString()} km across`

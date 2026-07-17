@@ -20,7 +20,7 @@ describe("Solo map registry", () => {
 
   test("default map is the first enabled map (the continuous world)", () => {
     expect(DEFAULT_SOLO_MAP).toBe(ENABLED_SOLO_MAPS[0]);
-    expect(DEFAULT_SOLO_MAP).toBe(GameMapType.WorldWindow);
+    expect(DEFAULT_SOLO_MAP).toBe(GameMapType.WorldOceania);
   });
 });
 

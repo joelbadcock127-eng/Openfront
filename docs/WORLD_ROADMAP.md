@@ -17,26 +17,28 @@ Nothing below disguises a prototype as the completed game.
   - Chunk seam validation (build-time + unit tests on shipped packs).
   - Basic territory rendering across scales (game render inside the
     window at every zoom).
-- **Stage 2 — playable high-detail regions: functional, extended to
-  Oceania.**
-  - LOD 0/1 terrain (~0.61 km / ~1.2 km cells) now covers the whole
-    Oceania region (lon 110°E–180°, lat 48.5°S–8°N): Australia, New
-    Zealand, New Guinea, and the Melanesian island arcs (New Caledonia,
-    Vanuatu, Fiji, Solomons) — everywhere you zoom in inside that box you
-    see full-detail coastline.
-  - Five playable windows are cut from that same LOD-0 grid, each near
-    the engine's proven scale (8.4–12.6M tiles): **Bass Strait**
-    (4096×2048, the original window and default map), **New Zealand
-    South** and **New Zealand North** (4096×3072 each, Cook Strait open
-    in both), **Torres Strait / New Guinea** (3072×3072), and **East
-    Australia** (4096×3072, Brisbane–Sydney–Canberra). All run the
-    unmodified OpenFront ruleset: expansion, combat, AI (bots +
-    real-city nations with national flags), buildings, ships, borders.
-  - The full globe exists around every window as a continuous
-    lower-detail world — a window is NOT a separate map experience; you
-    zoom out of the battle to the whole Earth mid-match.
-  - Spawn near Devonport: click northern Tasmania during spawn selection
-    on the Bass Strait window.
+- **Stage 2 — one playable Oceania inside the streamed Earth:
+  functional.**
+  - LOD 0/1 terrain (~0.61 km / ~1.2 km cells) covers the whole Oceania
+    region (lon 110°E–180°, lat 48.5°S–8°N): Australia, New Zealand, New
+    Guinea, and the Melanesian island arcs (New Caledonia, Vanuatu,
+    Fiji, Solomons).
+  - The playable map is **all of Oceania merged into ONE map — one
+    match, one continuous territorial state**: the entire Australian
+    continent (Western Australia, the Northern Territory, South
+    Australia included), Tasmania, both New Zealand islands, New Guinea
+    and the island arcs, 8192×7168 = 58.7M tiles at ~1.2 km per tile.
+    That is 7× the largest upstream map; ~1.2 km is the highest
+    resolution that measurably runs lag-free today (a ~0.61 km Oceania
+    map would be 235M tiles — see WORLD_PERFORMANCE.md for the
+    measurements and the resolution ladder). The full OpenFront ruleset
+    runs unmodified: expansion, combat, AI (bots + 24 real-city nations
+    across 7 countries with national flags), buildings, ships, borders.
+  - The full globe exists around the map as a continuous lower-detail
+    world — you zoom out of the battle to the whole Earth mid-match, no
+    transition.
+  - Bass Strait, Cook Strait and Torres Strait are open water on the
+    playable map: naval movement connects every theatre in one ocean.
 
 ## Functional but incomplete
 
@@ -60,8 +62,11 @@ Nothing below disguises a prototype as the completed game.
   Oceania (≈235M LOD-0 cells) is generated and shipped, proving the
   region-parameterised path; extending the box worldwide needs pack
   sharding and beefier generation (est. ~2–4 GB LOD-0 data worldwide).
-- More playable windows outside Oceania as detail coverage grows (the
-  window list is data-driven: one pipeline entry + map registration).
+- Growing the playable map beyond Oceania toward the whole Earth (the
+  window config is data-driven: widen the bbox, re-run the pipeline).
+  Resolution and extent trade off against the lag budget; raising the
+  playable resolution back toward ~0.61 km as engine optimisations land
+  is part of the same ladder (see WORLD_PERFORMANCE.md).
 - **Stage 4 — global playable simulation**: hierarchical AI over regional
   summaries, worldwide expansion/victory, chunk-level ownership
   summaries + run-length interior compression, dirty-region simulation,

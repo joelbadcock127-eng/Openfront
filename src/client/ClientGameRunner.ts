@@ -676,6 +676,9 @@ async function createClientGame(
             return;
           }
           if (rendererDisposed) return;
+          // One game tile covers 2^lod LOD-0 world cells; the camera works
+          // in game tiles, so world extents are scaled down accordingly.
+          const cellsPerTile = 1 << (region.lod ?? 0);
           worldBackdrop = new WorldBackdrop(
             store,
             gameRenderer.transformHandler,
@@ -684,12 +687,13 @@ async function createClientGame(
             region.lod0Rect.x,
             region.lod0Rect.y,
             glCanvas,
+            cellsPerTile,
           );
           gameRenderer.transformHandler.setExtendedBounds({
-            minX: -region.lod0Rect.x,
-            minY: -region.lod0Rect.y,
-            maxX: -region.lod0Rect.x + store.index.grid.w0,
-            maxY: -region.lod0Rect.y + store.index.grid.h0,
+            minX: -region.lod0Rect.x / cellsPerTile,
+            minY: -region.lod0Rect.y / cellsPerTile,
+            maxX: (-region.lod0Rect.x + store.index.grid.w0) / cellsPerTile,
+            maxY: (-region.lod0Rect.y + store.index.grid.h0) / cellsPerTile,
           });
         } catch (err) {
           console.error("failed to start world backdrop", err);

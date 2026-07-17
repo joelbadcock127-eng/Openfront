@@ -13,13 +13,11 @@ import { GameMapType, MapInfo, maps } from "../game/Game";
  * (land expansion, naval invasions, ports/trade, missiles) can be exercised.
  */
 export const ENABLED_SOLO_MAPS: readonly GameMapType[] = [
-  // The continuous-world experience: play in a high-detail Oceania window
-  // while the whole streamed Earth stays visible around it.
-  GameMapType.WorldWindow, // Bass Strait — the original window, default map
-  GameMapType.EastAustralia,
-  GameMapType.NewZealandNorth,
-  GameMapType.NewZealandSouth,
-  GameMapType.TorresStrait,
+  // The continuous-world experience: ALL of Oceania — the whole Australian
+  // continent, New Zealand, New Guinea and the Pacific island arcs — as one
+  // playable map, one match, one territorial state, with the rest of the
+  // streamed Earth visible around it.
+  GameMapType.WorldOceania,
   GameMapType.World,
 ];
 

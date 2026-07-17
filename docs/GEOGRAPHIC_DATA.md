@@ -53,11 +53,11 @@ data licence (the repository's own licences still apply to code/assets).
 
 ## Generated output files (committed)
 
-| File                                 | Content                                                                                                                                                               |
-| ------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `resources/world/world-index.json`   | Grid config, LOD/chunk index, detail region + playable windows                                                                                                        |
-| `resources/world/world-l{0..6}.pack` | Gzipped 256² terrain chunks per LOD; LOD 0/1 cover all of Oceania                                                                                                     |
-| `resources/maps/<window>/`           | Playable windows in OpenFront map format (worldwindow = Bass Strait, newzealandsouth, newzealandnorth, torresstrait, eastaustralia), emitted from the same world data |
+| File                                 | Content                                                                                                                       |
+| ------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------- |
+| `resources/world/world-index.json`   | Grid config, LOD/chunk index, detail region + playable windows                                                                |
+| `resources/world/world-l{0..6}.pack` | Gzipped 256² terrain chunks per LOD; LOD 0/1 cover all of Oceania                                                             |
+| `resources/maps/worldoceania/`       | The playable one-world Oceania map in OpenFront map format (all of Oceania at ~1.2 km/tile), emitted from the same world data |
 
 ## Not yet integrated (candidates for later stages)
 

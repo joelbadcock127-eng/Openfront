@@ -3,9 +3,9 @@
  *
  * Converts Natural Earth 10m vector data (public domain) into the game's
  * streamed world: an Equal Earth–projected, chunked, multi-LOD terrain
- * pyramid with LOD0/LOD1 detail across all of Oceania, plus playable
- * high-detail windows (Bass Strait, New Zealand N/S, Torres Strait,
- * East Australia) emitted in the standard OpenFront map format.
+ * pyramid with LOD0/LOD1 detail across all of Oceania, plus the playable
+ * one-world Oceania map (all of Oceania as ONE map at ~1.2 km/tile)
+ * emitted in the standard OpenFront map format.
  *
  * Run:  npx tsx scripts/world/build-world.ts
  * Requires the datasets in map-generator/world-data/ (see docs/GEOGRAPHIC_DATA.md).
@@ -164,62 +164,48 @@ const DETAIL_REGION = {
 };
 
 /**
- * Playable windows: OpenFront-format maps sliced from the detail region's
- * LOD-0 grid, each kept near the engine's proven no-lag scale (the largest
- * upstream map is ~8M tiles; these are 8.4–12.6M with far lower land
- * fractions). `id` must equal the GameMapType key lowercased (the map
- * loader derives the resources/maps/<id>/ directory from the key).
- * `gameMap` is the GameMapType key recorded in world-index.json.
- * The Bass Strait bbox is the original Stage-2 window and must not change
- * (its LOD-0 rect is load-bearing for existing tests/screens).
+ * Playable windows: OpenFront-format maps cut from the detail region's grid.
+ * One window = one continuous match. `lod` is the resolution the game map is
+ * emitted at: a game tile covers 2^lod LOD-0 world cells (lod 1 ⇒ ~1.2 km
+ * tiles). The whole of Oceania is ONE map — a single world, a single
+ * territorial state — at the highest resolution that measurably runs
+ * lag-free (a LOD-0 Oceania map would be 235M tiles, ~28× the engine's
+ * proven ceiling; see docs/WORLD_PERFORMANCE.md for the measurements).
+ * `id` must equal the GameMapType key lowercased (the map loader derives
+ * the resources/maps/<id>/ directory from the key). `gameMap` is the
+ * GameMapType key recorded in world-index.json.
  */
 const WINDOWS: Array<{
   id: string;
   gameMap: string;
+  lod: number;
+  maxNations: number;
+  /** Per-country ceiling so one country can't fill every nation slot. */
+  maxNationsPerCountry: number;
+  /** ISO a2 codes eligible for named nations (other land stays wilderness). */
+  nationIsos?: string[];
+  /** City names always included as nations when present (geo anchors). */
+  pinnedNations?: string[];
   lonMin: number;
   lonMax: number;
   latMin: number;
   latMax: number;
 }> = [
   {
-    id: "worldwindow",
-    gameMap: "WorldWindow",
-    lonMin: 142.4,
-    lonMax: 150.6,
-    latMin: -44.8,
-    latMax: -36.6,
-  },
-  {
-    id: "newzealandsouth",
-    gameMap: "NewZealandSouth",
-    lonMin: 166.2,
-    lonMax: 175.2,
-    latMin: -47.4,
-    latMax: -40.2,
-  },
-  {
-    id: "newzealandnorth",
-    gameMap: "NewZealandNorth",
-    lonMin: 172.4,
-    lonMax: 178.8,
-    latMin: -41.8,
-    latMax: -34.2,
-  },
-  {
-    id: "torresstrait",
-    gameMap: "TorresStrait",
-    lonMin: 140.0,
-    lonMax: 150.8,
-    latMin: -12.6,
-    latMax: -2.6,
-  },
-  {
-    id: "eastaustralia",
-    gameMap: "EastAustralia",
-    lonMin: 147.8,
-    lonMax: 154.4,
-    latMin: -35.8,
-    latMax: -24.4,
+    id: "worldoceania",
+    gameMap: "WorldOceania",
+    lod: 1,
+    maxNations: 24,
+    maxNationsPerCountry: 12,
+    // The bounding box necessarily includes maritime Southeast Asia (Java,
+    // Borneo, the southern Philippines) — that land is playable wilderness,
+    // but the named AI nations are Oceania's.
+    nationIsos: ["au", "nz", "pg", "fj", "sb", "vu", "nc"],
+    pinnedNations: ["Darwin", "Hobart", "Wellington", "Port Moresby", "Suva"],
+    lonMin: DETAIL_REGION.lonMin,
+    lonMax: DETAIL_REGION.lonMax,
+    latMin: DETAIL_REGION.latMin,
+    latMax: DETAIL_REGION.latMax,
   },
 ];
 
@@ -514,9 +500,13 @@ function emitWindowMap(
     return g;
   };
 
-  const full = toFinished(detail, 0);
-  const half = toFinished(downsampleLand(detail), 1);
-  const quarter = toFinished(downsampleLand(downsampleLand(detail)), 2);
+  // The game map is emitted at win.lod (one tile = 2^lod LOD-0 cells);
+  // map4x/map16x are the engine's half/quarter-per-axis mini variants.
+  let base = detail;
+  for (let k = 0; k < win.lod; k++) base = downsampleLand(base);
+  const full = toFinished(base, win.lod);
+  const half = toFinished(downsampleLand(base), win.lod + 1);
+  const quarter = toFinished(downsampleLand(downsampleLand(base)), win.lod + 2);
 
   fs.writeFileSync(path.join(windowMapDir, "map.bin"), full.data);
   fs.writeFileSync(path.join(windowMapDir, "map4x.bin"), half.data);
@@ -543,18 +533,23 @@ function emitWindowMap(
         p.lon >= win.lonMin &&
         p.lon <= win.lonMax &&
         p.lat >= win.latMin &&
-        p.lat <= win.latMax,
+        p.lat <= win.latMax &&
+        (!win.nationIsos || win.nationIsos.includes(p.iso)),
     )
     .sort((a, b) => b.pop - a.pop);
-  for (const c of candidates) {
-    if (nations.length >= 10) break;
+
+  const usedNames = new Set<string>();
+  const perCountry = new Map<string, number>();
+  const addNation = (c: (typeof candidates)[number]): void => {
+    if (nations.length >= win.maxNations || usedNames.has(c.name)) return;
+    if ((perCountry.get(c.iso) ?? 0) >= win.maxNationsPerCountry) return;
     const w = grid.geoToWorld(c.lon, c.lat);
-    let x = Math.floor(w.x) - originLod0X;
-    let y = Math.floor(w.y) - originLod0Y;
+    let x = (Math.floor(w.x) - originLod0X) >> win.lod;
+    let y = (Math.floor(w.y) - originLod0Y) >> win.lod;
     // Snap to nearest land cell within a small radius (coastal cities can
     // project a cell or two into water).
     const snapped = snapToLand(full, x, y, 20);
-    if (!snapped) continue;
+    if (!snapped) return;
     [x, y] = snapped;
     // Country flag from the place's ISO code when the asset exists.
     const flag =
@@ -562,8 +557,25 @@ function emitWindowMap(
       fs.existsSync(path.join(flagsDir, `${c.iso}.svg`))
         ? c.iso
         : "au";
+    usedNames.add(c.name);
+    perCountry.set(c.iso, (perCountry.get(c.iso) ?? 0) + 1);
     nations.push({ coordinates: [x, y], flag, name: c.name });
+  };
+
+  // Pinned geographic anchors first, then each country's largest city, then
+  // fill remaining slots by population.
+  for (const pin of win.pinnedNations ?? []) {
+    const c = candidates.find((p) => p.name === pin);
+    if (c) addNation(c);
   }
+  const seenCountry = new Set<string>();
+  for (const c of candidates) {
+    if (!seenCountry.has(c.iso)) {
+      seenCountry.add(c.iso);
+      addNation(c);
+    }
+  }
+  for (const c of candidates) addNation(c);
   log(
     `window ${win.id} nations: ${nations.map((n) => n.name).join(", ") || "(none found)"}`,
   );
@@ -856,12 +868,13 @@ function main(): void {
   const windowRefs: Array<{
     id: string;
     gameMap: string;
+    lod: number;
     lod0Rect: { x: number; y: number; width: number; height: number };
   }> = [];
   for (const win of WINDOWS) {
     const r = snapRect(win);
     log(
-      `emitting window ${win.id}: ${r.width}x${r.height} at (${r.x},${r.y})…`,
+      `emitting window ${win.id}: ${r.width >> win.lod}x${r.height >> win.lod} game tiles at LOD${win.lod} (LOD0 rect ${r.width}x${r.height} at ${r.x},${r.y})…`,
     );
     const slice = sliceGrid(
       { width: rw, height: rh, data: detail.data },
@@ -871,7 +884,12 @@ function main(): void {
       r.height,
     );
     emitWindowMap(win, slice, r.x, r.y);
-    windowRefs.push({ id: win.id, gameMap: win.gameMap, lod0Rect: r });
+    windowRefs.push({
+      id: win.id,
+      gameMap: win.gameMap,
+      lod: win.lod,
+      lod0Rect: r,
+    });
   }
 
   const worldIndex = {

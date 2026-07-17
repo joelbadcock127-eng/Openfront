@@ -1,0 +1,212 @@
+{
+  "name": "WorldOceania",
+  "map": {
+    "width": 8192,
+    "height": 7168,
+    "num_land_tiles": 9923929
+  },
+  "map4x": {
+    "width": 4096,
+    "height": 3584,
+    "num_land_tiles": 2490130
+  },
+  "map16x": {
+    "width": 2048,
+    "height": 1792,
+    "num_land_tiles": 626577
+  },
+  "nations": [
+    {
+      "coordinates": [
+        3584,
+        2835
+      ],
+      "flag": "au",
+      "name": "Darwin"
+    },
+    {
+      "coordinates": [
+        3472,
+        6305
+      ],
+      "flag": "au",
+      "name": "Hobart"
+    },
+    {
+      "coordinates": [
+        5792,
+        6144
+      ],
+      "flag": "nz",
+      "name": "Wellington"
+    },
+    {
+      "coordinates": [
+        5118,
+        2476
+      ],
+      "flag": "pg",
+      "name": "Port Moresby"
+    },
+    {
+      "coordinates": [
+        7663,
+        3522
+      ],
+      "flag": "fj",
+      "name": "Suva"
+    },
+    {
+      "coordinates": [
+        4436,
+        5347
+      ],
+      "flag": "au",
+      "name": "Sydney"
+    },
+    {
+      "coordinates": [
+        6174,
+        5669
+      ],
+      "flag": "nz",
+      "name": "Auckland"
+    },
+    {
+      "coordinates": [
+        6415,
+        4012
+      ],
+      "flag": "nc",
+      "name": "Nouméa"
+    },
+    {
+      "coordinates": [
+        6272,
+        2472
+      ],
+      "flag": "sb",
+      "name": "Honiara"
+    },
+    {
+      "coordinates": [
+        6779,
+        3474
+      ],
+      "flag": "vu",
+      "name": "Port Vila"
+    },
+    {
+      "coordinates": [
+        3659,
+        5774
+      ],
+      "flag": "au",
+      "name": "Melbourne"
+    },
+    {
+      "coordinates": [
+        4981,
+        4616
+      ],
+      "flag": "au",
+      "name": "Brisbane"
+    },
+    {
+      "coordinates": [
+        1580,
+        5128
+      ],
+      "flag": "au",
+      "name": "Perth"
+    },
+    {
+      "coordinates": [
+        3323,
+        5459
+      ],
+      "flag": "au",
+      "name": "Adelaide"
+    },
+    {
+      "coordinates": [
+        4558,
+        5227
+      ],
+      "flag": "au",
+      "name": "Newcastle"
+    },
+    {
+      "coordinates": [
+        4982,
+        4688
+      ],
+      "flag": "au",
+      "name": "Gold Coast"
+    },
+    {
+      "coordinates": [
+        3664,
+        5804
+      ],
+      "flag": "au",
+      "name": "Cranbourne"
+    },
+    {
+      "coordinates": [
+        6172,
+        5685
+      ],
+      "flag": "nz",
+      "name": "Manukau"
+    },
+    {
+      "coordinates": [
+        5414,
+        6376
+      ],
+      "flag": "nz",
+      "name": "Christchurch"
+    },
+    {
+      "coordinates": [
+        4174,
+        5498
+      ],
+      "flag": "au",
+      "name": "Canberra"
+    },
+    {
+      "coordinates": [
+        4379,
+        5402
+      ],
+      "flag": "au",
+      "name": "Wollongong"
+    },
+    {
+      "coordinates": [
+        6157,
+        5669
+      ],
+      "flag": "nz",
+      "name": "Waitakere"
+    },
+    {
+      "coordinates": [
+        6180,
+        5662
+      ],
+      "flag": "nz",
+      "name": "North Shore"
+    },
+    {
+      "coordinates": [
+        6140,
+        5769
+      ],
+      "flag": "nz",
+      "name": "Hamilton"
+    }
+  ]
+}

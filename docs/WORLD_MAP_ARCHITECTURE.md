@@ -139,15 +139,18 @@ canvas, below the HUD, pointer-events off):
 
 ## Simulation strategy (hybrid, Stage 2)
 
-- The **active simulation** runs on the selected playable window — Bass
-  Strait (4096×2048 = 8.4M tiles, the scale of the largest upstream map),
-  New Zealand South/North (4096×3072), Torres Strait/New Guinea
-  (3072×3072) or East Australia (4096×3072) — using the unmodified
-  deterministic engine in a Web Worker: fine cells at the frontier of
-  play, full OpenFront rules, AI, navy, structures. All windows are cut
-  from the same LOD-0 Oceania grid and registered in
-  `world-index.json` (`windows[]`, keyed by GameMapType).
-- Every window is cut from the same LOD-0 world data (land bits are
+- The **active simulation** runs on the playable window: ALL of Oceania
+  as one map (8192×7168 = 58.7M tiles at ~1.2 km per tile — the whole
+  Australian continent, New Zealand, New Guinea and the island arcs in a
+  single match with a single territorial state), using the unmodified
+  deterministic engine in a Web Worker: full OpenFront rules, AI, navy,
+  structures. The map is cut from the same Oceania world grid (at LOD 1;
+  one game tile = 2 LOD-0 cells per axis, recorded as `lod` in
+  `world-index.json` `windows[]`) and land bits are unit-tested identical
+  to the world packs. ~1.2 km/tile is the highest resolution that
+  measurably runs lag-free at this extent; the LOD-0 data already exists
+  for the day the engine can simulate 235M tiles.
+- The window is cut from the same world data (land bits are
   unit-tested identical), placed at its world origin — territory, attacks
   and naval movement inside it cross chunk boundaries trivially because
   the simulation is not chunked; chunks are a storage/streaming concept.
@@ -192,7 +195,9 @@ content-addressed by grid version); a save needs only dynamic state
   edge is not possible; the date-line edge is visible at full-world zoom.
 - The playable window boundary is visible as a resolution/render seam at
   high zoom-out (the window renders via WebGL minification rather than
-  aggregated summaries).
+  aggregated summaries). Inside the playable map the finest zoom shows
+  the game's ~1.2 km tiles; the ~0.61 km world data refines the view
+  only outside the playable rect until the playable resolution rises.
 - Simulation outside the window (Stage 4) and world-scale saves are not
   implemented; a match's conquerable area today is the window.
 - Terrain "elevation" is distance-to-coast, not real elevation data (no

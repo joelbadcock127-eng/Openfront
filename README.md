@@ -117,16 +117,18 @@ it is otherwise cosmetic).
 
 ## The continuous world map
 
-The flagship modes play on one continuous, streamed model of the real
-Earth. Five high-detail theatres cover Oceania — **Bass Strait** (the
-default; spawn near Devonport), **New Zealand South**, **New Zealand
-North**, **Torres Strait / New Guinea** and **East Australia** — all cut
-from the same ~0.6 km/cell terrain grid, which spans the whole Oceania
-region (Australia to Fiji). Pick any of them, fight locally, and zoom out
-— mid-match, with no loading screen — until the whole planet is on
-screen. Terrain streams in 256²-cell chunks over HTTP Range requests
-across a 7-level LOD pyramid built from Natural Earth 10m data in an
-Equal Earth projection.
+The flagship mode (**World: Oceania**, the default) plays on one
+continuous, streamed model of the real Earth: the whole of Oceania — the
+entire Australian continent (Perth to Darwin to Sydney), Tasmania, New
+Zealand, New Guinea and the Pacific island arcs out to Fiji — is ONE
+playable map, one match, one territorial state (58.7M tiles at ~1.2 km
+per tile, the highest resolution that measurably runs lag-free; see
+docs/WORLD_PERFORMANCE.md). Fight anywhere on it and zoom out —
+mid-match, with no loading screen — until the whole planet is on screen.
+Terrain streams in 256²-cell chunks over HTTP Range requests across a
+7-level LOD pyramid built from Natural Earth 10m data in an Equal Earth
+projection; the underlying ~0.6 km world data already covers the whole
+region, ready for when the engine can simulate it directly.
 
 - Architecture: [docs/WORLD_MAP_ARCHITECTURE.md](docs/WORLD_MAP_ARCHITECTURE.md)
 - Data sources & licences: [docs/GEOGRAPHIC_DATA.md](docs/GEOGRAPHIC_DATA.md)
