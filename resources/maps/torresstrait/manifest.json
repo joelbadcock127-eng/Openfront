@@ -1,0 +1,131 @@
+{
+  "name": "TorresStrait",
+  "map": {
+    "width": 3072,
+    "height": 3072,
+    "num_land_tiles": 2948142
+  },
+  "map4x": {
+    "width": 1536,
+    "height": 1536,
+    "num_land_tiles": 738863
+  },
+  "map16x": {
+    "width": 768,
+    "height": 768,
+    "num_land_tiles": 185612
+  },
+  "nations": [
+    {
+      "coordinates": [
+        2045,
+        1880
+      ],
+      "flag": "pg",
+      "name": "Port Moresby"
+    },
+    {
+      "coordinates": [
+        849,
+        1643
+      ],
+      "flag": "id",
+      "name": "Merauke"
+    },
+    {
+      "coordinates": [
+        2094,
+        1214
+      ],
+      "flag": "pg",
+      "name": "Lae"
+    },
+    {
+      "coordinates": [
+        1910,
+        845
+      ],
+      "flag": "pg",
+      "name": "Madang"
+    },
+    {
+      "coordinates": [
+        1612,
+        1001
+      ],
+      "flag": "pg",
+      "name": "Mt.  Hagen"
+    },
+    {
+      "coordinates": [
+        1819,
+        1055
+      ],
+      "flag": "pg",
+      "name": "Goroka"
+    },
+    {
+      "coordinates": [
+        2260,
+        1711
+      ],
+      "flag": "pg",
+      "name": "Popondetta"
+    },
+    {
+      "coordinates": [
+        1502,
+        1070
+      ],
+      "flag": "pg",
+      "name": "Mendi"
+    },
+    {
+      "coordinates": [
+        1547,
+        435
+      ],
+      "flag": "pg",
+      "name": "Wewak"
+    },
+    {
+      "coordinates": [
+        2695,
+        924
+      ],
+      "flag": "pg",
+      "name": "Kimbe"
+    }
+  ],
+  "resources": [
+    {
+      "name": "Porgera Gold",
+      "type": "gold",
+      "x": 1423,
+      "y": 905
+    },
+    {
+      "name": "Ok Tedi Copper",
+      "type": "copper",
+      "x": 1066,
+      "y": 844
+    }
+  ],
+  "chokepoints": [
+    {
+      "name": "Torres Strait",
+      "x": 1196,
+      "y": 1998,
+      "radius": 164
+    },
+    {
+      "name": "Vitiaz Strait",
+      "x": 2262,
+      "y": 1010,
+      "radius": 131
+    }
+  ],
+  "climate": {
+    "monsoonMaxY": 3072
+  }
+}
