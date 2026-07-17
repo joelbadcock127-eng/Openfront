@@ -67,9 +67,15 @@ export class WinCheckExecution implements Execution {
     const timeElapsed = this.mg.elapsedGameSeconds();
     const numTilesWithoutFallout =
       this.mg.numLandTiles() - this.mg.numTilesWithFallout();
+    // Land domination only applies when it is the selected victory
+    // condition; economic/straits victories are enforced by WorldExecution
+    // (the time limits below always apply).
+    const dominationEnabled =
+      this.mg.config().victoryCondition() === "domination";
     if (
-      (max.numTilesOwned() / numTilesWithoutFallout) * 100 >
-        this.mg.config().percentageTilesOwnedToWin() ||
+      (dominationEnabled &&
+        (max.numTilesOwned() / numTilesWithoutFallout) * 100 >
+          this.mg.config().percentageTilesOwnedToWin()) ||
       (this.mg.config().gameConfig().maxTimerValue !== undefined &&
         timeElapsed - this.mg.config().gameConfig().maxTimerValue! * 60 >= 0) ||
       timeElapsed >= WinCheckExecution.HARD_TIME_LIMIT_SECONDS

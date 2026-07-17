@@ -48,6 +48,9 @@ export class AiAttackBehavior {
     private expandRatio: number,
     private allianceBehavior?: NationAllianceBehavior,
     private emojiBehavior?: NationEmojiBehavior,
+    /** Personality bias: strategy names moved to the front of the
+     * difficulty order (see AiPersonality). */
+    private priorityStrategies?: string[],
   ) {}
 
   maybeAttack() {
@@ -358,24 +361,36 @@ export class AiAttackBehavior {
 
     const donate = (): boolean => this.donateTroops();
 
-    // Return strategies in order based on difficulty
-    // Easy nations get the dumbest order, impossible nations get the smartest order
-    switch (difficulty) {
-      case Difficulty.Easy:
-        // prettier-ignore
-        return [nuked, bots, retaliate, assist, betray, hated, weakest];
-      case Difficulty.Medium:
-        // prettier-ignore
-        return [bots, nuked, retaliate, assist, betray, hated, afk, traitor, weakest, island, donate];
-      case Difficulty.Hard:
-        // prettier-ignore
-        return [bots, retaliate, assist, betray, nuked, traitor, afk, hated, veryWeak, victim, weakest, island, donate];
-      case Difficulty.Impossible:
-        // prettier-ignore
-        return [retaliate, bots, veryWeak, assist, traitor, afk, betray, victim, nuked, hated, weakest, island, donate];
-      default:
-        assertNever(difficulty);
-    }
+    // Strategies in order based on difficulty; easy nations get the
+    // dumbest order, impossible nations the smartest. The AI personality
+    // then pulls its priority strategies to the front (grudges, turtling…).
+    const base = (() => {
+      switch (difficulty) {
+        case Difficulty.Easy:
+          // prettier-ignore
+          return [nuked, bots, retaliate, assist, betray, hated, weakest];
+        case Difficulty.Medium:
+          // prettier-ignore
+          return [bots, nuked, retaliate, assist, betray, hated, afk, traitor, weakest, island, donate];
+        case Difficulty.Hard:
+          // prettier-ignore
+          return [bots, retaliate, assist, betray, nuked, traitor, afk, hated, veryWeak, victim, weakest, island, donate];
+        case Difficulty.Impossible:
+          // prettier-ignore
+          return [retaliate, bots, veryWeak, assist, traitor, afk, betray, victim, nuked, hated, weakest, island, donate];
+        default:
+          assertNever(difficulty);
+      }
+    })();
+    if (this.priorityStrategies === undefined) return base;
+    const byName: Record<string, () => boolean> = {
+      nuked, bots, retaliate, assist, betray, hated, weakest,
+      afk, traitor, veryWeak, victim, island, donate,
+    };
+    const priority = this.priorityStrategies
+      .map((n) => byName[n])
+      .filter((f) => f !== undefined && base.includes(f));
+    return [...priority, ...base.filter((f) => !priority.includes(f))];
   }
 
   private hasNeighboringBotWithStructures(): boolean {

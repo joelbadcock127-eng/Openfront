@@ -558,6 +558,17 @@ export interface Player {
   doomsdayClockTicks(): number;
   enterDoomsdayClock(): void;
   clearDoomsdayClock(): void;
+  // Capital: the player's first spawn tile. Losing it triggers a temporary
+  // economic crisis until it is recovered or relocated (PlayerExecution).
+  capital(): TileRef | null;
+  setCapital(tile: TileRef | null): void;
+  inCapitalCrisis(): boolean;
+  startCapitalCrisis(): void;
+  clearCapitalCrisis(): void;
+  capitalCrisisStartedAt(): Tick;
+  // Espionage: per-player cooldown for spy operations.
+  lastSpyOpTick(): Tick;
+  recordSpyOp(): void;
   largestClusterBoundingBox: { min: Cell; max: Cell } | null;
   lastTileChange(): Tick;
 
@@ -702,6 +713,37 @@ export interface Player {
   bestTransportShipSpawn(tile: TileRef): TileRef | false;
 }
 
+/** Real resource deposit on the map (world-pipeline maps). */
+export interface ResourceSite {
+  name: string;
+  /** e.g. "iron" | "gold" | "coal" | "gas" | "oil" | "copper" | "bauxite" | "silver" */
+  type: string;
+  x: number;
+  y: number;
+}
+
+/** Strait chokepoint (world-pipeline maps). */
+export interface Chokepoint {
+  name: string;
+  x: number;
+  y: number;
+  /** Control radius in map tiles around the centre. */
+  radius: number;
+}
+
+/** Climate bands in map rows (world-pipeline maps). */
+export interface MapClimate {
+  /** Rows y < monsoonMaxY are in the monsoon belt (wet-season slowdown). */
+  monsoonMaxY: number;
+}
+
+/** Real-geography gameplay data carried by world-pipeline maps. */
+export interface MapExtras {
+  resources: ResourceSite[];
+  chokepoints: Chokepoint[];
+  climate?: MapClimate;
+}
+
 export interface Game extends GameMap {
   // Map & Dimensions
   isOnMap(cell: Cell): boolean;
@@ -760,6 +802,8 @@ export interface Game extends GameMap {
   setWinner(winner: Player | Team, allPlayersStats: AllPlayersStats): void;
   getWinner(): Player | Team | null;
   config(): Config;
+  /** Real-geography gameplay data (empty lists on classic maps). */
+  mapExtras(): MapExtras;
   isPaused(): boolean;
   setPaused(paused: boolean): void;
 
@@ -929,6 +973,15 @@ export enum MessageType {
   DONATION_RECEIVED,
   CHAT,
   RENEW_ALLIANCE,
+  // World-map gameplay (solo derivative additions).
+  CAPITAL_FALLEN,
+  CAPITAL_RECOVERED,
+  CAPITAL_RELOCATED,
+  RESOURCE_SEIZED,
+  CHOKEPOINT_CONTROLLED,
+  WORLD_EVENT,
+  SEASON_CHANGE,
+  SPY_OPERATION,
 }
 
 // Message categories used for filtering events in the EventsDisplay
@@ -964,6 +1017,14 @@ export const MESSAGE_TYPE_CATEGORIES: Record<MessageType, MessageCategory> = {
   [MessageType.DONATION_SENT]: MessageCategory.TRADE,
   [MessageType.DONATION_RECEIVED]: MessageCategory.TRADE,
   [MessageType.CHAT]: MessageCategory.CHAT,
+  [MessageType.CAPITAL_FALLEN]: MessageCategory.ATTACK,
+  [MessageType.CAPITAL_RECOVERED]: MessageCategory.ATTACK,
+  [MessageType.CAPITAL_RELOCATED]: MessageCategory.ATTACK,
+  [MessageType.RESOURCE_SEIZED]: MessageCategory.TRADE,
+  [MessageType.CHOKEPOINT_CONTROLLED]: MessageCategory.TRADE,
+  [MessageType.WORLD_EVENT]: MessageCategory.TRADE,
+  [MessageType.SEASON_CHANGE]: MessageCategory.TRADE,
+  [MessageType.SPY_OPERATION]: MessageCategory.ATTACK,
 } as const;
 
 /**

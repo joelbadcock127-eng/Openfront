@@ -23,6 +23,10 @@ import { NationStructureBehavior } from "./nation/NationStructureBehavior";
 import { NationWarshipBehavior } from "./nation/NationWarshipBehavior";
 import { SpawnExecution } from "./SpawnExecution";
 import { AiAttackBehavior } from "./utils/AiAttackBehavior";
+import {
+  AiPersonality,
+  rollPersonality,
+} from "./utils/AiPersonality";
 
 export class NationExecution implements Execution {
   private active = true;
@@ -39,6 +43,7 @@ export class NationExecution implements Execution {
   private mg: Game;
   private player: Player | null = null;
 
+  private personality: AiPersonality;
   private attackRate: number;
   private attackTick: number;
   private triggerRatio: number;
@@ -54,14 +59,19 @@ export class NationExecution implements Execution {
     this.random = new PseudoRandom(
       simpleHash(nation.playerInfo.id) + simpleHash(gameID),
     );
-    this.triggerRatio = this.random.nextInt(50, 60) / 100;
-    this.reserveRatio = this.random.nextInt(30, 40) / 100;
-    this.expandRatio = this.random.nextInt(10, 20) / 100;
+    // Deterministic archetype: same nation + game ⇒ same personality.
+    this.personality = rollPersonality(this.random);
+    this.triggerRatio = this.personality.triggerRatio;
+    this.reserveRatio = this.personality.reserveRatio;
+    this.expandRatio = this.personality.expandRatio;
   }
 
   init(mg: Game) {
     this.mg = mg;
-    this.attackRate = this.getAttackRate();
+    this.attackRate = Math.max(
+      5,
+      Math.round(this.getAttackRate() * this.personality.attackRateMultiplier),
+    );
     this.attackTick = this.random.nextInt(0, this.attackRate);
 
     if (!this.mg.hasPlayer(this.nation.playerInfo.id)) {
@@ -244,6 +254,7 @@ export class NationExecution implements Execution {
       this.expandRatio,
       this.allianceBehavior,
       this.emojiBehavior,
+      this.personality.priorityStrategies,
     );
     this.nukeBehavior = new NationNukeBehavior(
       this.random,

@@ -26,6 +26,12 @@ import {
   TERRAIN_OCEAN_BIT,
   WorldGrid,
 } from "../../src/core/world/WorldGrid";
+import {
+  buildWorldElevation,
+  landMagnitudeFromElevation,
+  waterMagnitudeFromDepth,
+  WorldElevation,
+} from "./elevation";
 import { encodePng } from "./png";
 import { Grid, rasterizeFeatures } from "./rasterize";
 import {
@@ -207,10 +213,133 @@ const WINDOWS: Array<{
     latMin: DETAIL_REGION.latMin,
     latMax: DETAIL_REGION.latMax,
   },
+  // Regional theatres — smaller matches at maximum detail, cut from the
+  // same grid and living in the same continuous world.
+  {
+    id: "bassstrait",
+    gameMap: "BassStrait",
+    lod: 0, // ~0.61 km/tile — the drilled-down theatre
+    maxNations: 10,
+    maxNationsPerCountry: 10,
+    nationIsos: ["au"],
+    pinnedNations: ["Hobart", "Launceston", "Melbourne", "Geelong"],
+    lonMin: 142.4,
+    lonMax: 150.6,
+    latMin: -44.8,
+    latMax: -36.6,
+  },
+  {
+    id: "newzealand",
+    gameMap: "NewZealand",
+    lod: 1, // whole country in one map (~1.2 km/tile)
+    maxNations: 12,
+    maxNationsPerCountry: 12,
+    nationIsos: ["nz"],
+    pinnedNations: ["Auckland", "Wellington", "Christchurch", "Dunedin"],
+    lonMin: 165.5,
+    lonMax: 179.4,
+    latMin: -47.6,
+    latMax: -33.8,
+  },
+  {
+    id: "torresstrait",
+    gameMap: "TorresStrait",
+    lod: 0,
+    maxNations: 10,
+    maxNationsPerCountry: 10,
+    nationIsos: ["au", "pg", "id"],
+    pinnedNations: ["Port Moresby", "Merauke"],
+    lonMin: 140.0,
+    lonMax: 150.8,
+    latMin: -12.6,
+    latMax: -2.6,
+  },
+  {
+    id: "eastaustralia",
+    gameMap: "EastAustralia",
+    lod: 0,
+    maxNations: 10,
+    maxNationsPerCountry: 10,
+    nationIsos: ["au"],
+    pinnedNations: ["Sydney", "Brisbane", "Canberra"],
+    lonMin: 147.8,
+    lonMax: 154.4,
+    latMin: -35.8,
+    latMax: -24.4,
+  },
 ];
 
 /** Ocean flood seed (single seed proves world-ocean connectivity). */
 const OCEAN_SEED: [number, number] = [-30, 0]; // mid-Atlantic
+
+/**
+ * Major rivers painted as thin water with periodic fords (land crossings)
+ * so they channel and slow land expansion without ever splitting a
+ * continent into disconnected landmasses. Selected from Natural Earth
+ * 10m rivers by scalerank.
+ */
+const RIVER_MAX_SCALERANK = 5;
+/** A 2-cell land ford roughly every this many km of river. */
+const RIVER_FORD_EVERY_KM = 30;
+
+/**
+ * Real resource deposits on their actual locations (approximate mine/field
+ * coordinates). Owning the site in-game grants an economy bonus; sites are
+ * emitted into each window's manifest (snapped to land).
+ */
+const RESOURCE_SITES: Array<{
+  name: string;
+  type: string;
+  lon: number;
+  lat: number;
+}> = [
+  { name: "Pilbara Iron", type: "iron", lon: 119.7, lat: -23.4 },
+  { name: "Middleback Iron", type: "iron", lon: 137.1, lat: -33.0 },
+  { name: "Kalgoorlie Gold", type: "gold", lon: 121.47, lat: -30.75 },
+  { name: "Bendigo Gold", type: "gold", lon: 144.28, lat: -36.76 },
+  { name: "Porgera Gold", type: "gold", lon: 143.13, lat: -5.47 },
+  { name: "Lihir Gold", type: "gold", lon: 152.64, lat: -3.12 },
+  { name: "Waihi Gold", type: "gold", lon: 175.84, lat: -37.39 },
+  { name: "Vatukoula Gold", type: "gold", lon: 177.85, lat: -17.5 },
+  { name: "Hunter Valley Coal", type: "coal", lon: 151.05, lat: -32.57 },
+  { name: "Bowen Basin Coal", type: "coal", lon: 148.2, lat: -22.5 },
+  { name: "Collie Coal", type: "coal", lon: 116.15, lat: -33.36 },
+  { name: "North West Shelf Gas", type: "gas", lon: 116.85, lat: -20.74 },
+  { name: "Gippsland Gas", type: "gas", lon: 147.1, lat: -38.24 },
+  { name: "Moomba Gas", type: "gas", lon: 140.2, lat: -28.1 },
+  { name: "Timor Sea Oil", type: "oil", lon: 130.85, lat: -12.47 },
+  { name: "Taranaki Oil", type: "oil", lon: 174.08, lat: -39.06 },
+  { name: "Olympic Dam Copper", type: "copper", lon: 136.89, lat: -30.44 },
+  { name: "Mount Isa Copper", type: "copper", lon: 139.49, lat: -20.73 },
+  { name: "Ok Tedi Copper", type: "copper", lon: 141.14, lat: -5.22 },
+  { name: "Grasberg Copper", type: "copper", lon: 137.11, lat: -4.06 },
+  { name: "Weipa Bauxite", type: "bauxite", lon: 141.87, lat: -12.68 },
+  { name: "Gove Bauxite", type: "bauxite", lon: 136.82, lat: -12.27 },
+  { name: "Broken Hill Silver", type: "silver", lon: 141.47, lat: -31.96 },
+  { name: "Cadia Gold", type: "gold", lon: 148.99, lat: -33.46 },
+];
+
+/**
+ * Strategic strait chokepoints: holding the shores in-game yields a naval
+ * toll. Emitted into window manifests (centre + control radius).
+ */
+const CHOKEPOINT_SITES: Array<{
+  name: string;
+  lon: number;
+  lat: number;
+  radiusKm: number;
+}> = [
+  { name: "Bass Strait", lon: 145.8, lat: -39.8, radiusKm: 140 },
+  { name: "Cook Strait", lon: 174.5, lat: -41.4, radiusKm: 80 },
+  { name: "Torres Strait", lon: 142.6, lat: -9.95, radiusKm: 100 },
+  { name: "Lombok Strait", lon: 115.7, lat: -8.7, radiusKm: 80 },
+  { name: "Makassar Strait", lon: 117.5, lat: -2.0, radiusKm: 140 },
+  { name: "Vitiaz Strait", lon: 147.8, lat: -5.9, radiusKm: 80 },
+  { name: "Foveaux Strait", lon: 168.2, lat: -46.7, radiusKm: 70 },
+];
+
+/** Monsoon belt: wet-season slowdown applies north (equatorward) of this. */
+const MONSOON_SOUTH_LAT = -20;
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -270,10 +399,99 @@ function carveStraits(g: TerrainGrid, lod: number, halfWidth: number): void {
   }
 }
 
+/** Real-elevation magnitude sampler for a grid at `lodAbs` whose local
+ * (0,0) sits at `originX/originY` in lodAbs cells. Undefined when the DEM
+ * dataset is absent (callers fall back to distance-based magnitude). */
+let worldElev: WorldElevation | null = null;
+function elevSamplerFor(
+  lodAbs: number,
+  originX = 0,
+  originY = 0,
+): ((x: number, y: number) => { landMag: number; waterMag: number }) | undefined {
+  const e = worldElev;
+  if (!e) return undefined;
+  return (x: number, y: number) => {
+    const m = e.at(lodAbs, originX + x, originY + y);
+    return {
+      landMag: landMagnitudeFromElevation(m),
+      waterMag: waterMagnitudeFromDepth(m),
+    };
+  };
+}
+
 function finishTerrain(g: TerrainGrid, lod: number): void {
   const [sx, sy] = geoToCell(OCEAN_SEED[0], OCEAN_SEED[1], lod);
   floodOcean(g, [[sx, sy]]);
-  computeShoreAndMagnitude(g, cellKmAt(lod));
+  computeShoreAndMagnitude(g, cellKmAt(lod), elevSamplerFor(lod));
+}
+
+/** River polylines (lon/lat vertex lists) selected for gameplay painting. */
+let riverLines: Array<Array<[number, number]>> = [];
+
+function loadRivers(): void {
+  const rivers = loadGeojson("ne_10m_rivers_lake_centerlines.geojson");
+  riverLines = [];
+  for (const f of rivers.features) {
+    const rank = Number(f.properties?.scalerank ?? 99);
+    if (rank > RIVER_MAX_SCALERANK) continue;
+    const geom = f.geometry;
+    const lines =
+      geom.type === "LineString"
+        ? [geom.coordinates as Array<[number, number]>]
+        : geom.type === "MultiLineString"
+          ? (geom.coordinates as Array<Array<[number, number]>>)
+          : [];
+    for (const line of lines) {
+      // Keep only lines that touch the detail region (cheap bbox test).
+      const touches = line.some(
+        ([lon, lat]) =>
+          lon >= DETAIL_REGION.lonMin &&
+          lon <= DETAIL_REGION.lonMax &&
+          lat >= DETAIL_REGION.latMin &&
+          lat <= DETAIL_REGION.latMax,
+      );
+      if (touches) riverLines.push(line);
+    }
+  }
+  log(`rivers: ${riverLines.length} major river lines in region`);
+}
+
+/**
+ * Paint rivers as 1-cell water with a 2-cell land ford roughly every
+ * RIVER_FORD_EVERY_KM, so rivers channel expansion but never disconnect a
+ * landmass. Deterministic: ford positions follow the painted-cell counter.
+ * Must run on raw land grids BEFORE ocean flood / shore / magnitude.
+ */
+function paintRivers(
+  g: TerrainGrid,
+  lodAbs: number,
+  originX: number,
+  originY: number,
+): void {
+  const proj = projectorForLod(lodAbs);
+  const fordEvery = Math.max(8, Math.round(RIVER_FORD_EVERY_KM / cellKmAt(lodAbs)));
+  for (const line of riverLines) {
+    let painted = 0;
+    let prev: [number, number] | null = null;
+    for (const [lon, lat] of line) {
+      const p = proj(lon, lat);
+      const cx = Math.round(p.x) - originX;
+      const cy = Math.round(p.y) - originY;
+      if (prev) {
+        const steps = Math.max(Math.abs(cx - prev[0]), Math.abs(cy - prev[1]), 1);
+        for (let s = 1; s <= steps; s++) {
+          const t = s / steps;
+          const x = Math.round(prev[0] + (cx - prev[0]) * t);
+          const y = Math.round(prev[1] + (cy - prev[1]) * t);
+          painted++;
+          if (painted % fordEvery < 2) continue; // leave a land ford
+          if (x < 0 || y < 0 || x >= g.width || y >= g.height) continue;
+          g.data[y * g.width + x] = 0; // water
+        }
+      }
+      prev = [cx, cy];
+    }
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -496,7 +714,11 @@ function emitWindowMap(
       }
     }
     floodOcean(g, seeds);
-    computeShoreAndMagnitude(g, cellKmAt(lod));
+    computeShoreAndMagnitude(
+      g,
+      cellKmAt(lod),
+      elevSamplerFor(lod, originLod0X >> lod, originLod0Y >> lod),
+    );
     return g;
   };
 
@@ -504,6 +726,7 @@ function emitWindowMap(
   // map4x/map16x are the engine's half/quarter-per-axis mini variants.
   let base = detail;
   for (let k = 0; k < win.lod; k++) base = downsampleLand(base);
+  paintRivers(base, win.lod, originLod0X >> win.lod, originLod0Y >> win.lod);
   const full = toFinished(base, win.lod);
   const half = toFinished(downsampleLand(base), win.lod + 1);
   const quarter = toFinished(downsampleLand(downsampleLand(base)), win.lod + 2);
@@ -580,6 +803,72 @@ function emitWindowMap(
     `window ${win.id} nations: ${nations.map((n) => n.name).join(", ") || "(none found)"}`,
   );
 
+  // Real resource sites inside this window, snapped to land.
+  const resources: Array<{
+    name: string;
+    type: string;
+    x: number;
+    y: number;
+  }> = [];
+  for (const site of RESOURCE_SITES) {
+    if (
+      site.lon < win.lonMin ||
+      site.lon > win.lonMax ||
+      site.lat < win.latMin ||
+      site.lat > win.latMax
+    ) {
+      continue;
+    }
+    const w = grid.geoToWorld(site.lon, site.lat);
+    const x = (Math.floor(w.x) - originLod0X) >> win.lod;
+    const y = (Math.floor(w.y) - originLod0Y) >> win.lod;
+    // Offshore fields snap to their coastal terminal.
+    const snapped = snapToLand(full, x, y, 40);
+    if (!snapped) continue;
+    resources.push({ name: site.name, type: site.type, x: snapped[0], y: snapped[1] });
+  }
+
+  // Strait chokepoints inside this window (centre stays in water; the game
+  // checks shore ownership within the radius).
+  const chokepoints: Array<{
+    name: string;
+    x: number;
+    y: number;
+    radius: number;
+  }> = [];
+  for (const cp of CHOKEPOINT_SITES) {
+    if (
+      cp.lon < win.lonMin ||
+      cp.lon > win.lonMax ||
+      cp.lat < win.latMin ||
+      cp.lat > win.latMax
+    ) {
+      continue;
+    }
+    const w = grid.geoToWorld(cp.lon, cp.lat);
+    chokepoints.push({
+      name: cp.name,
+      x: (Math.floor(w.x) - originLod0X) >> win.lod,
+      y: (Math.floor(w.y) - originLod0Y) >> win.lod,
+      radius: Math.max(4, Math.round(cp.radiusKm / cellKmAt(win.lod))),
+    });
+  }
+
+  // Monsoon belt: rows north (equatorward) of MONSOON_SOUTH_LAT.
+  const monsoonW = grid.geoToWorld(
+    (win.lonMin + win.lonMax) / 2,
+    MONSOON_SOUTH_LAT,
+  );
+  const climate = {
+    monsoonMaxY: Math.max(
+      0,
+      Math.min(
+        full.height,
+        Math.round((monsoonW.y - originLod0Y) / (1 << win.lod)),
+      ),
+    ),
+  };
+
   const manifest = {
     name: win.gameMap,
     map: {
@@ -598,6 +887,9 @@ function emitWindowMap(
       num_land_tiles: countLand(quarter),
     },
     nations,
+    resources,
+    chokepoints,
+    climate,
   };
   fs.writeFileSync(
     path.join(windowMapDir, "manifest.json"),
@@ -650,6 +942,18 @@ function main(): void {
 
   log("loading Natural Earth datasets…");
   const land = loadGeojson("ne_10m_land.geojson");
+  loadRivers();
+  log("building world elevation raster from ETOPO1…");
+  worldElev = buildWorldElevation(
+    grid,
+    GLOBAL_BASE_LOD,
+    path.join(dataDir, "etopo1_ice_g_i2.bin"),
+  );
+  log(
+    worldElev
+      ? "elevation: real DEM magnitude enabled (ETOPO1)"
+      : "elevation: ETOPO1 missing — falling back to distance-to-coast magnitude",
+  );
   const minorIslands = loadGeojson("ne_10m_minor_islands.geojson");
   const lakes = loadGeojson("ne_10m_lakes.geojson");
 
@@ -772,6 +1076,7 @@ function main(): void {
     TERRAIN_LAND_BIT,
   );
   rasterizeFeatures(detail, lakes.features, projRegion, 0);
+  paintRivers(detail, 0, rx0, ry0);
 
   // Finished detail terrain for the world layer (ocean seeded from region
   // border cells that are ocean at the global base).
@@ -798,7 +1103,11 @@ function main(): void {
       pushIfOcean(rw - 1, y);
     }
     floodOcean(detailFinished, seeds);
-    computeShoreAndMagnitude(detailFinished, cellKmAt(0));
+    computeShoreAndMagnitude(
+      detailFinished,
+      cellKmAt(0),
+      elevSamplerFor(0, rx0, ry0),
+    );
   }
 
   const detail1Land = downsampleLand({
@@ -832,7 +1141,11 @@ function main(): void {
       }
     }
     floodOcean(detail1, seeds);
-    computeShoreAndMagnitude(detail1, cellKmAt(1));
+    computeShoreAndMagnitude(
+      detail1,
+      cellKmAt(1),
+      elevSamplerFor(1, rx0 >> 1, ry0 >> 1),
+    );
   }
 
   // --- Pack chunks ---------------------------------------------------------

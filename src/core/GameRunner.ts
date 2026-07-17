@@ -5,6 +5,7 @@ import { Executor } from "./execution/ExecutionManager";
 import { RecomputeRailClusterExecution } from "./execution/RecomputeRailClusterExecution";
 import { SpawnTimerExecution } from "./execution/SpawnTimerExecution";
 import { WinCheckExecution } from "./execution/WinCheckExecution";
+import { WorldExecution } from "./execution/WorldExecution";
 import {
   AllPlayers,
   BuildableUnit,
@@ -73,7 +74,23 @@ export async function createGameRunner(
     gameMap.miniGameMap,
     config,
     gameMap.teamGameSpawnAreas,
+    {
+      resources: gameMap.resources,
+      chokepoints: gameMap.chokepoints,
+      climate: gameMap.climate,
+    },
   );
+
+  // Real-geography gameplay (resources, chokepoint tolls, seasons, world
+  // events, alt victory conditions) on maps that carry the data.
+  const extras = game.mapExtras();
+  if (
+    extras.resources.length > 0 ||
+    extras.chokepoints.length > 0 ||
+    extras.climate !== undefined
+  ) {
+    game.addExecution(new WorldExecution(gameStart.gameID));
+  }
 
   const gr = new GameRunner(
     game,

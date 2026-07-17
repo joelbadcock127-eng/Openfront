@@ -63,21 +63,61 @@ function visit(i: number, next: number[], data: Uint8Array): void {
 }
 
 /**
- * Mark shoreline bits and write magnitude from BFS distance to the coast.
+ * Mark shoreline bits and write magnitude.
  *
- * Water magnitude is the distance in cells (capped 31) — the renderer's
- * depth shading. Land magnitude maps distance-in-KILOMETRES to the engine's
- * terrain bands (plains < 10, highland 10–19, mountain 20+), so coastal
- * strips are plains, interiors rise to highland and only deep continental
- * interiors (Central Australia, Tibet, Antarctica…) read as mountains.
- * Using kilometres keeps the bands visually consistent across LODs, whose
- * cell sizes differ. Without elevation data this doubles as a gameplay
- * proxy: the engine slows attacks on higher terrain, so pushing deep inland
- * is slower than fighting along coasts — a supply-distance flavour.
+ * When an `elevation` sampler is provided (real DEM data — see
+ * elevation.ts), land magnitude comes from real elevation bands and water
+ * magnitude from real depth (bathymetric shading), and the distance BFS is
+ * skipped entirely.
  *
- * `cellKm` is the ground size of one cell at this grid's resolution.
+ * Otherwise (fallback): water magnitude is the BFS distance to the coast in
+ * cells (capped 31) and land magnitude maps distance-in-KILOMETRES to the
+ * engine's terrain bands (plains < 10, highland 10–19, mountain 20+) so the
+ * bands stay visually consistent across LODs. `cellKm` is the ground size
+ * of one cell at this grid's resolution.
  */
 export function computeShoreAndMagnitude(
+  grid: TerrainGrid,
+  cellKm: number,
+  elevation?: (x: number, y: number) => { landMag: number; waterMag: number },
+): void {
+  if (elevation) {
+    computeShore(grid);
+    const { width, height, data } = grid;
+    for (let y = 0; y < height; y++) {
+      const row = y * width;
+      for (let x = 0; x < width; x++) {
+        const i = row + x;
+        const m = elevation(x, y);
+        const mag = isLand(data[i]) ? m.landMag : m.waterMag;
+        data[i] = (data[i] & ~0x1f) | mag;
+      }
+    }
+    return;
+  }
+  computeShoreAndMagnitudeByDistance(grid, cellKm);
+}
+
+/** Shoreline bits only: land next to water, or water next to land. */
+function computeShore(grid: TerrainGrid): void {
+  const { width, height, data } = grid;
+  for (let y = 0; y < height; y++) {
+    const row = y * width;
+    for (let x = 0; x < width; x++) {
+      const i = row + x;
+      const land = isLand(data[i]);
+      const leftDiff = x > 0 && isLand(data[i - 1]) !== land;
+      const rightDiff = x < width - 1 && isLand(data[i + 1]) !== land;
+      const upDiff = y > 0 && isLand(data[i - width]) !== land;
+      const downDiff = y < height - 1 && isLand(data[i + width]) !== land;
+      if (leftDiff || rightDiff || upDiff || downDiff) {
+        data[i] |= TERRAIN_SHORE_BIT;
+      }
+    }
+  }
+}
+
+function computeShoreAndMagnitudeByDistance(
   grid: TerrainGrid,
   cellKm: number,
 ): void {

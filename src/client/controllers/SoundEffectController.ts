@@ -1,5 +1,5 @@
 import { EventBus } from "../../core/EventBus";
-import { UnitType } from "../../core/game/Game";
+import { MessageType, UnitType } from "../../core/game/Game";
 import { GameUpdateType } from "../../core/game/GameUpdates";
 import { Controller } from "../Controller";
 import { PlaySoundEffectEvent, SoundEffect } from "../sound/Sounds";
@@ -26,6 +26,23 @@ export class SoundEffectController implements Controller {
     for (const c of updates[GameUpdateType.ConquestEvent] ?? []) {
       if (c.conquerorId === myPlayer.id()) {
         this.emit("ka-ching");
+      }
+    }
+
+    // Real-geography events: prize captures ring the till, world events and
+    // season changes ping softly.
+    for (const e of updates[GameUpdateType.DisplayEvent] ?? []) {
+      if (
+        (e.messageType === MessageType.RESOURCE_SEIZED ||
+          e.messageType === MessageType.CHOKEPOINT_CONTROLLED) &&
+        e.playerID === myPlayer.smallID()
+      ) {
+        this.emit("ka-ching");
+      } else if (
+        e.messageType === MessageType.WORLD_EVENT ||
+        e.messageType === MessageType.SPY_OPERATION
+      ) {
+        this.emit("message");
       }
     }
   }

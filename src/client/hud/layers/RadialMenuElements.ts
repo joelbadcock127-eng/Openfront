@@ -93,6 +93,7 @@ export const COLORS = {
   info: "#475569",
   target: "#ef4444",
   attack: "#ef4444",
+  spy: "#7c3aed",
   infoDetails: "#7f8c8d",
   infoEmoji: "#fbbf24",
   trade: "#0891b2",
@@ -105,6 +106,7 @@ export const COLORS = {
     default: "#6366f1",
     help: "#22c55e",
     attack: "#ef4444",
+  spy: "#7c3aed",
     defend: "#3b82f6",
     greet: "#f97316",
     misc: "#a855f7",
@@ -466,6 +468,39 @@ function createMenuElements(
     });
 }
 
+const spyOperation = (
+  op: "steal" | "incite",
+  name: string,
+): MenuElement => ({
+  id: `spy_${op}`,
+  name,
+  disabled: (params: MenuElementParams) =>
+    params.selected === null ||
+    params.selected.id() === params.myPlayer.id() ||
+    params.game.inSpawnPhase(),
+  color: COLORS.spy,
+  icon: targetIcon,
+  action: (params: MenuElementParams) => {
+    params.playerActionHandler.handleSpyOperation(op, params.selected!);
+    params.closeMenu();
+  },
+});
+
+export const spyMenuElement: MenuElement = {
+  id: "spy",
+  name: "radial_spy",
+  disabled: (params: MenuElementParams) =>
+    params.selected === null ||
+    params.game.inSpawnPhase() ||
+    params.selected.id() === params.myPlayer.id(),
+  icon: infoIcon,
+  color: COLORS.spy,
+  subMenu: () => [
+    spyOperation("steal", "radial_spy_steal"),
+    spyOperation("incite", "radial_spy_incite"),
+  ],
+};
+
 export const attackMenuElement: MenuElement = {
   id: Slot.Attack,
   name: "radial_attack",
@@ -677,6 +712,9 @@ export const rootMenuElement: MenuElement = {
             isFriendlyTarget(params) && !isDisconnected
               ? donateGoldRadialElement
               : attackMenuElement,
+            !isAllied && !isFriendlyTarget(params) && params.selected !== null
+              ? spyMenuElement
+              : null,
           ]),
     ];
 

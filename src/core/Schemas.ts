@@ -39,6 +39,7 @@ export type Intent =
   | BreakAllianceIntent
   | TargetPlayerIntent
   | EmojiIntent
+  | SpyIntent
   | DonateGoldIntent
   | DonateTroopsIntent
   | BuildUnitIntent
@@ -65,6 +66,7 @@ export type AllianceRejectIntent = z.infer<typeof AllianceRejectIntentSchema>;
 export type BreakAllianceIntent = z.infer<typeof BreakAllianceIntentSchema>;
 export type TargetPlayerIntent = z.infer<typeof TargetPlayerIntentSchema>;
 export type EmojiIntent = z.infer<typeof EmojiIntentSchema>;
+export type SpyIntent = z.infer<typeof SpyIntentSchema>;
 export type DonateGoldIntent = z.infer<typeof DonateGoldIntentSchema>;
 export type DonateTroopsIntent = z.infer<typeof DonateTroopIntentSchema>;
 export type EmbargoIntent = z.infer<typeof EmbargoIntentSchema>;
@@ -365,6 +367,12 @@ export const GameConfigSchema = z.object({
   spawnImmunityDuration: z.number().int().min(0).nullable().optional(), // In ticks
   disabledUnits: z.enum(UnitType).array().optional(),
   playerTeams: TeamCountConfigSchema.optional(),
+  // Solo derivative additions (all optional → old records stay valid).
+  // How the match is won: land domination (default), economic (hold the
+  // majority of resource sites), or straits (control every chokepoint).
+  victoryCondition: z.enum(["domination", "economic", "straits"]).optional(),
+  // Seasons + monsoon slowdown on world-pipeline maps (default on).
+  weatherEnabled: z.boolean().optional(),
   goldMultiplier: z.number().min(0.1).max(1000).nullable().optional(),
   startingGold: z.number().int().min(0).max(1000000000).nullable().optional(),
   hostCheats: z
@@ -468,6 +476,12 @@ export const BreakAllianceIntentSchema = z.object({
 
 export const TargetPlayerIntentSchema = z.object({
   type: z.literal("targetPlayer"),
+  target: ID,
+});
+
+export const SpyIntentSchema = z.object({
+  type: z.literal("spy"),
+  operation: z.enum(["steal", "incite"]),
   target: ID,
 });
 
@@ -582,6 +596,7 @@ export const IntentSchema = z.discriminatedUnion("type", [
   BreakAllianceIntentSchema,
   TargetPlayerIntentSchema,
   EmojiIntentSchema,
+  SpyIntentSchema,
   DonateGoldIntentSchema,
   DonateTroopIntentSchema,
   BuildUnitIntentSchema,

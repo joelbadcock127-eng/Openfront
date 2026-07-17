@@ -13,6 +13,8 @@ with `npm run gen-world`.
 | `ne_10m_minor_islands`           | Natural Earth (same mirror)                                                                            | 5.x                         | Public domain     | 2026-07-11 | Small islands complementing the land layer                                 |
 | `ne_10m_lakes`                   | Natural Earth (same mirror)                                                                            | 5.x                         | Public domain     | 2026-07-11 | Lakes (rasterised back to water; Caspian, Great Lakes, Baikal…)            |
 | `ne_10m_populated_places_simple` | Natural Earth (same mirror)                                                                            | 5.x                         | Public domain     | 2026-07-11 | City points → nation names/positions/flags (ISO code) for playable windows |
+| `ne_10m_rivers_lake_centerlines` | Natural Earth (same mirror)                                                                            | 5.x                         | Public domain     | 2026-07-17 | Major rivers painted as thin water with fords (gameplay)                   |
+| `etopo1_ice_g_i2`                | NOAA NCEI ETOPO1 (ngdc.noaa.gov), 1 arc-minute global relief, ice surface                              | ETOPO1 (2009)               | **Public domain** | 2026-07-17 | Real elevation → land terrain bands; bathymetry → water shading            |
 
 Natural Earth's terms: _"All versions of Natural Earth raster + vector map
 data found on this website are in the public domain."_ No attribution is
@@ -36,9 +38,21 @@ data licence (the repository's own licences still apply to code/assets).
    are re-filled as land. These are gameplay-scale adjustments, documented
    here per the plan's requirement.
 6. Ocean flood fill from a single mid-Atlantic seed distinguishes
-   navigable ocean from land-locked lakes; shoreline bits and
-   distance-to-coast magnitude computed per LOD (thresholds in km so
-   terrain bands agree across LODs).
+   navigable ocean from land-locked lakes; shoreline bits computed per LOD.
+   **Terrain magnitude comes from real elevation** (ETOPO1, forward-projected
+   into an Equal Earth raster, max-accumulated): plains ≤150 m, highland
+   150–600 m, low mountains 600–1500 m, high mountains above — so the Great
+   Dividing Range, the Southern Alps and the New Guinea highlands are real.
+   Water magnitude is real depth (bathymetric shading). If the DEM file is
+   absent the pipeline falls back to distance-to-coast bands.
+   6b. **Rivers**: major Natural Earth rivers (scalerank ≤ 5) are painted as
+   1-cell water with a 2-cell land ford roughly every 30 km, so rivers
+   channel and slow land expansion without ever splitting a continent
+   (unit-tested: Sydney→Perth stays land-connected).
+   6c. **Gameplay sites**: each playable window's manifest carries real
+   resource deposits (Pilbara iron, Kalgoorlie gold, …), strait chokepoints
+   (Bass/Cook/Torres/…, with control radii) and a monsoon-belt row bound
+   used by the in-game weather system.
 7. LOD pyramid: 2× majority downsampling per level (ties toward land to
    retain islands), then per-LOD re-carving and reclassification.
 8. Chunking into 256² tiles, gzip, concatenation into per-LOD packs +

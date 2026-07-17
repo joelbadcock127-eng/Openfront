@@ -105,6 +105,13 @@ export class SendEmojiIntentEvent implements GameEvent {
   ) {}
 }
 
+export class SendSpyIntentEvent implements GameEvent {
+  constructor(
+    public readonly operation: "steal" | "incite",
+    public readonly target: PlayerView,
+  ) {}
+}
+
 export class SendDonateGoldIntentEvent implements GameEvent {
   constructor(
     public readonly recipient: PlayerView,
@@ -240,6 +247,7 @@ export class Transport {
       this.onSendTargetPlayerIntent(e),
     );
     this.eventBus.on(SendEmojiIntentEvent, (e) => this.onSendEmojiIntent(e));
+    this.eventBus.on(SendSpyIntentEvent, (e) => this.onSendSpyIntent(e));
     this.eventBus.on(SendDonateGoldIntentEvent, (e) =>
       this.onSendDonateGoldIntent(e),
     );
@@ -525,6 +533,14 @@ export class Transport {
     this.sendIntent({
       type: "targetPlayer",
       target: event.targetID,
+    });
+  }
+
+  private onSendSpyIntent(event: SendSpyIntentEvent) {
+    this.sendIntent({
+      type: "spy",
+      operation: event.operation,
+      target: event.target.id(),
     });
   }
 

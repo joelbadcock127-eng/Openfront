@@ -18,6 +18,12 @@ export const ENABLED_SOLO_MAPS: readonly GameMapType[] = [
   // playable map, one match, one territorial state, with the rest of the
   // streamed Earth visible around it.
   GameMapType.WorldOceania,
+  // Regional theatres cut from the same world grid (Bass Strait at maximum
+  // ~0.61 km detail), plus the classic upstream World map.
+  GameMapType.BassStrait,
+  GameMapType.EastAustralia,
+  GameMapType.NewZealand,
+  GameMapType.TorresStrait,
   GameMapType.World,
 ];
 

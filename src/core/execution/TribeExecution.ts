@@ -4,6 +4,7 @@ import { simpleHash } from "../Util";
 import { AllianceExtensionExecution } from "./alliance/AllianceExtensionExecution";
 import { DeleteUnitExecution } from "./DeleteUnitExecution";
 import { AiAttackBehavior } from "./utils/AiAttackBehavior";
+import { rollPersonality } from "./utils/AiPersonality";
 
 export class TribeExecution implements Execution {
   private active = true;
@@ -20,11 +21,18 @@ export class TribeExecution implements Execution {
 
   constructor(private tribe: Player) {
     this.random = new PseudoRandom(simpleHash(tribe.id()));
-    this.attackRate = this.random.nextInt(40, 80);
+    // Deterministic archetype: same tribe ⇒ same personality.
+    const personality = rollPersonality(this.random);
+    this.attackRate = Math.max(
+      10,
+      Math.round(
+        this.random.nextInt(40, 80) * personality.attackRateMultiplier,
+      ),
+    );
     this.attackTick = this.random.nextInt(0, this.attackRate);
-    this.triggerRatio = this.random.nextInt(50, 60) / 100;
-    this.reserveRatio = this.random.nextInt(30, 40) / 100;
-    this.expandRatio = this.random.nextInt(10, 20) / 100;
+    this.triggerRatio = personality.triggerRatio;
+    this.reserveRatio = personality.reserveRatio;
+    this.expandRatio = personality.expandRatio;
   }
 
   activeDuringSpawnPhase(): boolean {

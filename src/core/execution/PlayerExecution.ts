@@ -3,6 +3,7 @@ import {
   Cell,
   Execution,
   Game,
+  MessageType,
   Player,
   Structures,
   UnitType,
@@ -85,6 +86,8 @@ export class PlayerExecution implements Execution {
         alliance.expire();
       }
     }
+
+    this.handleCapital(ticks);
 
     for (const embargo of this.player.getEmbargoes()) {
       if (
@@ -413,6 +416,68 @@ export class PlayerExecution implements Execution {
     }
 
     return result;
+  }
+
+
+  /** Ticks a capital crisis lasts before the capital relocates. */
+  private static readonly CAPITAL_CRISIS_TICKS = 600;
+
+  /**
+   * Capital crisis: losing the capital tile halves gold income (see
+   * Config.goldAdditionRate) until it is retaken, or until the crisis
+   * runs its course and the capital relocates to a surviving city (or any
+   * owned tile).
+   */
+  private handleCapital(ticks: number): void {
+    const capital = this.player.capital();
+    if (capital === null) return;
+    const owner = this.mg.owner(capital);
+    const holdsCapital = owner.isPlayer() && owner === this.player;
+    if (holdsCapital) {
+      if (this.player.inCapitalCrisis()) {
+        this.player.clearCapitalCrisis();
+        this.mg.displayMessage(
+          "events_display.capital_recovered",
+          MessageType.CAPITAL_RECOVERED,
+          this.player.id(),
+        );
+      }
+      return;
+    }
+    if (!this.player.inCapitalCrisis()) {
+      this.player.startCapitalCrisis();
+      this.mg.displayMessage(
+        "events_display.capital_fallen",
+        MessageType.CAPITAL_FALLEN,
+        this.player.id(),
+      );
+      return;
+    }
+    if (
+      ticks - this.player.capitalCrisisStartedAt() >=
+      PlayerExecution.CAPITAL_CRISIS_TICKS
+    ) {
+      // Relocate: prefer a standing city, else any owned tile.
+      const city = this.player
+        .units()
+        .find((u) => u.type() === UnitType.City);
+      let newCapital: TileRef | null = city?.tile() ?? null;
+      if (newCapital === null) {
+        for (const t of this.player.tiles()) {
+          newCapital = t;
+          break;
+        }
+      }
+      this.player.setCapital(newCapital);
+      this.player.clearCapitalCrisis();
+      if (newCapital !== null) {
+        this.mg.displayMessage(
+          "events_display.capital_relocated",
+          MessageType.CAPITAL_RELOCATED,
+          this.player.id(),
+        );
+      }
+    }
   }
 
   private removeOnDeath(): void {

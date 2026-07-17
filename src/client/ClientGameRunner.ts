@@ -715,11 +715,31 @@ async function createClientGame(
     // a game (e.g. joining another without a page reload) leaks the WebGL
     // context, canvas and input overlay — a few games and mobile browsers hit
     // their WebGL context limit. Idempotent: stop() may be called more than once.
+    // Real-geography markers (resource deposits, strait chokepoints) on
+    // maps that carry them; drawn above the game canvas, below the HUD.
+    let resourceOverlay: import("./world/ResourceOverlay").ResourceOverlay | null =
+      null;
+    if (gameMap.resources.length > 0 || gameMap.chokepoints.length > 0) {
+      void import("./world/ResourceOverlay").then(({ ResourceOverlay }) => {
+        if (rendererDisposed) return;
+        resourceOverlay = new ResourceOverlay(
+          gameRenderer.transformHandler,
+          gameView.width(),
+          gameView.height(),
+          gameMap.resources,
+          gameMap.chokepoints,
+          glCanvas,
+        );
+      });
+    }
+
     const disposeRenderer = (): void => {
       if (rendererDisposed) return;
       rendererDisposed = true;
       worldBackdrop?.dispose();
       worldBackdrop = null;
+      resourceOverlay?.dispose();
+      resourceOverlay = null;
       gameRenderer.transformHandler.setExtendedBounds(null);
       stopFrameLoop();
       view.dispose();

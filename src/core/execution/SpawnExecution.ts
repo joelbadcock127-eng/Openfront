@@ -74,6 +74,10 @@ export class SpawnExecution implements Execution {
     }
 
     player.setSpawnTile(spawn.center);
+    // The first spawn tile is the player's capital (see capital crisis
+    // handling in PlayerExecution).
+    player.setCapital(spawn.center);
+    player.clearCapitalCrisis();
 
     if (
       this.mg.config().gameConfig().gameType === GameType.Singleplayer &&

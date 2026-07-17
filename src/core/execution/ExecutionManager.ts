@@ -15,6 +15,7 @@ import { DonateTroopsExecution } from "./DonateTroopExecution";
 import { EmbargoAllExecution } from "./EmbargoAllExecution";
 import { EmbargoExecution } from "./EmbargoExecution";
 import { EmojiExecution } from "./EmojiExecution";
+import { SpyExecution } from "./SpyExecution";
 import { MarkDisconnectedExecution } from "./MarkDisconnectedExecution";
 import { MoveWarshipExecution } from "./MoveWarshipExecution";
 import { NationExecution } from "./NationExecution";
@@ -83,6 +84,13 @@ export class Executor {
         return new TargetPlayerExecution(player, intent.target);
       case "emoji":
         return new EmojiExecution(player, intent.recipient, intent.emoji);
+      case "spy":
+        return new SpyExecution(
+          this.gameID,
+          player,
+          intent.operation,
+          intent.target,
+        );
       case "donate_troops":
         return new DonateTroopsExecution(
           player,

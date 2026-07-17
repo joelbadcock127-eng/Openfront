@@ -13,6 +13,7 @@ import {
   SendEmojiIntentEvent,
   SendSpawnIntentEvent,
   SendTargetPlayerIntentEvent,
+  SendSpyIntentEvent,
 } from "../../Transport";
 import { UIState } from "../../UIState";
 import { PlayerView } from "../../view";
@@ -68,6 +69,10 @@ export class PlayerActionHandler {
     if (!targetId) return;
 
     this.eventBus.emit(new SendTargetPlayerIntentEvent(targetId));
+  }
+
+  handleSpyOperation(operation: "steal" | "incite", target: PlayerView) {
+    this.eventBus.emit(new SendSpyIntentEvent(operation, target));
   }
 
   handleDonateGold(recipient: PlayerView) {

@@ -17,6 +17,10 @@ import {
   UnitInfo,
   UnitType,
 } from "../game/Game";
+import {
+  weatherMagnitudeMultiplier,
+  weatherSpeedMultiplier,
+} from "../game/Weather";
 import { TileRef } from "../game/GameMap";
 import { UserSettings } from "../game/UserSettings";
 import { GameConfig, TeamCountConfig } from "../Schemas";
@@ -584,6 +588,16 @@ export class Config {
     return 30;
   }
 
+  /** Selected victory condition; classic land domination by default. */
+  victoryCondition(): "domination" | "economic" | "straits" {
+    return this._gameConfig.victoryCondition ?? "domination";
+  }
+
+  /** Seasons + monsoon slowdown (world-pipeline maps). Default on. */
+  weatherEnabled(): boolean {
+    return this._gameConfig.weatherEnabled ?? true;
+  }
+
   percentageTilesOwnedToWin(): number {
     if (this._gameConfig.gameMode === GameMode.Team) {
       return 95;
@@ -643,6 +657,12 @@ export class Config {
         throw new Error(`impassable terrain cannot be attacked`);
       default:
         throw new Error(`terrain type ${type} not supported`);
+    }
+    if (this.weatherEnabled()) {
+      // Wet-season slowdown inside the monsoon belt (world-pipeline maps).
+      const climate = gm.mapExtras().climate;
+      speed *= weatherSpeedMultiplier(gm, tileToConquer, climate);
+      mag *= weatherMagnitudeMultiplier(gm, tileToConquer, climate);
     }
     if (defender.isPlayer()) {
       for (const dp of gm.nearbyUnits(
@@ -872,7 +892,15 @@ export class Config {
   }
 
   goldAdditionRate(player: Player | PlayerView): Gold {
-    const multiplier = this.goldMultiplierFor(player);
+    let multiplier = this.goldMultiplierFor(player);
+    if (
+      typeof (player as Player).inCapitalCrisis === "function" &&
+      (player as Player).inCapitalCrisis()
+    ) {
+      // Losing your capital halves the economy until it is recovered or
+      // relocated (see PlayerExecution capital handling).
+      multiplier *= 0.5;
+    }
     let baseRate: bigint;
     if (player.type() === PlayerType.Bot) {
       baseRate = 50n;

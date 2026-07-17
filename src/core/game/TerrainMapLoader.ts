@@ -1,4 +1,11 @@
-import { GameMapSize, GameMapType, TeamGameSpawnAreas } from "./Game";
+import {
+  Chokepoint,
+  GameMapSize,
+  GameMapType,
+  MapClimate,
+  ResourceSite,
+  TeamGameSpawnAreas,
+} from "./Game";
 import { GameMap, GameMapImpl } from "./GameMap";
 import { GameMapLoader } from "./GameMapLoader";
 
@@ -8,6 +15,11 @@ export type TerrainMapData = {
   gameMap: GameMap;
   miniGameMap: GameMap;
   teamGameSpawnAreas?: TeamGameSpawnAreas;
+  /** Real-geography gameplay data (world-pipeline maps only). Coordinates
+   * are already scaled to the loaded map size. */
+  resources: ResourceSite[];
+  chokepoints: Chokepoint[];
+  climate?: MapClimate;
 };
 
 const loadedMaps = new Map<string, TerrainMapData>();
@@ -29,7 +41,17 @@ export interface MapManifest {
   // the remainder is generated procedurally.
   additionalNations?: AdditionalNation[];
   teamGameSpawnAreas?: TeamGameSpawnAreas;
+  // World-pipeline maps (scripts/world/build-world.ts) additionally carry
+  // real-geography gameplay data. All optional — classic maps omit them.
+  /** Real resource deposits; owning the site tile grants an economy bonus. */
+  resources?: ResourceSite[];
+  /** Strait chokepoints; holding the surrounding shores yields a naval toll. */
+  chokepoints?: Chokepoint[];
+  /** Climate bands in map rows (monsoon belt north of monsoonMaxY). */
+  climate?: MapClimate;
 }
+
+export type { Chokepoint, MapClimate, ResourceSite };
 
 export interface Nation {
   coordinates?: [number, number];
@@ -101,12 +123,36 @@ export async function loadTerrainMap(
     teamGameSpawnAreas = scaled;
   }
 
+  // Real-geography extras (world-pipeline maps); scale to compact size.
+  const half = mapSize === GameMapSize.Compact;
+  const resources = (manifest.resources ?? []).map((r) => ({
+    ...r,
+    x: half ? Math.floor(r.x / 2) : r.x,
+    y: half ? Math.floor(r.y / 2) : r.y,
+  }));
+  const chokepoints = (manifest.chokepoints ?? []).map((c) => ({
+    ...c,
+    x: half ? Math.floor(c.x / 2) : c.x,
+    y: half ? Math.floor(c.y / 2) : c.y,
+    radius: half ? Math.max(2, Math.floor(c.radius / 2)) : c.radius,
+  }));
+  const climate = manifest.climate
+    ? {
+        monsoonMaxY: half
+          ? Math.floor(manifest.climate.monsoonMaxY / 2)
+          : manifest.climate.monsoonMaxY,
+      }
+    : undefined;
+
   const result = {
     nations: manifest.nations,
     additionalNations: manifest.additionalNations ?? [],
     gameMap: gameMap,
     miniGameMap: miniMap,
     teamGameSpawnAreas,
+    resources,
+    chokepoints,
+    climate,
   };
   loadedMaps.set(cacheKey, result);
   return result;

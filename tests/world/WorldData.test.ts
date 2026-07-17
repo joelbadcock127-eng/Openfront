@@ -257,11 +257,28 @@ describe("playable window ↔ world consistency (one Oceania map)", () => {
   );
   const mapBin: Buffer = fs.readFileSync(path.join(mapDir, "map.bin"));
 
-  test("Oceania is registered as ONE playable window covering the region", () => {
-    expect(index.windows.map((w) => w.id)).toEqual(["worldoceania"]);
+  test("Oceania is ONE playable map covering the whole region; regional theatres are cut from the same grid", () => {
+    expect(index.windows.map((w) => w.id).sort()).toEqual([
+      "bassstrait",
+      "eastaustralia",
+      "newzealand",
+      "torresstrait",
+      "worldoceania",
+    ]);
     const region = index.detailRegions.find((r) => r.id === "oceania")!;
-    // One world: the playable map covers the entire detail region.
+    // One world: the flagship map covers the entire detail region.
     expect(win.lod0Rect).toEqual(region.lod0Rect);
+    // Every regional theatre lies inside it (same world, same grid).
+    for (const w of index.windows) {
+      expect(w.lod0Rect.x).toBeGreaterThanOrEqual(region.lod0Rect.x);
+      expect(w.lod0Rect.y).toBeGreaterThanOrEqual(region.lod0Rect.y);
+      expect(w.lod0Rect.x + w.lod0Rect.width).toBeLessThanOrEqual(
+        region.lod0Rect.x + region.lod0Rect.width,
+      );
+      expect(w.lod0Rect.y + w.lod0Rect.height).toBeLessThanOrEqual(
+        region.lod0Rect.y + region.lod0Rect.height,
+      );
+    }
   });
 
   test("map dimensions match the registered rect at the window LOD", () => {

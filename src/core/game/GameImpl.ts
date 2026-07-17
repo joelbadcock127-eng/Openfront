@@ -38,6 +38,7 @@ import {
   Unit,
   UnitInfo,
   UnitType,
+  MapExtras,
 } from "./Game";
 import { GameMap, TileRef } from "./GameMap";
 import { GameUpdate, GameUpdateType } from "./GameUpdates";
@@ -59,6 +60,7 @@ export function createGame(
   miniGameMap: GameMap,
   config: Config,
   teamGameSpawnAreas?: TeamGameSpawnAreas,
+  mapExtras?: MapExtras,
 ): Game {
   const stats = new StatsImpl();
   return new GameImpl(
@@ -69,12 +71,14 @@ export function createGame(
     config,
     stats,
     teamGameSpawnAreas,
+    mapExtras,
   );
 }
 
 export type CellString = string;
 
 export class GameImpl implements Game {
+  private _mapExtras: MapExtras;
   private _ticks = 0;
   private startTick: number | null = null;
 
@@ -125,7 +129,9 @@ export class GameImpl implements Game {
     private _config: Config,
     private _stats: Stats,
     teamGameSpawnAreas?: TeamGameSpawnAreas,
+    mapExtras?: MapExtras,
   ) {
+    this._mapExtras = mapExtras ?? { resources: [], chokepoints: [] };
     const constructorStart = performance.now();
 
     this._teamGameSpawnAreas = teamGameSpawnAreas;
@@ -436,6 +442,10 @@ export class GameImpl implements Game {
   }
   config(): Config {
     return this._config;
+  }
+
+  mapExtras(): MapExtras {
+    return this._mapExtras;
   }
 
   isPaused(): boolean {

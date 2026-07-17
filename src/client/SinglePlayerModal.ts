@@ -73,6 +73,9 @@ export class SinglePlayerModal extends BaseModal {
   @state() private maxTimerValue: number | undefined =
     DEFAULT_OPTIONS.maxTimerValue;
   @state() private instantBuild: boolean = DEFAULT_OPTIONS.instantBuild;
+  @state() private weatherEnabled: boolean = true;
+  @state() private victoryEconomic: boolean = false;
+  @state() private victoryStraits: boolean = false;
   @state() private randomSpawn: boolean = DEFAULT_OPTIONS.randomSpawn;
   @state() private goldMultiplier: boolean = DEFAULT_OPTIONS.goldMultiplier;
   @state() private goldMultiplierValue: number | undefined =
@@ -236,6 +239,18 @@ export class SinglePlayerModal extends BaseModal {
                     checked: this.compactMap,
                   },
                   {
+                    labelKey: "single_modal.weather",
+                    checked: this.weatherEnabled,
+                  },
+                  {
+                    labelKey: "single_modal.victory_economic",
+                    checked: this.victoryEconomic,
+                  },
+                  {
+                    labelKey: "single_modal.victory_straits",
+                    checked: this.victoryStraits,
+                  },
+                  {
                     labelKey: "single_modal.water_nukes",
                     checked: this.waterNukes,
                   },
@@ -363,6 +378,17 @@ export class SinglePlayerModal extends BaseModal {
         break;
       case "single_modal.compact_map":
         this.handleCompactMapChange(checked);
+        break;
+      case "single_modal.weather":
+        this.weatherEnabled = checked;
+        break;
+      case "single_modal.victory_economic":
+        this.victoryEconomic = checked;
+        if (checked) this.victoryStraits = false;
+        break;
+      case "single_modal.victory_straits":
+        this.victoryStraits = checked;
+        if (checked) this.victoryEconomic = false;
         break;
       case "single_modal.water_nukes":
         this.waterNukes = checked;
@@ -569,6 +595,12 @@ export class SinglePlayerModal extends BaseModal {
               donateTroops: false,
               infiniteTroops: this.infiniteTroops,
               instantBuild: this.instantBuild,
+              weatherEnabled: this.weatherEnabled,
+              victoryCondition: this.victoryEconomic
+                ? ("economic" as const)
+                : this.victoryStraits
+                  ? ("straits" as const)
+                  : ("domination" as const),
               randomSpawn: this.randomSpawn,
               disabledUnits: this.disabledUnits
                 .map((u) => Object.values(UnitType).find((ut) => ut === u))

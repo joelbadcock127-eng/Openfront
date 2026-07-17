@@ -822,6 +822,37 @@ export class PlayerImpl implements Player {
     this.relations.set(other, newRelation);
   }
 
+  private _capital: TileRef | null = null;
+  private _inCapitalCrisis = false;
+  private _capitalCrisisStartedAt: Tick = 0;
+  private _lastSpyOpTick: Tick = -1_000_000;
+
+  capital(): TileRef | null {
+    return this._capital;
+  }
+  setCapital(tile: TileRef | null): void {
+    this._capital = tile;
+  }
+  inCapitalCrisis(): boolean {
+    return this._inCapitalCrisis;
+  }
+  startCapitalCrisis(): void {
+    this._inCapitalCrisis = true;
+    this._capitalCrisisStartedAt = this.mg.ticks();
+  }
+  clearCapitalCrisis(): void {
+    this._inCapitalCrisis = false;
+  }
+  capitalCrisisStartedAt(): Tick {
+    return this._capitalCrisisStartedAt;
+  }
+  lastSpyOpTick(): Tick {
+    return this._lastSpyOpTick;
+  }
+  recordSpyOp(): void {
+    this._lastSpyOpTick = this.mg.ticks();
+  }
+
   decayRelations() {
     this.relations.forEach((r: number, p: Player) => {
       const sign = -1 * Math.sign(r);
