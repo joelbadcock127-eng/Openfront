@@ -130,6 +130,14 @@ Terrain streams in 256²-cell chunks over HTTP Range requests across a
 projection; the underlying ~0.6 km world data already covers the whole
 region, ready for when the engine can simulate it directly.
 
+The world is not just terrain: real mountain ranges (NOAA ETOPO1
+elevation) slow your armies, major rivers channel campaigns, 24 real
+resource deposits (Pilbara iron, Kalgoorlie gold…) and seven real straits
+pay whoever holds them, the monsoon slows wet-season offensives in the
+tropics, AI nations have personalities and grudges, capitals matter, spies
+steal and incite — and you can win by domination, economics, or strait
+supremacy. See [docs/GAMEPLAY_FEATURES.md](docs/GAMEPLAY_FEATURES.md).
+
 - Architecture: [docs/WORLD_MAP_ARCHITECTURE.md](docs/WORLD_MAP_ARCHITECTURE.md)
 - Data sources & licences: [docs/GEOGRAPHIC_DATA.md](docs/GEOGRAPHIC_DATA.md)
 - Benchmarks: [docs/WORLD_PERFORMANCE.md](docs/WORLD_PERFORMANCE.md)
