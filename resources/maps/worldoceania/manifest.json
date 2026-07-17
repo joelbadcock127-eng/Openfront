@@ -3,17 +3,17 @@
   "map": {
     "width": 8192,
     "height": 7168,
-    "num_land_tiles": 9923929
+    "num_land_tiles": 9921436
   },
   "map4x": {
     "width": 4096,
     "height": 3584,
-    "num_land_tiles": 2490130
+    "num_land_tiles": 2490103
   },
   "map16x": {
     "width": 2048,
     "height": 1792,
-    "num_land_tiles": 626577
+    "num_land_tiles": 626576
   },
   "nations": [
     {
@@ -208,5 +208,198 @@
       "flag": "nz",
       "name": "Hamilton"
     }
-  ]
+  ],
+  "resources": [
+    {
+      "name": "Pilbara Iron",
+      "type": "iron",
+      "x": 2272,
+      "y": 4145
+    },
+    {
+      "name": "Middleback Iron",
+      "type": "iron",
+      "x": 3314,
+      "y": 5245
+    },
+    {
+      "name": "Kalgoorlie Gold",
+      "type": "gold",
+      "x": 2114,
+      "y": 4992
+    },
+    {
+      "name": "Bendigo Gold",
+      "type": "gold",
+      "x": 3674,
+      "y": 5659
+    },
+    {
+      "name": "Porgera Gold",
+      "type": "gold",
+      "x": 4807,
+      "y": 1988
+    },
+    {
+      "name": "Lihir Gold",
+      "type": "gold",
+      "x": 5691,
+      "y": 1700
+    },
+    {
+      "name": "Waihi Gold",
+      "type": "gold",
+      "x": 6218,
+      "y": 5727
+    },
+    {
+      "name": "Vatukoula Gold",
+      "type": "gold",
+      "x": 7637,
+      "y": 3446
+    },
+    {
+      "name": "Hunter Valley Coal",
+      "type": "coal",
+      "x": 4512,
+      "y": 5197
+    },
+    {
+      "name": "Bowen Basin Coal",
+      "type": "coal",
+      "x": 4804,
+      "y": 4040
+    },
+    {
+      "name": "Collie Coal",
+      "type": "coal",
+      "x": 1538,
+      "y": 5285
+    },
+    {
+      "name": "North West Shelf Gas",
+      "type": "gas",
+      "x": 2113,
+      "y": 3832
+    },
+    {
+      "name": "Gippsland Gas",
+      "type": "gas",
+      "x": 3803,
+      "y": 5819
+    },
+    {
+      "name": "Moomba Gas",
+      "type": "gas",
+      "x": 3844,
+      "y": 4690
+    },
+    {
+      "name": "Timor Sea Oil",
+      "type": "oil",
+      "x": 3583,
+      "y": 2839
+    },
+    {
+      "name": "Taranaki Oil",
+      "type": "oil",
+      "x": 5933,
+      "y": 5907
+    },
+    {
+      "name": "Olympic Dam Copper",
+      "type": "copper",
+      "x": 3439,
+      "y": 4957
+    },
+    {
+      "name": "Mount Isa Copper",
+      "type": "copper",
+      "x": 4110,
+      "y": 3831
+    },
+    {
+      "name": "Ok Tedi Copper",
+      "type": "copper",
+      "x": 4629,
+      "y": 1958
+    },
+    {
+      "name": "Grasberg Copper",
+      "type": "copper",
+      "x": 4273,
+      "y": 1816
+    },
+    {
+      "name": "Weipa Bauxite",
+      "type": "bauxite",
+      "x": 4571,
+      "y": 2865
+    },
+    {
+      "name": "Gove Bauxite",
+      "type": "bauxite",
+      "x": 4125,
+      "y": 2816
+    },
+    {
+      "name": "Broken Hill Silver",
+      "type": "silver",
+      "x": 3742,
+      "y": 5128
+    },
+    {
+      "name": "Cadia Gold",
+      "type": "gold",
+      "x": 4282,
+      "y": 5296
+    }
+  ],
+  "chokepoints": [
+    {
+      "name": "Bass Strait",
+      "x": 3584,
+      "y": 5986,
+      "radius": 114
+    },
+    {
+      "name": "Cook Strait",
+      "x": 5760,
+      "y": 6154,
+      "radius": 65
+    },
+    {
+      "name": "Torres Strait",
+      "x": 4694,
+      "y": 2535,
+      "radius": 82
+    },
+    {
+      "name": "Lombok Strait",
+      "x": 2281,
+      "y": 2383,
+      "radius": 65
+    },
+    {
+      "name": "Makassar Strait",
+      "x": 2499,
+      "y": 1563,
+      "radius": 114
+    },
+    {
+      "name": "Vitiaz Strait",
+      "x": 5227,
+      "y": 2041,
+      "radius": 65
+    },
+    {
+      "name": "Foveaux Strait",
+      "x": 4766,
+      "y": 6696,
+      "radius": 57
+    }
+  ],
+  "climate": {
+    "monsoonMaxY": 3745
+  }
 }
