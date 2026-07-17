@@ -15,6 +15,9 @@ const IGNORED_ERROR_PATTERNS = [
   /favicon/i,
   /swiftshader|software renderer|GroupMarkerNotSet|Automatic fallback to software WebGL/i,
   /Failed to load resource.*404/i,
+  // In-flight world chunk fetches abort when a match is exited; the chunk
+  // store handles the failure (coarse-LOD fallback) by design.
+  /world chunk .* failed to load/i,
 ];
 
 let page: Page;
@@ -106,10 +109,10 @@ test("expand into neutral territory and adjust sliders", async () => {
 
   // Click neutral land near the spawn to launch expansion attacks.
   for (const [x, y] of [
-    [758, 660],
-    [742, 670],
-    [750, 652],
-    [750, 665],
+    [733, 633],
+    [717, 643],
+    [725, 625],
+    [725, 638],
   ]) {
     await page.mouse.click(x, y);
     await page.waitForTimeout(1_500);
@@ -124,7 +127,7 @@ test("expand into neutral territory and adjust sliders", async () => {
 
 test("radial menu opens and build menu shows structures", async () => {
   // Right-click on own territory opens the radial action menu.
-  await page.mouse.click(750, 665, { button: "right" });
+  await page.mouse.click(725, 638, { button: "right" });
   const radial = page.locator(".radial-menu-container");
   await expect(radial).toBeVisible({ timeout: 15_000 });
   await page.screenshot({

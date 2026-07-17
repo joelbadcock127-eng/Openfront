@@ -17,10 +17,15 @@ export default defineConfig({
   // The solo flow test is a single long scenario; keep one worker.
   workers: 1,
   use: {
+    screenshot: "only-on-failure",
     baseURL: "http://localhost:9000",
     viewport: { width: 1440, height: 900 },
     ...(process.env.PLAYWRIGHT_CHROMIUM_PATH
-      ? { launchOptions: { executablePath: process.env.PLAYWRIGHT_CHROMIUM_PATH } }
+      ? {
+          launchOptions: {
+            executablePath: process.env.PLAYWRIGHT_CHROMIUM_PATH,
+          },
+        }
       : {}),
   },
   webServer: {

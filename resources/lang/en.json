@@ -600,6 +600,18 @@
     "teams_Trios": "Trios (teams of 3)",
     "toggle_name_reveal": "Toggle whether this player can see real names"
   },
+  "identity": {
+    "color_auto": "Automatic color",
+    "color_label": "Empire color",
+    "title_commonwealth": "Commonwealth of",
+    "title_empire": "Empire of",
+    "title_federation": "Federation of",
+    "title_free_state": "Free State of",
+    "title_kingdom": "Kingdom of",
+    "title_label": "Empire title",
+    "title_none": "No title",
+    "title_republic": "Republic of"
+  },
   "kick_reason": {
     "admin": "Kicked by an admin",
     "duplicate_session": "Kicked from game (you may have been playing on another tab)",
@@ -950,6 +962,22 @@
     "game_speed": "Game speed",
     "replay_speed": "Replay speed"
   },
+  "scenario": {
+    "battle_for_oceania": "Battle for Oceania",
+    "battle_for_oceania_desc": "All of Oceania, classic conquest: 400 rivals, one continent-spanning war.",
+    "coral_sea_theatre": "Coral Sea Theatre",
+    "coral_sea_theatre_desc": "Monsoon warfare over New Guinea and Torres Strait — the wet season decides campaigns.",
+    "impossible_australia": "Impossible Australia",
+    "impossible_australia_desc": "The eastern seaboard against impossible odds. Good luck.",
+    "long_white_cloud": "Long White Cloud",
+    "long_white_cloud_desc": "Aotearoa, whole-country war across both islands and Cook Strait.",
+    "master_of_straits": "Master of the Straits",
+    "master_of_straits_desc": "Win by controlling every strait in the theatre — a navy-first campaign.",
+    "outback_rush": "Outback Rush",
+    "outback_rush_desc": "Economic victory: race to hold the majority of Oceania's real mines and fields.",
+    "tasmanian_campaign": "Tasmanian Campaign",
+    "tasmanian_campaign_desc": "The drilled-down Bass Strait theatre at maximum detail — a gentler start."
+  },
   "select_lang": {
     "title": "Select Language"
   },
@@ -986,6 +1014,7 @@
     "nations_disabled": "Disabled",
     "options_title": "Options",
     "random_spawn": "Random spawn",
+    "scenarios_title": "Scenarios",
     "start": "Start Game",
     "starting_gold": "Starting Gold (Millions)",
     "starting_gold_placeholder": "5",

@@ -267,7 +267,12 @@ class Client {
       gameID: lobby.gameID,
       cosmetics: {},
       turnstileToken: null,
-      playerName: this.usernameInput?.getUsername() ?? genAnonUsername(),
+      // Solo games carry the composed empire name (title + username) in
+      // gameStartInfo; prefer it so the HUD matches the simulation.
+      playerName:
+        lobby.gameStartInfo?.players[0]?.username ??
+        this.usernameInput?.getUsername() ??
+        genAnonUsername(),
       playerClanTag: this.usernameInput?.getClanTag() ?? null,
       clanTagCheck: this.usernameInput?.getClanCheck(),
       playerRole: null,

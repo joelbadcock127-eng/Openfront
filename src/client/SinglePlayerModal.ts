@@ -1,6 +1,8 @@
 import { html } from "lit";
 import { customElement, state } from "lit/decorators.js";
 import { translateText } from "../client/Utils";
+import { Scenario, SCENARIOS } from "../core/configuration/Scenarios";
+import { DEFAULT_SOLO_MAP } from "../core/configuration/SoloMaps";
 import { DoomsdayClockSpeed } from "../core/game/DoomsdayClock";
 import {
   Difficulty,
@@ -10,7 +12,6 @@ import {
   GameType,
   UnitType,
 } from "../core/game/Game";
-import { DEFAULT_SOLO_MAP } from "../core/configuration/SoloMaps";
 import { generateID } from "../core/Util";
 import "./components/baseComponents/Button";
 import "./components/baseComponents/Modal";
@@ -74,6 +75,9 @@ export class SinglePlayerModal extends BaseModal {
     DEFAULT_OPTIONS.maxTimerValue;
   @state() private instantBuild: boolean = DEFAULT_OPTIONS.instantBuild;
   @state() private weatherEnabled: boolean = true;
+  @state() private selectedScenario: string | null = null;
+  @state() private empireTitle: string = "";
+  @state() private empireColor: string | null = null;
   @state() private victoryEconomic: boolean = false;
   @state() private victoryStraits: boolean = false;
   @state() private randomSpawn: boolean = DEFAULT_OPTIONS.randomSpawn;
@@ -108,6 +112,127 @@ export class SinglePlayerModal extends BaseModal {
       onBack: () => this.close(),
       ariaLabel: translateText("common.back"),
     });
+  }
+
+  private static readonly EMPIRE_TITLES = [
+    "empire",
+    "republic",
+    "kingdom",
+    "commonwealth",
+    "federation",
+    "free_state",
+  ];
+
+  private static readonly EMPIRE_COLORS = [
+    "#e11d48",
+    "#f97316",
+    "#facc15",
+    "#22c55e",
+    "#14b8a6",
+    "#3b82f6",
+    "#8b5cf6",
+    "#ec4899",
+  ];
+
+  private applyScenario(scenario: Scenario): void {
+    this.selectedScenario = scenario.id;
+    this.selectedMap = scenario.map;
+    this.selectedDifficulty = scenario.difficulty;
+    this.bots = scenario.bots;
+    this.weatherEnabled = scenario.weatherEnabled;
+    this.victoryEconomic = scenario.victoryCondition === "economic";
+    this.victoryStraits = scenario.victoryCondition === "straits";
+    void this.loadNationCount();
+  }
+
+  /** Compose the empire display name (schema caps usernames at 27 chars). */
+  private empireName(base: string): string {
+    if (this.empireTitle === "") return base;
+    const title = translateText(`identity.title_${this.empireTitle}`);
+    return `${title} ${base}`.slice(0, 27).trim();
+  }
+
+  private renderIdentityAndScenarios() {
+    return html`
+      <div class="space-y-4 mb-6">
+        <div>
+          <div class="text-sm font-semibold text-white/80 pb-2">
+            ${translateText("single_modal.scenarios_title")}
+          </div>
+          <div class="flex flex-wrap gap-2">
+            ${SCENARIOS.map(
+              (sc) => html`
+                <button
+                  class="px-3 py-1.5 rounded-lg text-xs border transition-colors ${this
+                    .selectedScenario === sc.id
+                    ? "bg-blue-600 border-blue-400 text-white"
+                    : "bg-white/5 border-white/15 text-white/80 hover:bg-white/10"}"
+                  title=${translateText(`scenario.${sc.id}_desc`)}
+                  @click=${() => this.applyScenario(sc)}
+                >
+                  ${translateText(`scenario.${sc.id}`)}
+                </button>
+              `,
+            )}
+          </div>
+        </div>
+        <div class="flex flex-wrap items-center gap-4">
+          <div>
+            <div class="text-sm font-semibold text-white/80 pb-2">
+              ${translateText("identity.title_label")}
+            </div>
+            <select
+              class="bg-white/10 border border-white/15 rounded-lg px-2 py-1.5 text-sm text-white"
+              .value=${this.empireTitle}
+              @change=${(e: Event) => {
+                this.empireTitle = (e.target as HTMLSelectElement).value;
+              }}
+            >
+              <option value="">${translateText("identity.title_none")}</option>
+              ${SinglePlayerModal.EMPIRE_TITLES.map(
+                (t) => html`
+                  <option value=${t} ?selected=${this.empireTitle === t}>
+                    ${translateText(`identity.title_${t}`)}
+                  </option>
+                `,
+              )}
+            </select>
+          </div>
+          <div>
+            <div class="text-sm font-semibold text-white/80 pb-2">
+              ${translateText("identity.color_label")}
+            </div>
+            <div class="flex gap-1.5 items-center">
+              <button
+                class="w-6 h-6 rounded-full border text-[9px] leading-none ${this
+                  .empireColor === null
+                  ? "border-white ring-2 ring-white/60"
+                  : "border-white/30"} bg-white/10 text-white/70"
+                title=${translateText("identity.color_auto")}
+                @click=${() => {
+                  this.empireColor = null;
+                }}
+              >
+                A
+              </button>
+              ${SinglePlayerModal.EMPIRE_COLORS.map(
+                (c) => html`
+                  <button
+                    class="w-6 h-6 rounded-full border ${this.empireColor === c
+                      ? "border-white ring-2 ring-white/60"
+                      : "border-white/30"}"
+                    style="background:${c}"
+                    @click=${() => {
+                      this.empireColor = c;
+                    }}
+                  ></button>
+                `,
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
   }
 
   protected renderBody() {
@@ -186,6 +311,7 @@ export class SinglePlayerModal extends BaseModal {
         <div
           class="flex-1 min-h-0 overflow-y-auto custom-scrollbar px-6 pt-4 pb-6 mr-1 mx-auto w-full max-w-5xl"
         >
+          ${this.renderIdentityAndScenarios()}
           <game-config-settings
             class="block"
             .sectionGapClass=${"space-y-6"}
@@ -296,6 +422,9 @@ export class SinglePlayerModal extends BaseModal {
     // Reset all transient form state to ensure clean slate
     this.selectedMap = DEFAULT_OPTIONS.selectedMap;
     this.selectedDifficulty = DEFAULT_OPTIONS.selectedDifficulty;
+    this.selectedScenario = null;
+    this.empireTitle = "";
+    this.empireColor = null;
     this.bots = DEFAULT_OPTIONS.bots;
     this.nations = 0;
     this.defaultNationCount = 0;
@@ -328,6 +457,7 @@ export class SinglePlayerModal extends BaseModal {
   }
 
   private handleConfigMapSelected = (e: Event) => {
+    this.selectedScenario = null;
     const customEvent = e as CustomEvent<{ map: GameMapType }>;
     this.handleMapSelection(customEvent.detail.map);
   };
@@ -337,6 +467,7 @@ export class SinglePlayerModal extends BaseModal {
   }
 
   private handleConfigDifficultySelected = (e: Event) => {
+    this.selectedScenario = null;
     const customEvent = e as CustomEvent<{ difficulty: Difficulty }>;
     this.handleDifficultySelection(customEvent.detail.difficulty);
   };
@@ -574,9 +705,11 @@ export class SinglePlayerModal extends BaseModal {
             players: [
               {
                 clientID,
-                username: usernameInput.getUsername(),
+                username: this.empireName(usernameInput.getUsername()),
                 clanTag: usernameInput.getClanTag() ?? null,
-                cosmetics: {},
+                cosmetics: this.empireColor
+                  ? { color: { color: this.empireColor } }
+                  : {},
               },
             ],
             config: {

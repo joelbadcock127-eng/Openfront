@@ -34,10 +34,15 @@ covered by `tests/WorldGameplay.test.ts`.
   cyclone that disrupts naval movement) are natural extensions once
   per-region state is worth the complexity.
 
+## Also shipped
+
+| #   | Feature              | What it does                                                                                                                                                                                                                                                           | Where                                 |
+| --- | -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------- |
+| 3   | **Scenario presets** | Seven one-click starts in solo setup — Battle for Oceania, Outback Rush (economic), Master of the Straits (naval), Tasmanian Campaign, Long White Cloud, Coral Sea Theatre, Impossible Australia — each bundling map, difficulty, bots, victory condition and weather. | `src/core/configuration/Scenarios.ts` |
+| 13  | **Empire identity**  | Pick an empire title (Kingdom of / Republic of / …) and a custom territory color in solo setup; the composed name and color flow through the simulation, HUD and map. Flag picker as before.                                                                           | `SinglePlayerModal`                   |
+
 ## Still planned (from the feature list)
 
-- **#3 scenario presets**, **#8 save/resume** (deterministic replay
-  fast-forward — the turn log and replay machinery already exist),
-  **#13 richer empire identity** (custom nation naming/colors beyond the
-  existing name+flag), and a deeper **#19 juice pass** (music, ambient
-  audio, territory-claim animations).
+- **#8 save/resume** (deterministic replay fast-forward — the turn log
+  and replay machinery already exist in the engine), and a deeper
+  **#19 juice pass** (music, ambient audio, territory-claim animations).
