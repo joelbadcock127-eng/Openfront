@@ -1,0 +1,147 @@
+{
+  "name": "NewZealand",
+  "map": {
+    "width": 3072,
+    "height": 2048,
+    "num_land_tiles": 408123
+  },
+  "map4x": {
+    "width": 1536,
+    "height": 1024,
+    "num_land_tiles": 102740
+  },
+  "map16x": {
+    "width": 768,
+    "height": 512,
+    "num_land_tiles": 25991
+  },
+  "nations": [
+    {
+      "coordinates": [
+        2078,
+        549
+      ],
+      "flag": "nz",
+      "name": "Auckland"
+    },
+    {
+      "coordinates": [
+        1696,
+        1024
+      ],
+      "flag": "nz",
+      "name": "Wellington"
+    },
+    {
+      "coordinates": [
+        1318,
+        1256
+      ],
+      "flag": "nz",
+      "name": "Christchurch"
+    },
+    {
+      "coordinates": [
+        926,
+        1494
+      ],
+      "flag": "nz",
+      "name": "Dunedin"
+    },
+    {
+      "coordinates": [
+        2076,
+        565
+      ],
+      "flag": "nz",
+      "name": "Manukau"
+    },
+    {
+      "coordinates": [
+        2061,
+        549
+      ],
+      "flag": "nz",
+      "name": "Waitakere"
+    },
+    {
+      "coordinates": [
+        2084,
+        542
+      ],
+      "flag": "nz",
+      "name": "North Shore"
+    },
+    {
+      "coordinates": [
+        2044,
+        649
+      ],
+      "flag": "nz",
+      "name": "Hamilton"
+    },
+    {
+      "coordinates": [
+        2122,
+        640
+      ],
+      "flag": "nz",
+      "name": "Tauranga"
+    },
+    {
+      "coordinates": [
+        1715,
+        1014
+      ],
+      "flag": "nz",
+      "name": "Lower Hutt"
+    },
+    {
+      "coordinates": [
+        1847,
+        924
+      ],
+      "flag": "nz",
+      "name": "Palmerston North"
+    },
+    {
+      "coordinates": [
+        2010,
+        848
+      ],
+      "flag": "nz",
+      "name": "Hastings"
+    }
+  ],
+  "resources": [
+    {
+      "name": "Waihi Gold",
+      "type": "gold",
+      "x": 2122,
+      "y": 607
+    },
+    {
+      "name": "Taranaki Oil",
+      "type": "oil",
+      "x": 1837,
+      "y": 787
+    }
+  ],
+  "chokepoints": [
+    {
+      "name": "Cook Strait",
+      "x": 1664,
+      "y": 1034,
+      "radius": 65
+    },
+    {
+      "name": "Foveaux Strait",
+      "x": 670,
+      "y": 1576,
+      "radius": 57
+    }
+  ],
+  "climate": {
+    "monsoonMaxY": 0
+  }
+}
