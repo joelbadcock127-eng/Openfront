@@ -55,8 +55,9 @@ test("main menu loads with solo-only navigation", async () => {
 
 test("solo setup shows the enabled maps and starts a match", async () => {
   await page.locator("#solo-play-button").click();
-  // Exactly the enabled solo maps (continuous world + classic World).
-  await expect(page.locator("map-display")).toHaveCount(2);
+  // Exactly the enabled solo maps (5 continuous-world windows + classic
+  // World).
+  await expect(page.locator("map-display")).toHaveCount(6);
   await expect(page.locator("text=/impossible/i").first()).toBeVisible();
   await page
     .locator("button:visible", { hasText: /start game/i })

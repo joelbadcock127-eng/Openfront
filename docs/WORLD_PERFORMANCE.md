@@ -15,7 +15,7 @@ Re-run with `node scripts` equivalents or the in-game overlay
 | Chunk boundary crossing      | no multi-second pauses | ✅ async streaming + coarse-LOD fallback; no blocking |
 | Distant world rendering      | from aggregated data   | ✅ LOD 4–6 packs (aggregates), never fine data        |
 | Simulation while zooming     | unaffected             | ✅ sim runs in the Web Worker; camera is render-only  |
-| Full-map memory              | never fully loaded     | ✅ world = ~5 MB packs on disk, streamed on demand    |
+| Full-map memory              | never fully loaded     | ✅ world = ~8 MB packs on disk, streamed on demand    |
 
 ## Benchmark (2026-07-11)
 
@@ -51,6 +51,24 @@ introspection hook.
   bots + 10 nations (the engine's GiantWorldMap scale); simulation load is
   identical to upstream since the engine is unmodified.
 
+## Oceania windows benchmark (2026-07-17)
+
+Same method as above, driven once per new playable window: select map,
+spawn, expand, zoom local → whole Earth. The three 4096×3072 windows
+(12.6M tiles, ~1.5× the largest upstream map but with far lower land
+fractions) show no regression versus the 8.4M Bass Strait window:
+
+| Window (tiles)            | backdrop draw | cached chunks | terrain mem | console errors |
+| ------------------------- | ------------- | ------------- | ----------- | -------------- |
+| New Zealand South (12.6M) | 0.2 ms        | 315           | 20.6 MB     | none           |
+| New Zealand North (12.6M) | 0.2 ms        | 271           | 17.8 MB     | none           |
+| Torres Strait (9.4M)      | 0.2 ms        | 330           | 21.6 MB     | none           |
+| East Australia (12.6M)    | 0.3 ms        | 301           | 19.7 MB     | none           |
+
+Range requests were used end-to-end in every run (no full-pack
+downloads); the LOD0/LOD1 packs now cover all of Oceania and total
+~8 MB on disk.
+
 ## Instrumentation available
 
 The `worldDebug` overlay reports, live: current LOD, chunks drawn, draw
@@ -64,7 +82,8 @@ benchmark).
 - Save/load benchmarks: n/a until world saves exist (see roadmap).
 - Stage-3 full-world LOD-0 data will multiply pack sizes (~2–4 GB); the
   Range-streaming design is built for it but has only been validated with
-  the current ~5 MB dataset plus the detail region.
+  the current ~8 MB dataset (global LOD 2–6 plus LOD 0/1 across all of
+  Oceania — 3,584 LOD-0 chunks).
 - No dedicated numbers yet for "many simultaneous attacks across the
   window boundary" — the boundary is not a simulation boundary (the sim is
   unchunked inside the window), so no cliff is expected.

@@ -16,8 +16,15 @@ export interface WorldDetailRegion {
   minLod: number;
   /** Region rectangle in LOD-0 world cells. */
   lod0Rect: { x: number; y: number; width: number; height: number };
-  /** GameMapType name of the playable window emitted for this region. */
-  gameMap?: string;
+}
+
+/** A playable OpenFront map cut from the detail region's LOD-0 grid. */
+export interface WorldWindowRef {
+  id: string;
+  /** GameMapType key of the playable window map (e.g. "WorldWindow"). */
+  gameMap: string;
+  /** Window rectangle in LOD-0 world cells (its origin in the world). */
+  lod0Rect: { x: number; y: number; width: number; height: number };
 }
 
 export interface WorldIndex {
@@ -27,5 +34,6 @@ export interface WorldIndex {
   globalBaseLod: number;
   projection: "equal-earth";
   detailRegions: WorldDetailRegion[];
+  windows: WorldWindowRef[];
   lods: Record<string, WorldLodIndex>;
 }

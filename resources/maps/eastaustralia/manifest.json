@@ -1,0 +1,100 @@
+{
+  "name": "EastAustralia",
+  "map": {
+    "width": 4096,
+    "height": 3072,
+    "num_land_tiles": 7317278
+  },
+  "map4x": {
+    "width": 2048,
+    "height": 1536,
+    "num_land_tiles": 1829762
+  },
+  "map16x": {
+    "width": 1024,
+    "height": 768,
+    "num_land_tiles": 457658
+  },
+  "nations": [
+    {
+      "coordinates": [
+        1704,
+        2502
+      ],
+      "flag": "au",
+      "name": "Sydney"
+    },
+    {
+      "coordinates": [
+        2795,
+        1040
+      ],
+      "flag": "au",
+      "name": "Brisbane"
+    },
+    {
+      "coordinates": [
+        1949,
+        2263
+      ],
+      "flag": "au",
+      "name": "Newcastle"
+    },
+    {
+      "coordinates": [
+        2797,
+        1185
+      ],
+      "flag": "au",
+      "name": "Gold Coast"
+    },
+    {
+      "coordinates": [
+        1181,
+        2804
+      ],
+      "flag": "au",
+      "name": "Canberra"
+    },
+    {
+      "coordinates": [
+        1590,
+        2612
+      ],
+      "flag": "au",
+      "name": "Wollongong"
+    },
+    {
+      "coordinates": [
+        1479,
+        2715
+      ],
+      "flag": "au",
+      "name": "Nowra"
+    },
+    {
+      "coordinates": [
+        2598,
+        1066
+      ],
+      "flag": "au",
+      "name": "Toowoomba"
+    },
+    {
+      "coordinates": [
+        2881,
+        862
+      ],
+      "flag": "au",
+      "name": "Sunshine Coast"
+    },
+    {
+      "coordinates": [
+        2483,
+        1692
+      ],
+      "flag": "au",
+      "name": "Coffs Harbour"
+    }
+  ]
+}

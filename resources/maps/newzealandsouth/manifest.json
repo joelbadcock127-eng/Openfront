@@ -1,0 +1,100 @@
+{
+  "name": "NewZealandSouth",
+  "map": {
+    "width": 4096,
+    "height": 3072,
+    "num_land_tiles": 777414
+  },
+  "map4x": {
+    "width": 2048,
+    "height": 1536,
+    "num_land_tiles": 195273
+  },
+  "map16x": {
+    "width": 1024,
+    "height": 768,
+    "num_land_tiles": 49288
+  },
+  "nations": [
+    {
+      "coordinates": [
+        3392,
+        1024
+      ],
+      "flag": "nz",
+      "name": "Wellington"
+    },
+    {
+      "coordinates": [
+        2637,
+        1488
+      ],
+      "flag": "nz",
+      "name": "Christchurch"
+    },
+    {
+      "coordinates": [
+        1853,
+        1965
+      ],
+      "flag": "nz",
+      "name": "Dunedin"
+    },
+    {
+      "coordinates": [
+        3430,
+        1004
+      ],
+      "flag": "nz",
+      "name": "Lower Hutt"
+    },
+    {
+      "coordinates": [
+        3147,
+        1023
+      ],
+      "flag": "nz",
+      "name": "Nelson"
+    },
+    {
+      "coordinates": [
+        3435,
+        987
+      ],
+      "flag": "nz",
+      "name": "Porirua"
+    },
+    {
+      "coordinates": [
+        1423,
+        2070
+      ],
+      "flag": "nz",
+      "name": "Invercargill"
+    },
+    {
+      "coordinates": [
+        3461,
+        990
+      ],
+      "flag": "nz",
+      "name": "Upper Hutt"
+    },
+    {
+      "coordinates": [
+        3220,
+        1069
+      ],
+      "flag": "nz",
+      "name": "Blenheim"
+    },
+    {
+      "coordinates": [
+        2256,
+        1664
+      ],
+      "flag": "nz",
+      "name": "Timaru"
+    }
+  ]
+}

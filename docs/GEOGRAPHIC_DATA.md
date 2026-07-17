@@ -7,12 +7,12 @@ with `npm run gen-world`.
 
 ## Source datasets
 
-| Dataset                          | Provider                                                                                               | Version                     | Licence           | Downloaded | Used for                                                        |
-| -------------------------------- | ------------------------------------------------------------------------------------------------------ | --------------------------- | ----------------- | ---------- | --------------------------------------------------------------- |
-| `ne_10m_land`                    | Natural Earth (naturalearthdata.com), GeoJSON mirror: github.com/nvkelso/natural-earth-vector (master) | 5.x (10m, master @ 2026-07) | **Public domain** | 2026-07-11 | Land polygons incl. major islands                               |
-| `ne_10m_minor_islands`           | Natural Earth (same mirror)                                                                            | 5.x                         | Public domain     | 2026-07-11 | Small islands complementing the land layer                      |
-| `ne_10m_lakes`                   | Natural Earth (same mirror)                                                                            | 5.x                         | Public domain     | 2026-07-11 | Lakes (rasterised back to water; Caspian, Great Lakes, Baikal…) |
-| `ne_10m_populated_places_simple` | Natural Earth (same mirror)                                                                            | 5.x                         | Public domain     | 2026-07-11 | City points → nation names/positions for playable windows       |
+| Dataset                          | Provider                                                                                               | Version                     | Licence           | Downloaded | Used for                                                                   |
+| -------------------------------- | ------------------------------------------------------------------------------------------------------ | --------------------------- | ----------------- | ---------- | -------------------------------------------------------------------------- |
+| `ne_10m_land`                    | Natural Earth (naturalearthdata.com), GeoJSON mirror: github.com/nvkelso/natural-earth-vector (master) | 5.x (10m, master @ 2026-07) | **Public domain** | 2026-07-11 | Land polygons incl. major islands                                          |
+| `ne_10m_minor_islands`           | Natural Earth (same mirror)                                                                            | 5.x                         | Public domain     | 2026-07-11 | Small islands complementing the land layer                                 |
+| `ne_10m_lakes`                   | Natural Earth (same mirror)                                                                            | 5.x                         | Public domain     | 2026-07-11 | Lakes (rasterised back to water; Caspian, Great Lakes, Baikal…)            |
+| `ne_10m_populated_places_simple` | Natural Earth (same mirror)                                                                            | 5.x                         | Public domain     | 2026-07-11 | City points → nation names/positions/flags (ISO code) for playable windows |
 
 Natural Earth's terms: _"All versions of Natural Earth raster + vector map
 data found on this website are in the public domain."_ No attribution is
@@ -31,7 +31,7 @@ data licence (the repository's own licences still apply to code/assets).
    (horizontal edges skipped; unclosed rings implicitly closed).
 5. **Strait preservation**: a curated list of strategic chokepoints
    (Gibraltar, Bosporus, Dardanelles, Øresund, Great Belt, Messina, Dover,
-   Bab-el-Mandeb, Hormuz, Singapore, Bering) is re-carved as water after
+   Bab-el-Mandeb, Hormuz, Singapore, Bering, Cook, Torres) is re-carved as water after
    every downsample so they can never silt shut; Suez and Panama isthmuses
    are re-filled as land. These are gameplay-scale adjustments, documented
    here per the plan's requirement.
@@ -43,19 +43,21 @@ data licence (the repository's own licences still apply to code/assets).
    retain islands), then per-LOD re-carving and reclassification.
 8. Chunking into 256² tiles, gzip, concatenation into per-LOD packs +
    JSON index; encode/decode roundtrip verified during the build.
-9. Validation gates (build fails otherwise): 26 island checks, 10
-   ocean/lake classification checks, 4 BFS strait-navigability probes.
+9. Validation gates (build fails otherwise): 32 island checks (incl.
+   New Guinea, New Britain, New Caledonia, Fiji, Vanuatu, Guadalcanal),
+   14 ocean/lake classification checks (incl. Cook/Torres straits, Coral
+   and Tasman seas), 6 BFS strait-navigability probes.
 10. Diagnostic PNG previews (world overview + Tasmania/Bass Strait, Italy,
     Britain, Japan, Indonesia/Malacca, Panama, Bosporus, Bering/date line)
     written to `map-generator/world-data/diagnostics/`.
 
 ## Generated output files (committed)
 
-| File                                 | Content                                                                                                                         |
-| ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------- |
-| `resources/world/world-index.json`   | Grid config, LOD/chunk index, detail regions                                                                                    |
-| `resources/world/world-l{0..6}.pack` | Gzipped 256² terrain chunks per LOD (~5 MB total)                                                                               |
-| `resources/maps/worldwindow/`        | Playable Bass Strait window in OpenFront map format (map.bin/map4x/map16x/manifest/thumbnail), emitted from the same world data |
+| File                                 | Content                                                                                                                                                               |
+| ------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `resources/world/world-index.json`   | Grid config, LOD/chunk index, detail region + playable windows                                                                                                        |
+| `resources/world/world-l{0..6}.pack` | Gzipped 256² terrain chunks per LOD; LOD 0/1 cover all of Oceania                                                                                                     |
+| `resources/maps/<window>/`           | Playable windows in OpenFront map format (worldwindow = Bass Strait, newzealandsouth, newzealandnorth, torresstrait, eastaustralia), emitted from the same world data |
 
 ## Not yet integrated (candidates for later stages)
 

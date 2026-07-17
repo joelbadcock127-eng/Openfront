@@ -77,19 +77,19 @@ Do NOT use `npm install` — `npm run inst` runs the safer
 ## Development commands
 
 ```bash
-npm run dev         # dev server → http://localhost:9000
-npm test            # unit/integration tests (vitest)
-npm run test:e2e    # browser end-to-end test (Playwright)
-npm run lint        # eslint
-npx tsc --noEmit    # typecheck
-npm run format      # prettier
+npm run dev      # dev server → http://localhost:9000
+npm test         # unit/integration tests (vitest)
+npm run test:e2e # browser end-to-end test (Playwright)
+npm run lint     # eslint
+npx tsc --noEmit # typecheck
+npm run format   # prettier
 ```
 
 ## Production build
 
 ```bash
-npm run build-prod  # typecheck + vite build → static/
-npm run tunnel      # production build + serve it with the Node server
+npm run build-prod # typecheck + vite build → static/
+npm run tunnel     # production build + serve it with the Node server
 ```
 
 ## Deploying (static hosting)
@@ -100,7 +100,7 @@ static site — no Node server required. The static build renders the
 normally injects per request) so any static host can serve it:
 
 ```bash
-npm run build:static   # production build + render static/index.html in place
+npm run build:static # production build + render static/index.html in place
 # then serve the `static/` directory on any static host
 ```
 
@@ -117,12 +117,16 @@ it is otherwise cosmetic).
 
 ## The continuous world map
 
-The flagship mode (**World: Bass Strait**) plays on one continuous,
-streamed model of the real Earth: spawn near Devonport, fight for Tasmania
-and southern Victoria at ~0.6 km/cell detail, and zoom out — mid-match,
-with no loading screen — until the whole planet is on screen. Terrain
-streams in 256²-cell chunks over HTTP Range requests across a 7-level LOD
-pyramid built from Natural Earth 10m data in an Equal Earth projection.
+The flagship modes play on one continuous, streamed model of the real
+Earth. Five high-detail theatres cover Oceania — **Bass Strait** (the
+default; spawn near Devonport), **New Zealand South**, **New Zealand
+North**, **Torres Strait / New Guinea** and **East Australia** — all cut
+from the same ~0.6 km/cell terrain grid, which spans the whole Oceania
+region (Australia to Fiji). Pick any of them, fight locally, and zoom out
+— mid-match, with no loading screen — until the whole planet is on
+screen. Terrain streams in 256²-cell chunks over HTTP Range requests
+across a 7-level LOD pyramid built from Natural Earth 10m data in an
+Equal Earth projection.
 
 - Architecture: [docs/WORLD_MAP_ARCHITECTURE.md](docs/WORLD_MAP_ARCHITECTURE.md)
 - Data sources & licences: [docs/GEOGRAPHIC_DATA.md](docs/GEOGRAPHIC_DATA.md)

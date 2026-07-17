@@ -1,0 +1,100 @@
+{
+  "name": "NewZealandNorth",
+  "map": {
+    "width": 4096,
+    "height": 3072,
+    "num_land_tiles": 712404
+  },
+  "map4x": {
+    "width": 2048,
+    "height": 1536,
+    "num_land_tiles": 178965
+  },
+  "map16x": {
+    "width": 1024,
+    "height": 768,
+    "num_land_tiles": 45176
+  },
+  "nations": [
+    {
+      "coordinates": [
+        2109,
+        1098
+      ],
+      "flag": "nz",
+      "name": "Auckland"
+    },
+    {
+      "coordinates": [
+        1344,
+        2048
+      ],
+      "flag": "nz",
+      "name": "Wellington"
+    },
+    {
+      "coordinates": [
+        2104,
+        1131
+      ],
+      "flag": "nz",
+      "name": "Manukau"
+    },
+    {
+      "coordinates": [
+        2074,
+        1099
+      ],
+      "flag": "nz",
+      "name": "Waitakere"
+    },
+    {
+      "coordinates": [
+        2121,
+        1085
+      ],
+      "flag": "nz",
+      "name": "North Shore"
+    },
+    {
+      "coordinates": [
+        2041,
+        1299
+      ],
+      "flag": "nz",
+      "name": "Hamilton"
+    },
+    {
+      "coordinates": [
+        2196,
+        1281
+      ],
+      "flag": "nz",
+      "name": "Tauranga"
+    },
+    {
+      "coordinates": [
+        1382,
+        2028
+      ],
+      "flag": "nz",
+      "name": "Lower Hutt"
+    },
+    {
+      "coordinates": [
+        1646,
+        1849
+      ],
+      "flag": "nz",
+      "name": "Palmerston North"
+    },
+    {
+      "coordinates": [
+        1972,
+        1697
+      ],
+      "flag": "nz",
+      "name": "Hastings"
+    }
+  ]
+}

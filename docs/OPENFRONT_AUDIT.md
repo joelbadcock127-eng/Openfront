@@ -219,7 +219,7 @@ browser (blind headless coordinate-clicking proved unreliable for these):
 - Port placement, transport-ship and warship movement/combat
   (`tests/` TransportShip/Warship/Port/TradeShip suites)
 - Victory and defeat detection (`tests/core/executions/WinCheckExecution.test.ts`
-  and WinModal logic); a defeat was *provoked* in-browser (troops drained
+  and WinModal logic); a defeat was _provoked_ in-browser (troops drained
   to double digits among hostile nations) but the eliminating attack did
   not land within the session budget
 - Deterministic replays / identical outcomes from identical seeds

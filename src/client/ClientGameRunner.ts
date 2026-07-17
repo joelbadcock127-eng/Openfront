@@ -14,7 +14,6 @@ import {
 import { createPartialGameRecord, findClosestBy, replacer } from "../core/Util";
 import {
   BuildableUnit,
-  GameMapType,
   PlayerType,
   Structures,
   UnitType,
@@ -35,6 +34,7 @@ import {
   UserSettings,
 } from "../core/game/UserSettings";
 import { WorkerClient } from "../core/worker/WorkerClient";
+import { worldWindowKey } from "../core/world/WorldWindows";
 import { getPersistentID } from "./Auth";
 import { showInGameAlert } from "./InGameModal";
 import {
@@ -657,7 +657,8 @@ async function createClientGame(
     // world coordinates; camera bounds extend to the whole Earth.
     let worldBackdrop: import("./world/WorldBackdrop").WorldBackdrop | null =
       null;
-    if (lobbyConfig.gameStartInfo.config.gameMap === GameMapType.WorldWindow) {
+    const windowKey = worldWindowKey(lobbyConfig.gameStartInfo.config.gameMap);
+    if (windowKey !== null) {
       void (async () => {
         try {
           const [{ WorldChunkStore }, { WorldBackdrop }] = await Promise.all([
@@ -667,11 +668,11 @@ async function createClientGame(
           const store = await WorldChunkStore.load(() =>
             worldBackdrop?.onChunkLoaded(),
           );
-          const region = store.index.detailRegions.find(
-            (r) => r.gameMap === "WorldWindow",
+          const region = store.index.windows.find(
+            (w) => w.gameMap === windowKey,
           );
           if (!region) {
-            console.error("world index has no WorldWindow region");
+            console.error(`world index has no ${windowKey} window`);
             return;
           }
           if (rendererDisposed) return;

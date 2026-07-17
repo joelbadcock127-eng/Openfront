@@ -63,7 +63,13 @@ function orOmitted(value: unknown): unknown {
 
 // Maps produced by the world pipeline (scripts/world/build-world.ts) rather
 // than the Go map generator; they have no map-generator/assets entry.
-const WORLD_PIPELINE_MAPS = new Set(["WorldWindow"]);
+const WORLD_PIPELINE_MAPS = new Set([
+  "WorldWindow",
+  "NewZealandSouth",
+  "NewZealandNorth",
+  "TorresStrait",
+  "EastAustralia",
+]);
 
 describe("Map consistency", () => {
   test("Every GameMapType has map-generator assets (image.png + info.json only)", () => {

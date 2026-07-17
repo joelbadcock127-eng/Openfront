@@ -3,8 +3,9 @@
  *
  * Converts Natural Earth 10m vector data (public domain) into the game's
  * streamed world: an Equal Earth–projected, chunked, multi-LOD terrain
- * pyramid plus a playable high-detail window (Bass Strait region) emitted in
- * the standard OpenFront map format.
+ * pyramid with LOD0/LOD1 detail across all of Oceania, plus playable
+ * high-detail windows (Bass Strait, New Zealand N/S, Torres Strait,
+ * East Australia) emitted in the standard OpenFront map format.
  *
  * Run:  npx tsx scripts/world/build-world.ts
  * Requires the datasets in map-generator/world-data/ (see docs/GEOGRAPHIC_DATA.md).
@@ -12,7 +13,7 @@
  * Outputs:
  *   resources/world/world-index.json      chunk index + grid config
  *   resources/world/world-l{k}.pack       concatenated gzipped chunks per LOD
- *   resources/maps/worldwindow/           OpenFront-format playable window
+ *   resources/maps/<window-id>/           OpenFront-format playable windows
  *   map-generator/world-data/diagnostics/ PNG previews (not committed)
  */
 import * as fs from "node:fs";
@@ -42,7 +43,7 @@ const repoRoot = path.join(__dirname, "..", "..");
 const dataDir = path.join(repoRoot, "map-generator", "world-data");
 const outDir = path.join(repoRoot, "resources", "world");
 const diagDir = path.join(dataDir, "diagnostics");
-const windowMapDir = path.join(repoRoot, "resources", "maps", "worldwindow");
+const flagsDir = path.join(repoRoot, "resources", "flags");
 
 // ---------------------------------------------------------------------------
 // Configuration
@@ -82,6 +83,8 @@ const STRAITS: Array<{
   { name: "Strait of Hormuz", from: [56.4, 26.8], to: [56.7, 26.3] },
   { name: "Singapore Strait", from: [103.5, 1.15], to: [104.4, 1.2] },
   { name: "Bering Strait", from: [-169.7, 65.7], to: [-168.7, 65.9] },
+  { name: "Cook Strait", from: [174.35, -41.55], to: [174.7, -41.25] },
+  { name: "Torres Strait", from: [141.8, -10.05], to: [143.4, -9.9] },
   { name: "Suez isthmus", from: [32.4, 31.1], to: [32.5, 29.9], land: true },
   { name: "Panama isthmus", from: [-80.1, 9.3], to: [-79.5, 8.9], land: true },
 ];
@@ -108,6 +111,12 @@ const ISLAND_CHECKS: Array<{ name: string; lon: number; lat: number }> = [
   { name: "Borneo", lon: 114.0, lat: 0.5 },
   { name: "New Zealand South", lon: 169.8, lat: -44.5 },
   { name: "New Zealand North", lon: 175.5, lat: -38.5 },
+  { name: "New Guinea", lon: 143.0, lat: -5.5 },
+  { name: "New Britain", lon: 151.0, lat: -5.5 },
+  { name: "New Caledonia", lon: 165.4, lat: -21.6 },
+  { name: "Viti Levu (Fiji)", lon: 178.0, lat: -17.8 },
+  { name: "Espiritu Santo (Vanuatu)", lon: 166.9, lat: -15.4 },
+  { name: "Guadalcanal", lon: 160.0, lat: -9.6 },
   { name: "Sri Lanka", lon: 80.7, lat: 7.9 },
   { name: "Taiwan", lon: 121.0, lat: 23.7 },
   { name: "Cuba", lon: -78.7, lat: 21.9 },
@@ -132,18 +141,87 @@ const WATER_CHECKS: Array<{
   { name: "Sea of Japan", lon: 135.0, lat: 40.0, ocean: true },
   { name: "Hudson Bay", lon: -85.0, lat: 60.0, ocean: true },
   { name: "Bass Strait", lon: 146.0, lat: -39.5, ocean: true },
+  { name: "Cook Strait", lon: 174.5, lat: -41.4, ocean: true },
+  { name: "Torres Strait", lon: 142.6, lat: -9.95, ocean: true },
+  { name: "Coral Sea", lon: 152.0, lat: -18.0, ocean: true },
+  { name: "Tasman Sea", lon: 160.0, lat: -38.0, ocean: true },
   { name: "Caspian Sea", lon: 50.5, lat: 42.0, ocean: false },
   { name: "Lake Superior", lon: -87.5, lat: 47.6, ocean: false },
 ];
 
-/** First playable detail region: Bass Strait (Tasmania + southern Victoria). */
+/**
+ * High-detail region generated at LOD0/LOD1: all of Oceania (Western
+ * Australia through New Zealand/Fiji, Tasmania up to Micronesia). Everywhere
+ * inside this box the world has full ~0.61 km cells; Stage 3 extends the
+ * same treatment worldwide.
+ */
 const DETAIL_REGION = {
-  id: "bassstrait",
-  lonMin: 142.4,
-  lonMax: 150.6,
-  latMin: -44.8,
-  latMax: -36.6,
+  id: "oceania",
+  lonMin: 110,
+  lonMax: 180,
+  latMin: -48.5,
+  latMax: 8,
 };
+
+/**
+ * Playable windows: OpenFront-format maps sliced from the detail region's
+ * LOD-0 grid, each kept near the engine's proven no-lag scale (the largest
+ * upstream map is ~8M tiles; these are 8.4–12.6M with far lower land
+ * fractions). `id` must equal the GameMapType key lowercased (the map
+ * loader derives the resources/maps/<id>/ directory from the key).
+ * `gameMap` is the GameMapType key recorded in world-index.json.
+ * The Bass Strait bbox is the original Stage-2 window and must not change
+ * (its LOD-0 rect is load-bearing for existing tests/screens).
+ */
+const WINDOWS: Array<{
+  id: string;
+  gameMap: string;
+  lonMin: number;
+  lonMax: number;
+  latMin: number;
+  latMax: number;
+}> = [
+  {
+    id: "worldwindow",
+    gameMap: "WorldWindow",
+    lonMin: 142.4,
+    lonMax: 150.6,
+    latMin: -44.8,
+    latMax: -36.6,
+  },
+  {
+    id: "newzealandsouth",
+    gameMap: "NewZealandSouth",
+    lonMin: 166.2,
+    lonMax: 175.2,
+    latMin: -47.4,
+    latMax: -40.2,
+  },
+  {
+    id: "newzealandnorth",
+    gameMap: "NewZealandNorth",
+    lonMin: 172.4,
+    lonMax: 178.8,
+    latMin: -41.8,
+    latMax: -34.2,
+  },
+  {
+    id: "torresstrait",
+    gameMap: "TorresStrait",
+    lonMin: 140.0,
+    lonMax: 150.8,
+    latMin: -12.6,
+    latMax: -2.6,
+  },
+  {
+    id: "eastaustralia",
+    gameMap: "EastAustralia",
+    lonMin: 147.8,
+    lonMax: 154.4,
+    latMin: -35.8,
+    latMax: -24.4,
+  },
+];
 
 /** Ocean flood seed (single seed proves world-ocean connectivity). */
 const OCEAN_SEED: [number, number] = [-30, 0]; // mid-Atlantic
@@ -267,10 +345,18 @@ function cropView(
   lonMax: number,
   latMin: number,
 ): TerrainGrid {
-  const [x0, y0] = geoToCell(lonMin, latMax, lod);
-  const [x1, y1] = geoToCell(lonMax, latMin, lod);
-  const w = Math.max(1, x1 - x0);
-  const h = Math.max(1, y1 - y0);
+  // Use all four corners: Equal Earth is pseudocylindrical, so x depends on
+  // latitude too — two opposite corners can nearly coincide in x.
+  const corners = [
+    geoToCell(lonMin, latMax, lod),
+    geoToCell(lonMax, latMax, lod),
+    geoToCell(lonMin, latMin, lod),
+    geoToCell(lonMax, latMin, lod),
+  ];
+  const x0 = Math.min(...corners.map((c) => c[0]));
+  const y0 = Math.min(...corners.map((c) => c[1]));
+  const w = Math.max(1, Math.max(...corners.map((c) => c[0])) - x0);
+  const h = Math.max(1, Math.max(...corners.map((c) => c[1])) - y0);
   const out = new Uint8Array(w * h);
   for (let y = 0; y < h; y++) {
     out.set(
@@ -359,11 +445,36 @@ function packLod(
 // Playable window map (OpenFront format)
 // ---------------------------------------------------------------------------
 
+/** Cut a sub-rectangle out of a terrain grid (cell coordinates). */
+function sliceGrid(
+  g: TerrainGrid,
+  x0: number,
+  y0: number,
+  w: number,
+  h: number,
+): TerrainGrid {
+  if (x0 < 0 || y0 < 0 || x0 + w > g.width || y0 + h > g.height) {
+    throw new Error(
+      `slice ${x0},${y0} ${w}x${h} outside ${g.width}x${g.height}`,
+    );
+  }
+  const out = new Uint8Array(w * h);
+  for (let y = 0; y < h; y++) {
+    out.set(
+      g.data.subarray((y0 + y) * g.width + x0, (y0 + y) * g.width + x0 + w),
+      y * w,
+    );
+  }
+  return { width: w, height: h, data: out };
+}
+
 function emitWindowMap(
+  win: (typeof WINDOWS)[number],
   detail: TerrainGrid,
   originLod0X: number,
   originLod0Y: number,
 ): void {
+  const windowMapDir = path.join(repoRoot, "resources", "maps", win.id);
   fs.mkdirSync(windowMapDir, { recursive: true });
 
   const countLand = (g: TerrainGrid) => {
@@ -424,14 +535,15 @@ function emitWindowMap(
       pop: Number(f.properties?.pop_max ?? 0),
       lon: Number(f.properties?.longitude ?? NaN),
       lat: Number(f.properties?.latitude ?? NaN),
+      iso: String(f.properties?.iso_a2 ?? "").toLowerCase(),
     }))
     .filter(
       (p) =>
         p.name &&
-        p.lon >= DETAIL_REGION.lonMin &&
-        p.lon <= DETAIL_REGION.lonMax &&
-        p.lat >= DETAIL_REGION.latMin &&
-        p.lat <= DETAIL_REGION.latMax,
+        p.lon >= win.lonMin &&
+        p.lon <= win.lonMax &&
+        p.lat >= win.latMin &&
+        p.lat <= win.latMax,
     )
     .sort((a, b) => b.pop - a.pop);
   for (const c of candidates) {
@@ -444,14 +556,20 @@ function emitWindowMap(
     const snapped = snapToLand(full, x, y, 20);
     if (!snapped) continue;
     [x, y] = snapped;
-    nations.push({ coordinates: [x, y], flag: "au", name: c.name });
+    // Country flag from the place's ISO code when the asset exists.
+    const flag =
+      /^[a-z]{2}$/.test(c.iso) &&
+      fs.existsSync(path.join(flagsDir, `${c.iso}.svg`))
+        ? c.iso
+        : "au";
+    nations.push({ coordinates: [x, y], flag, name: c.name });
   }
   log(
-    `window nations: ${nations.map((n) => n.name).join(", ") || "(none found)"}`,
+    `window ${win.id} nations: ${nations.map((n) => n.name).join(", ") || "(none found)"}`,
   );
 
   const manifest = {
-    name: "WorldWindow",
+    name: win.gameMap,
     map: {
       width: full.width,
       height: full.height,
@@ -473,9 +591,9 @@ function emitWindowMap(
     path.join(windowMapDir, "manifest.json"),
     `${JSON.stringify(manifest, null, 2)}\n`,
   );
-  writeDiag("window-bassstrait", full);
+  writeDiag(`window-${win.id}`, full);
   log(
-    `window map: ${full.width}x${full.height}, ${manifest.map.num_land_tiles} land tiles`,
+    `window map ${win.id}: ${full.width}x${full.height}, ${manifest.map.num_land_tiles} land tiles`,
   );
 }
 
@@ -566,6 +684,8 @@ function main(): void {
     { name: "Bosporus chain", a: [28.0, 43.0], b: [25.0, 39.0] },
     { name: "Øresund/Belts", a: [11.0, 56.5], b: [19.0, 58.0] },
     { name: "Bering", a: [-171.0, 64.0], b: [-168.0, 67.5] },
+    { name: "Cook Strait", a: [172.0, -40.5], b: [175.6, -41.6] },
+    { name: "Torres Strait", a: [139.5, -10.5], b: [144.5, -11.5] },
   ];
   for (const p of straitProbes) {
     const a = geoToCell(p.a[0], p.a[1], GLOBAL_BASE_LOD);
@@ -596,20 +716,31 @@ function main(): void {
   }
 
   // --- Detail region (LOD0 + LOD1) ----------------------------------------
-  // Snap region to 1024 LOD-0 cells so chunk grids align at LOD0/1/2.
-  const corners = [
-    grid.geoToWorld(DETAIL_REGION.lonMin, DETAIL_REGION.latMax),
-    grid.geoToWorld(DETAIL_REGION.lonMax, DETAIL_REGION.latMax),
-    grid.geoToWorld(DETAIL_REGION.lonMin, DETAIL_REGION.latMin),
-    grid.geoToWorld(DETAIL_REGION.lonMax, DETAIL_REGION.latMin),
-  ];
-  const ALIGN = 1024;
-  const rx0 = Math.floor(Math.min(...corners.map((c) => c.x)) / ALIGN) * ALIGN;
-  const ry0 = Math.floor(Math.min(...corners.map((c) => c.y)) / ALIGN) * ALIGN;
-  const rx1 = Math.ceil(Math.max(...corners.map((c) => c.x)) / ALIGN) * ALIGN;
-  const ry1 = Math.ceil(Math.max(...corners.map((c) => c.y)) / ALIGN) * ALIGN;
-  const rw = rx1 - rx0;
-  const rh = ry1 - ry0;
+  // Snap rects to 1024 LOD-0 cells so chunk grids align at LOD0/1/2.
+  const snapRect = (b: {
+    lonMin: number;
+    lonMax: number;
+    latMin: number;
+    latMax: number;
+  }) => {
+    const corners = [
+      grid.geoToWorld(b.lonMin, b.latMax),
+      grid.geoToWorld(b.lonMax, b.latMax),
+      grid.geoToWorld(b.lonMin, b.latMin),
+      grid.geoToWorld(b.lonMax, b.latMin),
+    ];
+    const ALIGN = 1024;
+    const x0 = Math.floor(Math.min(...corners.map((c) => c.x)) / ALIGN) * ALIGN;
+    const y0 = Math.floor(Math.min(...corners.map((c) => c.y)) / ALIGN) * ALIGN;
+    const x1 = Math.ceil(Math.max(...corners.map((c) => c.x)) / ALIGN) * ALIGN;
+    const y1 = Math.ceil(Math.max(...corners.map((c) => c.y)) / ALIGN) * ALIGN;
+    return { x: x0, y: y0, width: x1 - x0, height: y1 - y0 };
+  };
+  const regionRect = snapRect(DETAIL_REGION);
+  const rx0 = regionRect.x;
+  const ry0 = regionRect.y;
+  const rw = regionRect.width;
+  const rh = regionRect.height;
   log(
     `detail region ${DETAIL_REGION.id}: LOD0 rect ${rw}x${rh} at (${rx0},${ry0})`,
   );
@@ -721,6 +852,28 @@ function main(): void {
     );
   }
 
+  // --- Playable window maps ------------------------------------------------
+  const windowRefs: Array<{
+    id: string;
+    gameMap: string;
+    lod0Rect: { x: number; y: number; width: number; height: number };
+  }> = [];
+  for (const win of WINDOWS) {
+    const r = snapRect(win);
+    log(
+      `emitting window ${win.id}: ${r.width}x${r.height} at (${r.x},${r.y})…`,
+    );
+    const slice = sliceGrid(
+      { width: rw, height: rh, data: detail.data },
+      r.x - rx0,
+      r.y - ry0,
+      r.width,
+      r.height,
+    );
+    emitWindowMap(win, slice, r.x, r.y);
+    windowRefs.push({ id: win.id, gameMap: win.gameMap, lod0Rect: r });
+  }
+
   const worldIndex = {
     version: FORMAT_VERSION,
     grid: { w0: W0, h0: H0, maxLod: MAX_LOD, chunkSize: CHUNK_SIZE },
@@ -731,19 +884,15 @@ function main(): void {
         id: DETAIL_REGION.id,
         minLod: 0,
         lod0Rect: { x: rx0, y: ry0, width: rw, height: rh },
-        gameMap: "WorldWindow",
       },
     ],
+    windows: windowRefs,
     lods: indexLods,
   };
   fs.writeFileSync(
     path.join(outDir, "world-index.json"),
     JSON.stringify(worldIndex),
   );
-
-  // --- Playable window map -------------------------------------------------
-  log("emitting playable window map (OpenFront format)…");
-  emitWindowMap({ width: rw, height: rh, data: detail.data }, rx0, ry0);
 
   // --- Diagnostics ----------------------------------------------------------
   writeDiag("world-lod5", lods.get(5)!);
@@ -768,6 +917,14 @@ function main(): void {
     cropView(base, GLOBAL_BASE_LOD, -180, 68, -160, 60),
   );
   writeDiag("dateline-west", cropView(base, GLOBAL_BASE_LOD, 170, 68, 180, 60));
+  writeDiag(
+    "newzealand",
+    cropView(base, GLOBAL_BASE_LOD, 165, -33, 179.5, -48),
+  );
+  writeDiag(
+    "newguinea-torres",
+    cropView(base, GLOBAL_BASE_LOD, 139, -1, 152, -13),
+  );
 
   log(`done in ${((Date.now() - t0) / 1000).toFixed(1)}s`);
 }

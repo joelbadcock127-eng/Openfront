@@ -65,15 +65,15 @@ Gameplay consequences (documented per the plan):
 
 ## Level-of-detail hierarchy
 
-| LOD | Grid        | Cell size | Coverage                                                 |
-| --- | ----------- | --------- | -------------------------------------------------------- |
-| 0   | 65536×32768 | ~0.61 km  | detail regions (Bass Strait) — Stage 3 extends worldwide |
-| 1   | 32768×16384 | ~1.2 km   | detail regions                                           |
-| 2   | 16384×8192  | ~2.4 km   | **global** (base)                                        |
-| 3   | 8192×4096   | ~4.9 km   | global                                                   |
-| 4   | 4096×2048   | ~9.8 km   | global                                                   |
-| 5   | 2048×1024   | ~19.6 km  | global                                                   |
-| 6   | 1024×512    | ~39 km    | global (always resident: 8 chunks)                       |
+| LOD | Grid        | Cell size | Coverage                                                    |
+| --- | ----------- | --------- | ----------------------------------------------------------- |
+| 0   | 65536×32768 | ~0.61 km  | detail regions (all of Oceania) — Stage 3 extends worldwide |
+| 1   | 32768×16384 | ~1.2 km   | detail regions                                              |
+| 2   | 16384×8192  | ~2.4 km   | **global** (base)                                           |
+| 3   | 8192×4096   | ~4.9 km   | global                                                      |
+| 4   | 4096×2048   | ~9.8 km   | global                                                      |
+| 5   | 2048×1024   | ~19.6 km  | global                                                      |
+| 6   | 1024×512    | ~39 km    | global (always resident: 8 chunks)                          |
 
 - LOD k cell `(x,y)` covers LOD-0 cells `[x·2^k,(x+1)·2^k)²` — parent→child
   references are pure index arithmetic.
@@ -139,11 +139,15 @@ canvas, below the HUD, pointer-events off):
 
 ## Simulation strategy (hybrid, Stage 2)
 
-- The **active simulation** runs on the playable window (Bass Strait,
-  4096×2048 = 8.4M tiles — the same scale as the largest upstream map),
-  using the unmodified deterministic engine in a Web Worker: fine cells at
-  the frontier of play, full OpenFront rules, AI, navy, structures.
-- The window is cut from the same LOD-0 world data (land bits are
+- The **active simulation** runs on the selected playable window — Bass
+  Strait (4096×2048 = 8.4M tiles, the scale of the largest upstream map),
+  New Zealand South/North (4096×3072), Torres Strait/New Guinea
+  (3072×3072) or East Australia (4096×3072) — using the unmodified
+  deterministic engine in a Web Worker: fine cells at the frontier of
+  play, full OpenFront rules, AI, navy, structures. All windows are cut
+  from the same LOD-0 Oceania grid and registered in
+  `world-index.json` (`windows[]`, keyed by GameMapType).
+- Every window is cut from the same LOD-0 world data (land bits are
   unit-tested identical), placed at its world origin — territory, attacks
   and naval movement inside it cross chunk boundaries trivially because
   the simulation is not chunked; chunks are a storage/streaming concept.
@@ -181,8 +185,9 @@ content-addressed by grid version); a save needs only dynamic state
 
 ## Known limitations
 
-- LOD 0/1 coverage exists only for the Bass Strait region until Stage 3
-  generation runs worldwide; elsewhere the finest zoom shows 2.4 km cells.
+- LOD 0/1 coverage exists only inside the Oceania region (lon
+  110°E–180°, lat 48.5°S–8°N) until Stage 3 generation runs worldwide;
+  elsewhere the finest zoom shows 2.4 km cells.
 - No horizontal world wrap: trans-Pacific naval travel around the ±180°
   edge is not possible; the date-line edge is visible at full-world zoom.
 - The playable window boundary is visible as a resolution/render seam at
