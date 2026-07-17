@@ -1,0 +1,125 @@
+{
+  "name": "BassStrait",
+  "map": {
+    "width": 4096,
+    "height": 2048,
+    "num_land_tiles": 868346
+  },
+  "map4x": {
+    "width": 2048,
+    "height": 1024,
+    "num_land_tiles": 217747
+  },
+  "map16x": {
+    "width": 1024,
+    "height": 512,
+    "num_land_tiles": 54737
+  },
+  "nations": [
+    {
+      "coordinates": [
+        1824,
+        1347
+      ],
+      "flag": "au",
+      "name": "Hobart"
+    },
+    {
+      "coordinates": [
+        2016,
+        1056
+      ],
+      "flag": "au",
+      "name": "Launceston"
+    },
+    {
+      "coordinates": [
+        2198,
+        284
+      ],
+      "flag": "au",
+      "name": "Melbourne"
+    },
+    {
+      "coordinates": [
+        2055,
+        359
+      ],
+      "flag": "au",
+      "name": "Geelong"
+    },
+    {
+      "coordinates": [
+        2209,
+        344
+      ],
+      "flag": "au",
+      "name": "Cranbourne"
+    },
+    {
+      "coordinates": [
+        2048,
+        228
+      ],
+      "flag": "au",
+      "name": "Ballarat"
+    },
+    {
+      "coordinates": [
+        2229,
+        54
+      ],
+      "flag": "au",
+      "name": "Bendigo"
+    },
+    {
+      "coordinates": [
+        2150,
+        256
+      ],
+      "flag": "au",
+      "name": "Melton"
+    },
+    {
+      "coordinates": [
+        1711,
+        405
+      ],
+      "flag": "au",
+      "name": "Warrnambool"
+    },
+    {
+      "coordinates": [
+        2189,
+        230
+      ],
+      "flag": "au",
+      "name": "Sunbury"
+    }
+  ],
+  "resources": [
+    {
+      "name": "Bendigo Gold",
+      "type": "gold",
+      "x": 2229,
+      "y": 54
+    },
+    {
+      "name": "Gippsland Gas",
+      "type": "gas",
+      "x": 2486,
+      "y": 374
+    }
+  ],
+  "chokepoints": [
+    {
+      "name": "Bass Strait",
+      "x": 2049,
+      "y": 708,
+      "radius": 229
+    }
+  ],
+  "climate": {
+    "monsoonMaxY": 0
+  }
+}
