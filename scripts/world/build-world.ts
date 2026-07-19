@@ -163,10 +163,12 @@ const WATER_CHECKS: Array<{
  */
 const DETAIL_REGION = {
   id: "oceania",
-  lonMin: 110,
+  // Expanded to cover mainland Southeast Asia (Burma through Vietnam),
+  // Thailand, the Malay peninsula and the whole Philippines.
+  lonMin: 92,
   lonMax: 180,
   latMin: -48.5,
-  latMax: 8,
+  latMax: 25,
 };
 
 /**
@@ -208,10 +210,36 @@ const WINDOWS: Array<{
     // but the named AI nations are Oceania's.
     nationIsos: ["au", "nz", "pg", "fj", "sb", "vu", "nc"],
     pinnedNations: ["Darwin", "Hobart", "Wellington", "Port Moresby", "Suva"],
-    lonMin: DETAIL_REGION.lonMin,
-    lonMax: DETAIL_REGION.lonMax,
-    latMin: DETAIL_REGION.latMin,
-    latMax: DETAIL_REGION.latMax,
+    // Fixed bounds (the detail region has grown beyond Oceania).
+    lonMin: 110,
+    lonMax: 180,
+    latMin: -48.5,
+    latMax: 8,
+  },
+  {
+    // ONE map for the whole of Southeast Asia: Burma, Thailand, Indochina,
+    // the Malay peninsula, Sumatra/Borneo and the entire Philippines —
+    // ~15.5M tiles at ~1.2 km/tile, well inside the lag-free budget.
+    id: "worldsoutheastasia",
+    gameMap: "WorldSoutheastAsia",
+    lod: 1,
+    maxNations: 24,
+    maxNationsPerCountry: 5,
+    nationIsos: ["th", "mm", "vn", "kh", "la", "my", "ph", "id", "sg", "bn"],
+    pinnedNations: [
+      "Bangkok",
+      "Manila",
+      "Yangon",
+      "Hanoi",
+      "Ho Chi Minh City",
+      "Singapore",
+      "Phnom Penh",
+      "Kuala Lumpur",
+    ],
+    lonMin: 92,
+    lonMax: 128,
+    latMin: -11,
+    latMax: 25,
   },
   // Regional theatres — smaller matches at maximum detail, cut from the
   // same grid and living in the same continuous world.
@@ -274,15 +302,15 @@ const OCEAN_SEED: [number, number] = [-30, 0]; // mid-Atlantic
 
 /**
  * Rivers are painted as navigable ESTUARIES only: the lower reaches nearest
- * the sea become a 2-cell-wide water channel connected to the ocean (so
+ * the sea become a 3-cell-wide water channel connected to the ocean (so
  * ships can sail upriver), and everything upstream stays plain land — rivers
  * never obstruct land expansion and never draw thin broken water lines
  * across the interior. Selected from Natural Earth 10m rivers by scalerank,
  * plus a few hand-added lines (e.g. the Yarra into Melbourne).
  */
-const RIVER_MAX_SCALERANK = 5;
+const RIVER_MAX_SCALERANK = 8;
 /** Paint at most this many km of river inland from its mouth. */
-const RIVER_ESTUARY_KM = 75;
+const RIVER_ESTUARY_KM = 150;
 
 /**
  * Real resource deposits on their actual locations (approximate mine/field
@@ -319,6 +347,17 @@ const RESOURCE_SITES: Array<{
   { name: "Gove Bauxite", type: "bauxite", lon: 136.82, lat: -12.27 },
   { name: "Broken Hill Silver", type: "silver", lon: 141.47, lat: -31.96 },
   { name: "Cadia Gold", type: "gold", lon: 148.99, lat: -33.46 },
+  // Southeast Asia
+  { name: "Mae Moh Coal", type: "coal", lon: 99.72, lat: 18.28 },
+  { name: "Monywa Copper", type: "copper", lon: 95.13, lat: 22.11 },
+  { name: "Bawdwin Silver", type: "silver", lon: 97.3, lat: 23.1 },
+  { name: "Sepon Gold", type: "gold", lon: 105.99, lat: 17.08 },
+  { name: "Baguio Gold", type: "gold", lon: 120.59, lat: 16.41 },
+  { name: "Toledo Copper", type: "copper", lon: 123.64, lat: 10.38 },
+  { name: "Erawan Gas", type: "gas", lon: 101.4, lat: 10.2 },
+  { name: "Cuu Long Oil", type: "oil", lon: 107.9, lat: 10.3 },
+  { name: "Seria Oil", type: "oil", lon: 114.32, lat: 4.6 },
+  { name: "Yadana Gas", type: "gas", lon: 97.7, lat: 14.7 },
 ];
 
 /**
@@ -338,6 +377,9 @@ const CHOKEPOINT_SITES: Array<{
   { name: "Makassar Strait", lon: 117.5, lat: -2.0, radiusKm: 140 },
   { name: "Vitiaz Strait", lon: 147.8, lat: -5.9, radiusKm: 80 },
   { name: "Foveaux Strait", lon: 168.2, lat: -46.7, radiusKm: 70 },
+  { name: "Strait of Malacca", lon: 100.7, lat: 2.9, radiusKm: 160 },
+  { name: "Sunda Strait", lon: 105.85, lat: -5.95, radiusKm: 90 },
+  { name: "Luzon Strait", lon: 120.9, lat: 20.4, radiusKm: 120 },
 ];
 
 /** Monsoon belt: wet-season slowdown applies north (equatorward) of this. */
@@ -446,6 +488,58 @@ const EXTRA_RIVER_LINES: Array<Array<[number, number]>> = [
     [144.92, -37.845],
     [144.91, -37.86], // Hobsons Bay mouth
   ],
+  [
+    // Brisbane River: Ipswich reach down to Moreton Bay.
+    [152.76, -27.6],
+    [152.9, -27.5],
+    [152.99, -27.46],
+    [153.03, -27.45], // Brisbane CBD
+    [153.1, -27.42],
+    [153.17, -27.38], // mouth
+  ],
+  [
+    // Swan River: Perth waters down to Fremantle.
+    [116.02, -31.92],
+    [115.95, -31.94],
+    [115.89, -31.96], // Perth CBD
+    [115.84, -32.01],
+    [115.78, -32.04],
+    [115.74, -32.05], // Fremantle mouth
+  ],
+  [
+    // Derwent: New Norfolk through Hobart to Storm Bay.
+    [147.06, -42.78],
+    [147.17, -42.8],
+    [147.26, -42.84],
+    [147.33, -42.88], // Hobart
+    [147.38, -42.95],
+    [147.42, -43.03], // mouth
+  ],
+  [
+    // Chao Phraya: Ayutthaya through Bangkok to the Gulf of Thailand.
+    [100.5, 15.0],
+    [100.57, 14.35], // Ayutthaya
+    [100.49, 13.95],
+    [100.5, 13.75], // Bangkok
+    [100.55, 13.62],
+    [100.59, 13.53], // mouth
+  ],
+  [
+    // Saigon River: Ho Chi Minh City to the Can Gio estuary.
+    [106.55, 11.15],
+    [106.66, 10.9],
+    [106.7, 10.78], // HCMC
+    [106.79, 10.62],
+    [106.89, 10.48],
+    [106.96, 10.36], // mouth
+  ],
+  [
+    // Pasig: Laguna de Bay through Manila to Manila Bay.
+    [121.08, 14.52],
+    [121.03, 14.55],
+    [120.99, 14.58], // Manila
+    [120.95, 14.6], // mouth
+  ],
 ];
 
 function loadRivers(): void {
@@ -480,7 +574,7 @@ function loadRivers(): void {
 /**
  * Paint each river's ESTUARY: starting from the mouth (the end of the line
  * that reaches existing water), walk inland up to RIVER_ESTUARY_KM painting
- * a 2-cell-wide water channel. The channel touches the sea, so the ocean
+ * a 3-cell-wide water channel. The channel touches the sea, so the ocean
  * flood makes it navigable; everything further upstream is left as land and
  * never obstructs expansion. Must run on raw land grids BEFORE ocean flood
  * / shore / magnitude.
@@ -553,17 +647,16 @@ function paintRivers(
           const t = s / steps;
           const x = Math.round(prev[0] + (cx - prev[0]) * t);
           const y = Math.round(prev[1] + (cy - prev[1]) * t);
-          // 2-cell-wide channel so the estuary is boat-navigable.
-          for (const [ox, oy] of [
-            [0, 0],
-            [1, 0],
-            [0, 1],
-            [1, 1],
-          ]) {
-            const px = x + ox;
-            const py = y + oy;
-            if (px < 0 || py < 0 || px >= g.width || py >= g.height) continue;
-            g.data[py * g.width + px] = 0; // water
+          // 3-cell-wide channel so the estuary is comfortably navigable.
+          for (let oy = -1; oy <= 1; oy++) {
+            for (let ox = -1; ox <= 1; ox++) {
+              const px = x + ox;
+              const py = y + oy;
+              if (px < 0 || py < 0 || px >= g.width || py >= g.height) {
+                continue;
+              }
+              g.data[py * g.width + px] = 0; // water
+            }
           }
           if (++painted >= maxCells) break outer;
         }
@@ -1123,12 +1216,15 @@ function main(): void {
     latMin: number;
     latMax: number;
   }) => {
-    const corners = [
-      grid.geoToWorld(b.lonMin, b.latMax),
-      grid.geoToWorld(b.lonMax, b.latMax),
-      grid.geoToWorld(b.lonMin, b.latMin),
-      grid.geoToWorld(b.lonMax, b.latMin),
-    ];
+    // Equal Earth's |x| for a given lon is largest at the latitude nearest
+    // the equator — for boxes spanning lat 0 that's an interior latitude,
+    // not a corner, so sample it too.
+    const lats = [b.latMin, b.latMax];
+    if (b.latMin < 0 && b.latMax > 0) lats.push(0);
+    const corners = lats.flatMap((lat) => [
+      grid.geoToWorld(b.lonMin, lat),
+      grid.geoToWorld(b.lonMax, lat),
+    ]);
     const ALIGN = 1024;
     const x0 = Math.floor(Math.min(...corners.map((c) => c.x)) / ALIGN) * ALIGN;
     const y0 = Math.floor(Math.min(...corners.map((c) => c.y)) / ALIGN) * ALIGN;
@@ -1204,6 +1300,10 @@ function main(): void {
     height: detail1Land.height,
     data: detail1Land.data,
   };
+  // Re-paint rivers at LOD1 with the same deterministic math the LOD1
+  // window maps use, so window tiles and world LOD1 cells stay identical
+  // (downsampling alone can pinch the channel differently).
+  paintRivers(detail1, 1, rx0 >> 1, ry0 >> 1);
   {
     const seeds: Array<[number, number]> = [];
     for (let x = 0; x < detail1.width; x++) {

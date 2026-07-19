@@ -396,7 +396,13 @@
   },
   "game_mode": {
     "ffa": "Free for All",
-    "teams": "Teams"
+    "teams": "Teams",
+    "teams_2": "2 Teams",
+    "teams_3": "3 Teams",
+    "teams_4": "4 Teams",
+    "teams_5": "5 Teams",
+    "teams_6": "6 Teams",
+    "title": "Game Mode"
   },
   "game_starting_modal": {
     "code_license": "Code licensed under AGPL-3.0 (no warranty)",
@@ -771,6 +777,7 @@
     "world": "World",
     "worldinverted": "World Inverted",
     "worldoceania": "World: Oceania",
+    "worldsoutheastasia": "World: Southeast Asia",
     "yellowsea": "Yellow Sea",
     "yenisei": "Yenisei"
   },
@@ -976,6 +983,8 @@
     "battle_for_oceania_desc": "All of Oceania, classic conquest: 400 rivals, one continent-spanning war.",
     "coral_sea_theatre": "Coral Sea Theatre",
     "coral_sea_theatre_desc": "Monsoon warfare over New Guinea and Torres Strait — the wet season decides campaigns.",
+    "dragons_of_the_mekong": "Dragons of the Mekong",
+    "dragons_of_the_mekong_desc": "All of Southeast Asia at war — from the Irrawaddy to Luzon, 500 states, with the Strait of Malacca as the prize.",
     "impossible_australia": "Impossible Australia",
     "impossible_australia_desc": "The eastern seaboard against impossible odds. Good luck.",
     "long_white_cloud": "Long White Cloud",

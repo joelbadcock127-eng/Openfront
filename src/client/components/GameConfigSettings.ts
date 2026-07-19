@@ -470,6 +470,47 @@ export class GameConfigSettings extends LitElement {
           `,
         )}
         ${renderSection(
+          DIFFICULTY_ICON,
+          "text-purple-400",
+          "bg-purple-500/20",
+          "game_mode.title",
+          html`
+            <div class="grid grid-cols-3 md:grid-cols-6 gap-3">
+              ${(
+                [
+                  ["ffa", GameMode.FFA, null],
+                  ["teams_2", GameMode.Team, 2],
+                  ["teams_3", GameMode.Team, 3],
+                  ["teams_4", GameMode.Team, 4],
+                  ["teams_5", GameMode.Team, 5],
+                  ["teams_6", GameMode.Team, 6],
+                ] as Array<[string, GameMode, number | null]>
+              ).map(([key, mode, count]) => {
+                const isSelected =
+                  settings.gameMode.selected === mode &&
+                  (mode === GameMode.FFA ||
+                    settings.teamCount.selected === count);
+                return html`
+                  <button
+                    @click=${() => {
+                      this.handleGameModeSelect(mode);
+                      if (count !== null) this.handleTeamCountSelect(count);
+                    }}
+                    class="${cardClass(
+                      isSelected,
+                      "flex flex-col items-center p-3 gap-1",
+                    )}"
+                  >
+                    <span class="${CARD_LABEL_CLASS} text-center text-white">
+                      ${translateText(`game_mode.${key}`)}
+                    </span>
+                  </button>
+                `;
+              })}
+            </div>
+          `,
+        )}
+        ${renderSection(
           OPTIONS_ICON,
           "text-orange-400",
           "bg-orange-500/20",

@@ -15,7 +15,12 @@
  * off, HUD above). Markers live in game-tile coordinates and follow the
  * shared camera (TransformHandler), fading in with zoom.
  */
-import { Chokepoint, MessageType, ResourceSite } from "../../core/game/Game";
+import {
+  Chokepoint,
+  MessageType,
+  PlayerType,
+  ResourceSite,
+} from "../../core/game/Game";
 import { TileRef } from "../../core/game/GameMap";
 import { GameUpdateType } from "../../core/game/GameUpdates";
 import { TransformHandler } from "../TransformHandler";
@@ -372,11 +377,12 @@ export class ResourceOverlay {
     alpha: number,
   ): void {
     const me = this.gameView.myPlayer();
-    // Hundreds of AI castles blanket the continent view — fade them in
-    // from mid-regional zoom. The local player's castle always shows.
+    // Nation castles fade in from mid-regional zoom; the local player's
+    // castle always shows. Bot tribes have no capital at all.
     const showOthers = this.transform.scale >= 0.55;
     for (const p of this.gameView.playerViews()) {
       if (!p.isAlive()) continue;
+      if (p.type() === PlayerType.Bot) continue;
       if (!showOthers && p !== me) continue;
       const spawn = p.state.spawnTile;
       if (spawn === undefined) continue;

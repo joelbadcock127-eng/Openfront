@@ -65,6 +65,7 @@ function orOmitted(value: unknown): unknown {
 // than the Go map generator; they have no map-generator/assets entry.
 const WORLD_PIPELINE_MAPS = new Set([
   "WorldOceania",
+  "WorldSoutheastAsia",
   "BassStrait",
   "NewZealand",
   "TorresStrait",

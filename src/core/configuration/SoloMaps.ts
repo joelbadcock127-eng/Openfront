@@ -18,6 +18,9 @@ export const ENABLED_SOLO_MAPS: readonly GameMapType[] = [
   // playable map, one match, one territorial state, with the rest of the
   // streamed Earth visible around it.
   GameMapType.WorldOceania,
+  // ONE map for the whole of Southeast Asia: Burma, Thailand, Indochina,
+  // Malaya, Sumatra/Borneo and the entire Philippines.
+  GameMapType.WorldSoutheastAsia,
   // Regional theatres cut from the same world grid (Bass Strait at maximum
   // ~0.61 km detail), plus the classic upstream World map.
   GameMapType.BassStrait,

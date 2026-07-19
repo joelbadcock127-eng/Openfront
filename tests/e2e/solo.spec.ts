@@ -22,6 +22,9 @@ const IGNORED_ERROR_PATTERNS = [
 
 let page: Page;
 const consoleErrors: string[] = [];
+// The screen point that successfully spawned (set by the spawn test); later
+// tests click relative to it so they always target our own territory.
+let spawnPoint: [number, number] = [660, 360];
 
 test.describe.configure({ mode: "serial" });
 
@@ -60,7 +63,7 @@ test("solo setup shows the enabled maps and starts a match", async () => {
   await page.locator("#solo-play-button").click();
   // Exactly the enabled solo maps (one-world Oceania + 4 regional theatres
   // + classic World).
-  await expect(page.locator("map-display")).toHaveCount(6);
+  await expect(page.locator("map-display")).toHaveCount(7);
   await expect(page.locator("text=/impossible/i").first()).toBeVisible();
   await page
     .locator("button:visible", { hasText: /start game/i })
@@ -75,15 +78,30 @@ test("solo setup shows the enabled maps and starts a match", async () => {
 test("spawn selection and HUD", async () => {
   // Give the map render a moment, then click land to request a spawn.
   await page.waitForTimeout(8_000);
-  // Land points on the Oceania map (Sydney & Brisbane; computed from geo
-  // coordinates via WorldGrid).
-  for (const [x, y] of [
-    [750, 665],
-    [810, 588],
-    [750, 665],
-  ]) {
+  // The boot camera framing varies between runs and data rebuilds, so try
+  // a spread of screen points across interior Australia (a huge land
+  // target at the boot zoom) until the spawn-phase banner goes away.
+  const candidates: Array<[number, number]> = [
+    [660, 360],
+    [620, 320],
+    [700, 400],
+    [560, 330],
+    [640, 260],
+    [720, 330],
+    [600, 420],
+    [660, 480],
+    [725, 638],
+    [660, 360],
+    [620, 320],
+    [700, 400],
+  ];
+  for (const [x, y] of candidates) {
     await page.mouse.click(x, y);
-    await page.waitForTimeout(1_000);
+    await page.waitForTimeout(2_500);
+    if ((await page.locator("text=Choose a starting location").count()) === 0) {
+      spawnPoint = [x, y];
+      break;
+    }
   }
   // Wait out the spawn countdown; the control panel (troop/attack HUD)
   // becomes visible once the game is live.
@@ -108,11 +126,12 @@ test("expand into neutral territory and adjust sliders", async () => {
   expect(await slider.inputValue()).not.toBe(before);
 
   // Click neutral land near the spawn to launch expansion attacks.
+  const [sx, sy] = spawnPoint;
   for (const [x, y] of [
-    [733, 633],
-    [717, 643],
-    [725, 625],
-    [725, 638],
+    [sx + 8, sy - 5],
+    [sx - 8, sy + 5],
+    [sx, sy - 13],
+    [sx, sy],
   ]) {
     await page.mouse.click(x, y);
     await page.waitForTimeout(1_500);
@@ -127,7 +146,7 @@ test("expand into neutral territory and adjust sliders", async () => {
 
 test("radial menu opens and build menu shows structures", async () => {
   // Right-click on own territory opens the radial action menu.
-  await page.mouse.click(725, 638, { button: "right" });
+  await page.mouse.click(spawnPoint[0], spawnPoint[1], { button: "right" });
   const radial = page.locator(".radial-menu-container");
   await expect(radial).toBeVisible({ timeout: 15_000 });
   await page.screenshot({

@@ -75,6 +75,8 @@ export class SinglePlayerModal extends BaseModal {
     DEFAULT_OPTIONS.maxTimerValue;
   @state() private instantBuild: boolean = DEFAULT_OPTIONS.instantBuild;
   @state() private weatherEnabled: boolean = true;
+  @state() private gameMode: GameMode = GameMode.FFA;
+  @state() private teamCount: number = 2;
   @state() private selectedScenario: string | null = null;
   @state() private empireTitle: string = "";
   @state() private empireColor: string | null = null;
@@ -325,10 +327,10 @@ export class SinglePlayerModal extends BaseModal {
                 disabled: this.nations === 0,
               },
               gameMode: {
-                selected: GameMode.FFA,
+                selected: this.gameMode,
               },
               teamCount: {
-                selected: 2,
+                selected: this.teamCount,
               },
               options: {
                 titleKey: "single_modal.options_title",
@@ -395,6 +397,8 @@ export class SinglePlayerModal extends BaseModal {
             }}
             @map-selected=${this.handleConfigMapSelected}
             @difficulty-selected=${this.handleConfigDifficultySelected}
+            @game-mode-selected=${this.handleConfigGameModeSelected}
+            @team-count-selected=${this.handleConfigTeamCountSelected}
             @doomsday-clock-speed-selected=${this
               .handleConfigDoomsdayClockSpeedSelected}
             @bots-changed=${this.handleBotsChange}
@@ -470,6 +474,16 @@ export class SinglePlayerModal extends BaseModal {
     this.selectedScenario = null;
     const customEvent = e as CustomEvent<{ difficulty: Difficulty }>;
     this.handleDifficultySelection(customEvent.detail.difficulty);
+  };
+
+  private handleConfigGameModeSelected = (e: Event) => {
+    const customEvent = e as CustomEvent<{ mode: GameMode }>;
+    this.gameMode = customEvent.detail.mode;
+  };
+
+  private handleConfigTeamCountSelected = (e: Event) => {
+    const customEvent = e as CustomEvent<{ count: number }>;
+    this.teamCount = customEvent.detail.count;
   };
 
   private handleConfigDoomsdayClockSpeedSelected = (e: Event) => {
@@ -718,8 +732,8 @@ export class SinglePlayerModal extends BaseModal {
                 ? GameMapSize.Compact
                 : GameMapSize.Normal,
               gameType: GameType.Singleplayer,
-              gameMode: GameMode.FFA,
-              playerTeams: 2,
+              gameMode: this.gameMode,
+              playerTeams: this.teamCount,
               difficulty: this.selectedDifficulty,
               maxTimerValue: finalMaxTimerValue,
               bots: this.bots,

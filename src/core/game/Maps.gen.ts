@@ -110,6 +110,7 @@ export enum GameMapType {
   // is the flagship (all of Oceania — one map, one match, one territorial
   // state); the others are regional theatres cut from the same world grid.
   WorldOceania = "World Oceania", // resources/maps/worldoceania/manifest.json
+  WorldSoutheastAsia = "World Southeast Asia", // resources/maps/worldsoutheastasia/manifest.json
   BassStrait = "Bass Strait", // resources/maps/bassstrait/manifest.json
   NewZealand = "New Zealand", // resources/maps/newzealand/manifest.json
   TorresStrait = "Torres Strait", // resources/maps/torresstrait/manifest.json
@@ -922,6 +923,13 @@ export const maps: readonly MapInfo[] = [
     type: GameMapType.WorldOceania,
     translationKey: "map.worldoceania",
     categories: ["continental", "oceania"],
+    multiplayerFrequency: 0,
+  },
+  {
+    id: "WorldSoutheastAsia",
+    type: GameMapType.WorldSoutheastAsia,
+    translationKey: "map.worldsoutheastasia",
+    categories: ["continental", "asia"],
     multiplayerFrequency: 0,
   },
   {

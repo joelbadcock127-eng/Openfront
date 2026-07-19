@@ -46,6 +46,16 @@ export const SCENARIOS: readonly Scenario[] = [
     weatherEnabled: true,
   },
   {
+    // The new theatre: all of Southeast Asia — monsoon warfare from the
+    // Irrawaddy to Luzon, with Malacca as the prize.
+    id: "dragons_of_the_mekong",
+    map: GameMapType.WorldSoutheastAsia,
+    difficulty: Difficulty.Medium,
+    bots: 500,
+    victoryCondition: "domination",
+    weatherEnabled: true,
+  },
+  {
     // The drilled-down intro theatre at ~0.61 km/tile.
     id: "tasmanian_campaign",
     map: GameMapType.BassStrait,

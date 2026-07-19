@@ -292,13 +292,14 @@ describe("AI personalities (#7)", () => {
 });
 
 describe("capital city and empire shatter", () => {
-  test("humans get a free capital city at spawn (world maps)", async () => {
+  test("spawning sets a capital but grants no free City structure", async () => {
     const extras: MapExtras = {
       resources: [{ name: "Test Iron", type: "iron", x: 4, y: 2 }],
       chokepoints: [],
     };
     const { alice } = await spawnedGame(extras);
-    expect(alice.unitCount(UnitType.City)).toBe(1);
+    expect(alice.capital()).not.toBeNull();
+    expect(alice.unitCount(UnitType.City)).toBe(0);
   });
 
   test("a large empire shatters into successor states when the capital falls", async () => {

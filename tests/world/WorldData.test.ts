@@ -257,18 +257,20 @@ describe("playable window ↔ world consistency (one Oceania map)", () => {
   );
   const mapBin: Buffer = fs.readFileSync(path.join(mapDir, "map.bin"));
 
-  test("Oceania is ONE playable map covering the whole region; regional theatres are cut from the same grid", () => {
+  test("one-world maps and regional theatres are cut from the same world grid", () => {
     expect(index.windows.map((w) => w.id).sort()).toEqual([
       "bassstrait",
       "eastaustralia",
       "newzealand",
       "torresstrait",
       "worldoceania",
+      "worldsoutheastasia",
     ]);
     const region = index.detailRegions.find((r) => r.id === "oceania")!;
-    // One world: the flagship map covers the entire detail region.
-    expect(win.lod0Rect).toEqual(region.lod0Rect);
-    // Every regional theatre lies inside it (same world, same grid).
+    // Two one-world theatres (Oceania, Southeast Asia) plus the regional
+    // maps all live inside the high-detail region of the same world grid.
+    expect(win.lod0Rect.width >> win.lod).toBe(8192);
+    expect(win.lod0Rect.height >> win.lod).toBe(7168);
     for (const w of index.windows) {
       expect(w.lod0Rect.x).toBeGreaterThanOrEqual(region.lod0Rect.x);
       expect(w.lod0Rect.y).toBeGreaterThanOrEqual(region.lod0Rect.y);

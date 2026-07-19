@@ -432,6 +432,9 @@ export class PlayerExecution implements Execution {
    * owned tile).
    */
   private handleCapital(ticks: number): void {
+    // Bot tribes have no capital — only nations and humans run the
+    // capital-crisis machinery.
+    if (this.player.type() === PlayerType.Bot) return;
     const capital = this.player.capital();
     if (capital === null) return;
     const owner = this.mg.owner(capital);
