@@ -3,12 +3,12 @@
   "map": {
     "width": 3072,
     "height": 2048,
-    "num_land_tiles": 408123
+    "num_land_tiles": 408079
   },
   "map4x": {
     "width": 1536,
     "height": 1024,
-    "num_land_tiles": 102740
+    "num_land_tiles": 102728
   },
   "map16x": {
     "width": 768,
