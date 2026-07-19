@@ -3,17 +3,17 @@
   "map": {
     "width": 4096,
     "height": 3072,
-    "num_land_tiles": 7316358
+    "num_land_tiles": 7310049
   },
   "map4x": {
     "width": 2048,
     "height": 1536,
-    "num_land_tiles": 1829579
+    "num_land_tiles": 1828205
   },
   "map16x": {
     "width": 1024,
     "height": 768,
-    "num_land_tiles": 457652
+    "num_land_tiles": 457400
   },
   "nations": [
     {
@@ -26,8 +26,8 @@
     },
     {
       "coordinates": [
-        2795,
-        1040
+        2793,
+        1038
       ],
       "flag": "au",
       "name": "Brisbane"
