@@ -1,0 +1,303 @@
+{
+  "name": "WorldSoutheastAsia",
+  "map": {
+    "width": 4096,
+    "height": 5120,
+    "num_land_tiles": 5316643
+  },
+  "map4x": {
+    "width": 2048,
+    "height": 2560,
+    "num_land_tiles": 1336320
+  },
+  "map16x": {
+    "width": 1024,
+    "height": 1280,
+    "num_land_tiles": 337303
+  },
+  "nations": [
+    {
+      "coordinates": [
+        1344,
+        1687
+      ],
+      "flag": "th",
+      "name": "Bangkok"
+    },
+    {
+      "coordinates": [
+        3161,
+        1585
+      ],
+      "flag": "ph",
+      "name": "Manila"
+    },
+    {
+      "coordinates": [
+        894,
+        1323
+      ],
+      "flag": "mm",
+      "name": "Yangon"
+    },
+    {
+      "coordinates": [
+        1646,
+        817
+      ],
+      "flag": "vn",
+      "name": "Hanoi"
+    },
+    {
+      "coordinates": [
+        1948,
+        2049
+      ],
+      "flag": "vn",
+      "name": "Ho Chi Minh City"
+    },
+    {
+      "coordinates": [
+        1771,
+        3207
+      ],
+      "flag": "sg",
+      "name": "Singapore"
+    },
+    {
+      "coordinates": [
+        1777,
+        1954
+      ],
+      "flag": "kh",
+      "name": "Phnom Penh"
+    },
+    {
+      "coordinates": [
+        1570,
+        2977
+      ],
+      "flag": "my",
+      "name": "Kuala Lumpur"
+    },
+    {
+      "coordinates": [
+        2016,
+        4122
+      ],
+      "flag": "id",
+      "name": "Jakarta"
+    },
+    {
+      "coordinates": [
+        1432,
+        2703
+      ],
+      "flag": "my",
+      "name": "George Town"
+    },
+    {
+      "coordinates": [
+        1440,
+        1182
+      ],
+      "flag": "la",
+      "name": "Vientiane"
+    },
+    {
+      "coordinates": [
+        2763,
+        2767
+      ],
+      "flag": "bn",
+      "name": "Bandar Seri Begawan"
+    },
+    {
+      "coordinates": [
+        2543,
+        4253
+      ],
+      "flag": "id",
+      "name": "Surabaya"
+    },
+    {
+      "coordinates": [
+        3164,
+        1580
+      ],
+      "flag": "ph",
+      "name": "Quezon City"
+    },
+    {
+      "coordinates": [
+        2076,
+        4217
+      ],
+      "flag": "id",
+      "name": "Bandung"
+    },
+    {
+      "coordinates": [
+        2029,
+        4127
+      ],
+      "flag": "id",
+      "name": "Bekasi"
+    },
+    {
+      "coordinates": [
+        1290,
+        2927
+      ],
+      "flag": "id",
+      "name": "Medan"
+    },
+    {
+      "coordinates": [
+        1725,
+        841
+      ],
+      "flag": "vn",
+      "name": "Haiphong"
+    },
+    {
+      "coordinates": [
+        3712,
+        2495
+      ],
+      "flag": "ph",
+      "name": "Davao"
+    },
+    {
+      "coordinates": [
+        760,
+        706
+      ],
+      "flag": "mm",
+      "name": "Mandalay"
+    },
+    {
+      "coordinates": [
+        3610,
+        2332
+      ],
+      "flag": "ph",
+      "name": "Cagayan de Oro"
+    },
+    {
+      "coordinates": [
+        1875,
+        2137
+      ],
+      "flag": "vn",
+      "name": "Can Tho"
+    },
+    {
+      "coordinates": [
+        1988,
+        1409
+      ],
+      "flag": "vn",
+      "name": "Da Nang"
+    },
+    {
+      "coordinates": [
+        1556,
+        2995
+      ],
+      "flag": "my",
+      "name": "Kelang"
+    }
+  ],
+  "resources": [
+    {
+      "name": "Mae Moh Coal",
+      "type": "coal",
+      "x": 1177,
+      "y": 1144
+    },
+    {
+      "name": "Monywa Copper",
+      "type": "copper",
+      "x": 673,
+      "y": 690
+    },
+    {
+      "name": "Bawdwin Silver",
+      "type": "silver",
+      "x": 835,
+      "y": 574
+    },
+    {
+      "name": "Sepon Gold",
+      "type": "gold",
+      "x": 1763,
+      "y": 1288
+    },
+    {
+      "name": "Baguio Gold",
+      "type": "gold",
+      "x": 3082,
+      "y": 1368
+    },
+    {
+      "name": "Toledo Copper",
+      "type": "copper",
+      "x": 3486,
+      "y": 2096
+    },
+    {
+      "name": "Cuu Long Oil",
+      "type": "oil",
+      "x": 2032,
+      "y": 2073
+    },
+    {
+      "name": "Seria Oil",
+      "type": "oil",
+      "x": 2709,
+      "y": 2802
+    },
+    {
+      "name": "Yadana Gas",
+      "type": "gas",
+      "x": 1083,
+      "y": 1563
+    }
+  ],
+  "chokepoints": [
+    {
+      "name": "Lombok Strait",
+      "x": 2793,
+      "y": 4431,
+      "radius": 65
+    },
+    {
+      "name": "Makassar Strait",
+      "x": 3011,
+      "y": 3611,
+      "radius": 114
+    },
+    {
+      "name": "Strait of Malacca",
+      "x": 1480,
+      "y": 3010,
+      "radius": 131
+    },
+    {
+      "name": "Sunda Strait",
+      "x": 1929,
+      "y": 4095,
+      "radius": 74
+    },
+    {
+      "name": "Luzon Strait",
+      "x": 2993,
+      "y": 892,
+      "radius": 98
+    }
+  ],
+  "climate": {
+    "monsoonMaxY": 5120
+  }
+}
