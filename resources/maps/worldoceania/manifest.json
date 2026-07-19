@@ -3,17 +3,17 @@
   "map": {
     "width": 8192,
     "height": 7168,
-    "num_land_tiles": 9923150
+    "num_land_tiles": 9899337
   },
   "map4x": {
     "width": 4096,
     "height": 3584,
-    "num_land_tiles": 2489975
+    "num_land_tiles": 2484876
   },
   "map16x": {
     "width": 2048,
     "height": 1792,
-    "num_land_tiles": 626563
+    "num_land_tiles": 625671
   },
   "nations": [
     {
@@ -27,7 +27,7 @@
     {
       "coordinates": [
         3472,
-        6305
+        6304
       ],
       "flag": "au",
       "name": "Hobart"
@@ -98,16 +98,16 @@
     },
     {
       "coordinates": [
-        3658,
-        5773
+        3657,
+        5772
       ],
       "flag": "au",
       "name": "Melbourne"
     },
     {
       "coordinates": [
-        4981,
-        4616
+        4979,
+        4614
       ],
       "flag": "au",
       "name": "Brisbane"
@@ -353,6 +353,12 @@
       "type": "gold",
       "x": 4282,
       "y": 5296
+    },
+    {
+      "name": "Seria Oil",
+      "type": "oil",
+      "x": 2197,
+      "y": 754
     }
   ],
   "chokepoints": [
