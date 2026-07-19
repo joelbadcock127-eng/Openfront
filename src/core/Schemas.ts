@@ -40,6 +40,8 @@ export type Intent =
   | TargetPlayerIntent
   | EmojiIntent
   | SpyIntent
+  | StabilizeIntent
+  | DevelopSiteIntent
   | DonateGoldIntent
   | DonateTroopsIntent
   | BuildUnitIntent
@@ -67,6 +69,8 @@ export type BreakAllianceIntent = z.infer<typeof BreakAllianceIntentSchema>;
 export type TargetPlayerIntent = z.infer<typeof TargetPlayerIntentSchema>;
 export type EmojiIntent = z.infer<typeof EmojiIntentSchema>;
 export type SpyIntent = z.infer<typeof SpyIntentSchema>;
+export type StabilizeIntent = z.infer<typeof StabilizeIntentSchema>;
+export type DevelopSiteIntent = z.infer<typeof DevelopSiteIntentSchema>;
 export type DonateGoldIntent = z.infer<typeof DonateGoldIntentSchema>;
 export type DonateTroopsIntent = z.infer<typeof DonateTroopIntentSchema>;
 export type EmbargoIntent = z.infer<typeof EmbargoIntentSchema>;
@@ -338,7 +342,7 @@ export const GameConfigSchema = z.object({
     .min(1)
     .max(400)
     .or(z.enum(["default", "disabled"])),
-  bots: z.number().int().min(0).max(400),
+  bots: z.number().int().min(0).max(1000),
   infiniteGold: z.boolean(),
   infiniteTroops: z.boolean(),
   instantBuild: z.boolean(),
@@ -485,6 +489,15 @@ export const SpyIntentSchema = z.object({
   target: ID,
 });
 
+export const StabilizeIntentSchema = z.object({
+  type: z.literal("stabilize"),
+});
+
+export const DevelopSiteIntentSchema = z.object({
+  type: z.literal("develop_site"),
+  tile: z.number(),
+});
+
 export const EmojiIntentSchema = z.object({
   type: z.literal("emoji"),
   recipient: z.union([ID, z.literal(AllPlayers)]),
@@ -597,6 +610,8 @@ export const IntentSchema = z.discriminatedUnion("type", [
   TargetPlayerIntentSchema,
   EmojiIntentSchema,
   SpyIntentSchema,
+  StabilizeIntentSchema,
+  DevelopSiteIntentSchema,
   DonateGoldIntentSchema,
   DonateTroopIntentSchema,
   BuildUnitIntentSchema,

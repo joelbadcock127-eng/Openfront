@@ -13,6 +13,21 @@ export class TestConfig extends Config {
   private _defaultNukeSpeed: number = 4;
   private _spawnImmunityDuration: number = 0;
   private _nationSpawnImmunityDuration: number = 0;
+  private _capitalShatterMinTiles: number = 2000;
+  private _unrestCheckTicks: number = 100;
+
+  setCapitalShatterMinTiles(n: number): void {
+    this._capitalShatterMinTiles = n;
+  }
+  capitalShatterMinTiles(): number {
+    return this._capitalShatterMinTiles;
+  }
+  setUnrestCheckTicks(n: number): void {
+    this._unrestCheckTicks = n;
+  }
+  unrestCheckTicks(): number {
+    return this._unrestCheckTicks;
+  }
 
   disableNavMesh(): boolean {
     return this.gameConfig().disableNavMesh ?? true;

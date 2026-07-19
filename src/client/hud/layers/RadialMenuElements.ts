@@ -29,6 +29,9 @@ const donateGoldIcon = assetUrl("images/DonateGoldIconWhite.svg");
 const donateTroopIcon = assetUrl("images/DonateTroopIconWhite.svg");
 const emojiIcon = assetUrl("images/EmojiIconWhite.svg");
 const infoIcon = assetUrl("images/InfoIcon.svg");
+const spyMaskIcon = assetUrl("images/SpyMaskIconWhite.svg");
+const riotFistIcon = assetUrl("images/RiotFistIconWhite.svg");
+const investIcon = assetUrl("images/InvestIconWhite.svg");
 const swordIcon = assetUrl("images/SwordIconWhite.svg");
 const targetIcon = assetUrl("images/TargetIconWhite.svg");
 const traitorIcon = assetUrl("images/TraitorIconWhite.svg");
@@ -94,6 +97,7 @@ export const COLORS = {
   target: "#ef4444",
   attack: "#ef4444",
   spy: "#7c3aed",
+  invest: "#0ea5e9",
   infoDetails: "#7f8c8d",
   infoEmoji: "#fbbf24",
   trade: "#0891b2",
@@ -106,7 +110,8 @@ export const COLORS = {
     default: "#6366f1",
     help: "#22c55e",
     attack: "#ef4444",
-  spy: "#7c3aed",
+    spy: "#7c3aed",
+    invest: "#0ea5e9",
     defend: "#3b82f6",
     greet: "#f97316",
     misc: "#a855f7",
@@ -471,6 +476,7 @@ function createMenuElements(
 const spyOperation = (
   op: "steal" | "incite",
   name: string,
+  icon: string,
 ): MenuElement => ({
   id: `spy_${op}`,
   name,
@@ -479,7 +485,17 @@ const spyOperation = (
     params.selected.id() === params.myPlayer.id() ||
     params.game.inSpawnPhase(),
   color: COLORS.spy,
-  icon: targetIcon,
+  icon,
+  tooltipItems: [
+    {
+      text: translateText(
+        op === "steal"
+          ? "radial_menu.spy_steal_tip"
+          : "radial_menu.spy_incite_tip",
+      ),
+      className: "",
+    },
+  ],
   action: (params: MenuElementParams) => {
     params.playerActionHandler.handleSpyOperation(op, params.selected!);
     params.closeMenu();
@@ -493,12 +509,44 @@ export const spyMenuElement: MenuElement = {
     params.selected === null ||
     params.game.inSpawnPhase() ||
     params.selected.id() === params.myPlayer.id(),
-  icon: infoIcon,
+  icon: spyMaskIcon,
   color: COLORS.spy,
   subMenu: () => [
-    spyOperation("steal", "radial_spy_steal"),
-    spyOperation("incite", "radial_spy_incite"),
+    spyOperation("steal", "radial_spy_steal", donateGoldIcon),
+    spyOperation("incite", "radial_spy_incite", riotFistIcon),
   ],
+};
+
+// Own-territory economy actions: invest against unrest, develop a nearby
+// resource site.
+export const investElement: MenuElement = {
+  id: "invest",
+  name: "radial_invest",
+  disabled: (params: MenuElementParams) => params.game.inSpawnPhase(),
+  color: COLORS.invest,
+  icon: investIcon,
+  tooltipItems: [
+    { text: translateText("radial_menu.invest_tip"), className: "" },
+  ],
+  action: (params: MenuElementParams) => {
+    params.playerActionHandler.handleStabilize();
+    params.closeMenu();
+  },
+};
+
+export const developSiteElement: MenuElement = {
+  id: "develop_site",
+  name: "radial_develop",
+  disabled: (params: MenuElementParams) => params.game.inSpawnPhase(),
+  color: COLORS.invest,
+  icon: buildIcon,
+  tooltipItems: [
+    { text: translateText("radial_menu.develop_tip"), className: "" },
+  ],
+  action: (params: MenuElementParams) => {
+    params.playerActionHandler.handleDevelopSite(params.tile);
+    params.closeMenu();
+  },
 };
 
 export const attackMenuElement: MenuElement = {
@@ -705,7 +753,13 @@ export const rootMenuElement: MenuElement = {
     const menuItems: (MenuElement | null)[] = [
       infoMenuElement,
       ...(isOwnTerritory
-        ? [deleteUnitElement, allyRequestElement, buildMenuElement]
+        ? [
+            deleteUnitElement,
+            allyRequestElement,
+            buildMenuElement,
+            investElement,
+            developSiteElement,
+          ]
         : [
             isAllied && !isDisconnected ? allyBreakElement : boatMenuElement,
             inExtensionWindow ? allyExtendElement : allyRequestElement,

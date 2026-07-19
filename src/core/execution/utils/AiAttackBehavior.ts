@@ -384,8 +384,19 @@ export class AiAttackBehavior {
     })();
     if (this.priorityStrategies === undefined) return base;
     const byName: Record<string, () => boolean> = {
-      nuked, bots, retaliate, assist, betray, hated, weakest,
-      afk, traitor, veryWeak, victim, island, donate,
+      nuked,
+      bots,
+      retaliate,
+      assist,
+      betray,
+      hated,
+      weakest,
+      afk,
+      traitor,
+      veryWeak,
+      victim,
+      island,
+      donate,
     };
     const priority = this.priorityStrategies
       .map((n) => byName[n])

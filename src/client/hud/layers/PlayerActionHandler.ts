@@ -7,13 +7,15 @@ import {
   SendBoatAttackIntentEvent,
   SendBreakAllianceIntentEvent,
   SendDeleteUnitIntentEvent,
+  SendDevelopSiteIntentEvent,
   SendDonateGoldIntentEvent,
   SendDonateTroopsIntentEvent,
   SendEmbargoIntentEvent,
   SendEmojiIntentEvent,
   SendSpawnIntentEvent,
-  SendTargetPlayerIntentEvent,
   SendSpyIntentEvent,
+  SendStabilizeIntentEvent,
+  SendTargetPlayerIntentEvent,
 } from "../../Transport";
 import { UIState } from "../../UIState";
 import { PlayerView } from "../../view";
@@ -73,6 +75,14 @@ export class PlayerActionHandler {
 
   handleSpyOperation(operation: "steal" | "incite", target: PlayerView) {
     this.eventBus.emit(new SendSpyIntentEvent(operation, target));
+  }
+
+  handleStabilize() {
+    this.eventBus.emit(new SendStabilizeIntentEvent());
+  }
+
+  handleDevelopSite(tile: number) {
+    this.eventBus.emit(new SendDevelopSiteIntentEvent(tile));
   }
 
   handleDonateGold(recipient: PlayerView) {

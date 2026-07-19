@@ -17,12 +17,12 @@ import {
   UnitInfo,
   UnitType,
 } from "../game/Game";
+import { TileRef } from "../game/GameMap";
+import { UserSettings } from "../game/UserSettings";
 import {
   weatherMagnitudeMultiplier,
   weatherSpeedMultiplier,
 } from "../game/Weather";
-import { TileRef } from "../game/GameMap";
-import { UserSettings } from "../game/UserSettings";
 import { GameConfig, TeamCountConfig } from "../Schemas";
 import { NukeType } from "../StatsSchemas";
 import { assertNever, sigmoid, toInt, within } from "../Util";
@@ -586,6 +586,17 @@ export class Config {
   }
   minDistanceBetweenPlayers(): number {
     return 30;
+  }
+
+  /** Empires larger than this shatter (instead of relocating the capital)
+   * when a capital crisis runs its course. */
+  capitalShatterMinTiles(): number {
+    return 2000;
+  }
+
+  /** Cadence (ticks) of the overextension/unrest evaluation. */
+  unrestCheckTicks(): number {
+    return 100;
   }
 
   /** Selected victory condition; classic land domination by default. */

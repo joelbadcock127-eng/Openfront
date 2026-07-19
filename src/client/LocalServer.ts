@@ -13,10 +13,7 @@ import {
   StampedIntent,
   Turn,
 } from "../core/Schemas";
-import {
-  createPartialGameRecord,
-  decompressGameRecord,
-} from "../core/Util";
+import { createPartialGameRecord, decompressGameRecord } from "../core/Util";
 import { getPersistentID } from "./Auth";
 import { LobbyConfig } from "./ClientGameRunner";
 import {

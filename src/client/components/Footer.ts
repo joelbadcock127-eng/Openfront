@@ -46,8 +46,8 @@ export class Footer extends LitElement {
             ${BRANDING.upstream.name} service.
           </span>
           <span>
-            Map and asset attributions are listed in the repository's
-            CREDITS.md and LICENSE-ASSETS files.
+            Map and asset attributions are listed in the repository's CREDITS.md
+            and LICENSE-ASSETS files.
           </span>
         </div>
       </footer>

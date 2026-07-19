@@ -6,6 +6,7 @@ import {
   PlayerInfo,
   PlayerType,
   SpawnArea,
+  UnitType,
 } from "../game/Game";
 import { TileRef } from "../game/GameMap";
 import { PseudoRandom } from "../PseudoRandom";
@@ -75,9 +76,18 @@ export class SpawnExecution implements Execution {
 
     player.setSpawnTile(spawn.center);
     // The first spawn tile is the player's capital (see capital crisis
-    // handling in PlayerExecution).
+    // handling in PlayerExecution). Humans and nations get a free capital
+    // city — the big, obvious building marking the seat of power.
     player.setCapital(spawn.center);
     player.clearCapitalCrisis();
+    const extras = this.mg.mapExtras();
+    if (
+      player.type() !== PlayerType.Bot &&
+      player.unitCount(UnitType.City) === 0 &&
+      (extras.resources.length > 0 || extras.chokepoints.length > 0)
+    ) {
+      player.buildUnit(UnitType.City, spawn.center, {});
+    }
 
     if (
       this.mg.config().gameConfig().gameType === GameType.Singleplayer &&

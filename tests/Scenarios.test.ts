@@ -17,7 +17,7 @@ describe("scenario presets (#3)", () => {
       expect(ENABLED_SOLO_MAPS).toContain(s.map);
       expect(Object.values(Difficulty)).toContain(s.difficulty);
       expect(s.bots).toBeGreaterThanOrEqual(0);
-      expect(s.bots).toBeLessThanOrEqual(400);
+      expect(s.bots).toBeLessThanOrEqual(1000);
       expect(["domination", "economic", "straits"]).toContain(
         s.victoryCondition,
       );

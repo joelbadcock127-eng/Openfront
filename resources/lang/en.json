@@ -319,6 +319,7 @@
     "conquered_no_gold": "Conquered {name} (didn't play, no gold awarded)",
     "duration_second": "1 second",
     "duration_seconds_plural": "{seconds} seconds",
+    "empire_shattered": "Your empire has shattered! Successor states have broken away — only the heartland remains",
     "focus": "Focus",
     "gold_rush": "Gold rush at {site}! Its owner profits fourfold",
     "hydrogen_bomb_detonated": "{name} - hydrogen bomb detonated",
@@ -327,6 +328,7 @@
     "missile_intercepted": "Missile intercepted {unit}",
     "no_boats_available": "No boats available, max {max}",
     "plague": "A plague is spreading — armies are wasting away",
+    "rebellion": "Rebellion! {tiles} tiles of frontier territory have broken free",
     "received_gold_from_captured_ship": "Received {gold} gold from ship captured from {name}",
     "received_gold_from_conquest": "Conquered {name}, received {gold} gold",
     "received_gold_from_player": "Received {gold} gold from {name}",
@@ -339,16 +341,19 @@
     "sent_emoji": "Sent {name}: {emoji}",
     "sent_gold_to_player": "Sent {gold} gold to {name}",
     "sent_troops_to_player": "Sent {troops} troops to {name}",
+    "site_developed": "{site} developed to level {level} — output increased",
     "spy_caught": "You caught {attacker}'s spies red-handed",
     "spy_failed": "Your operation against {target} failed — your agents were caught",
     "spy_incite_success": "Your agents incited an uprising in {target}'s borderlands",
     "spy_incite_victim": "{attacker} incited an uprising in your borderlands!",
     "spy_steal_success": "Your agents stole from {target}'s treasury",
     "spy_steal_victim": "{attacker}'s agents robbed your treasury!",
+    "stabilized": "Your investment calmed the restive territories",
     "trade_boom": "A trade boom sweeps the region — all economies surge",
     "trade_ship_captured": "Your trade ship was captured by {name}",
     "unit_destroyed": "Your {unit} was destroyed",
     "unit_voluntarily_deleted": "Unit voluntarily deleted",
+    "unrest_rising": "Unrest is rising in your new territories ({unrest}/100) — slow down, garrison troops, or invest to stabilize",
     "wants_to_renew_alliance": "{name} wants to renew your alliance"
   },
   "flag_input": {
@@ -948,7 +953,11 @@
   },
   "radial_menu": {
     "delete_unit_description": "Click to delete the nearest unit",
-    "delete_unit_title": "Delete Unit"
+    "delete_unit_title": "Delete Unit",
+    "develop_tip": "Develop a nearby resource site you own (250k × level)",
+    "invest_tip": "Invest to reduce unrest (cost scales with empire size)",
+    "spy_incite_tip": "Incite a border uprising (50k gold, can fail)",
+    "spy_steal_tip": "Steal from their treasury (25k gold, can fail)"
   },
   "relation": {
     "default": "Default",

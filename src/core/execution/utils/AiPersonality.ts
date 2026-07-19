@@ -24,9 +24,9 @@ export interface AiPersonality {
 }
 
 export function rollPersonality(random: PseudoRandom): AiPersonality {
-  const archetype = (["aggressive", "turtle", "opportunist", "vengeful"] as const)[
-    random.nextInt(0, 4)
-  ];
+  const archetype = (
+    ["aggressive", "turtle", "opportunist", "vengeful"] as const
+  )[random.nextInt(0, 4)];
   switch (archetype) {
     case "aggressive":
       return {

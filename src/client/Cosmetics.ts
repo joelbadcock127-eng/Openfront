@@ -192,7 +192,6 @@ export async function purchaseCosmetic(
   window.location.reload();
 }
 
-
 export async function fetchCosmetics(): Promise<Cosmetics | null> {
   // The cosmetics store is removed in this solo derivative; there is no
   // catalogue to fetch. Every caller already handles null (no cosmetics), so
@@ -203,7 +202,6 @@ export async function fetchCosmetics(): Promise<Cosmetics | null> {
   __cosmetics = Promise.resolve(null);
   return __cosmetics;
 }
-
 
 export async function resolveFlagUrl(
   flagRef: string,

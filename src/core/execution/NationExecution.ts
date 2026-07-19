@@ -23,10 +23,7 @@ import { NationStructureBehavior } from "./nation/NationStructureBehavior";
 import { NationWarshipBehavior } from "./nation/NationWarshipBehavior";
 import { SpawnExecution } from "./SpawnExecution";
 import { AiAttackBehavior } from "./utils/AiAttackBehavior";
-import {
-  AiPersonality,
-  rollPersonality,
-} from "./utils/AiPersonality";
+import { AiPersonality, rollPersonality } from "./utils/AiPersonality";
 
 export class NationExecution implements Execution {
   private active = true;

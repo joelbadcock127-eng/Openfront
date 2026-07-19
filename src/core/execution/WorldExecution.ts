@@ -37,18 +37,21 @@ import { seasonAt, seasonKey } from "../game/Weather";
 const CHECK_EVERY = 10;
 /** Checks a victory condition must hold consecutively to win (~5 min). */
 const VICTORY_HOLD_CHECKS = 300;
-/** Gold per tick for an owned resource site, by type. */
+/** Gold per tick for an owned resource site (level 1), by type. Sites are
+ * meant to be worth fighting over: a site rivals the base worker income. */
 const RESOURCE_GOLD: Record<string, bigint> = {
-  gold: 40n,
-  oil: 35n,
-  gas: 35n,
-  iron: 25n,
-  coal: 25n,
-  copper: 25n,
-  bauxite: 20n,
-  silver: 20n,
+  gold: 160n,
+  oil: 140n,
+  gas: 140n,
+  iron: 100n,
+  coal: 100n,
+  copper: 100n,
+  bauxite: 80n,
+  silver: 80n,
 };
-const RESOURCE_GOLD_DEFAULT = 20n;
+const RESOURCE_GOLD_DEFAULT = 80n;
+/** One-time windfall for seizing a site. */
+const CAPTURE_BONUS: Gold = 75_000n;
 /** Gold per tick for a controlled chokepoint. */
 const CHOKEPOINT_GOLD = 50n;
 /** Shore ownership share required to control a chokepoint. */
@@ -96,6 +99,9 @@ export class WorldExecution implements Execution {
     this.nextEventAt =
       ticks + this.random.nextInt(EVENT_MIN_GAP, EVENT_MAX_GAP);
     const extras = mg.mapExtras();
+    // Site development levels (1–3) live on mapExtras so the
+    // DevelopSiteExecution can raise them.
+    extras.siteLevels = extras.resources.map(() => 1);
     for (const site of extras.resources) {
       if (!mg.isValidCoord(site.x, site.y)) continue;
       this.resourceTiles.push(mg.ref(site.x, site.y));
@@ -157,7 +163,8 @@ export class WorldExecution implements Execution {
     const extras = this.mg.mapExtras();
     if (this.event !== null && ticks >= this.event.until) {
       this.event = null;
-      this.nextEventAt = ticks + this.random.nextInt(EVENT_MIN_GAP, EVENT_MAX_GAP);
+      this.nextEventAt =
+        ticks + this.random.nextInt(EVENT_MIN_GAP, EVENT_MAX_GAP);
     }
     if (this.event === null && ticks >= this.nextEventAt) {
       const kinds: Array<WorldEvent["kind"]> = ["trade_boom", "plague"];
@@ -213,19 +220,24 @@ export class WorldExecution implements Execution {
       if (id !== prev) {
         this.resourceOwners[i] = id;
         if (player !== null) {
+          // Seizing a site pays an immediate windfall on top of the
+          // ongoing income — capturing a gold mine should feel like one.
+          player.addGold(CAPTURE_BONUS);
           this.mg.displayMessage(
             "events_display.resource_seized",
             MessageType.RESOURCE_SEIZED,
             player.id(),
-            undefined,
+            CAPTURE_BONUS,
             { site: extras.resources[i].name },
           );
         }
       }
       if (player !== null && player.isAlive()) {
+        const level = BigInt(extras.siteLevels?.[i] ?? 1);
         let gold: Gold =
           (RESOURCE_GOLD[extras.resources[i].type] ?? RESOURCE_GOLD_DEFAULT) *
-          BigInt(CHECK_EVERY);
+          BigInt(CHECK_EVERY) *
+          level;
         if (this.event?.kind === "gold_rush" && this.event.site === i) {
           gold *= GOLD_RUSH_MULTIPLIER;
         }

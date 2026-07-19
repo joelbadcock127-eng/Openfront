@@ -14,7 +14,6 @@ import { GameConfig } from "../core/Schemas";
 import type { LangSelector } from "./LangSelector";
 import { Platform } from "./Platform";
 
-
 export function normaliseMapKey(mapName: string): string {
   return mapName.toLowerCase().replace(/[\s.]+/g, "");
 }
@@ -554,7 +553,12 @@ export function getMessageTypeClasses(type: MessageType): string {
     case MessageType.SEASON_CHANGE:
       return severityColors["info"];
     case MessageType.SPY_OPERATION:
+    case MessageType.UNREST:
       return severityColors["warn"];
+    case MessageType.EMPIRE_SHATTERED:
+      return severityColors["fail"];
+    case MessageType.SITE_DEVELOPED:
+      return severityColors["success"];
     default:
       console.warn(`Message type ${type} has no explicit color`);
       return severityColors["white"];

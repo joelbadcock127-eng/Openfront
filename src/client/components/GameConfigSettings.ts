@@ -484,7 +484,7 @@ export class GameConfigSettings extends LitElement {
               >
                 <fluent-slider
                   min="0"
-                  max="400"
+                  max="1000"
                   step="1"
                   .value=${settings.options.bots.value}
                   labelKey=${settings.options.bots.labelKey}
@@ -502,7 +502,7 @@ export class GameConfigSettings extends LitElement {
                   >
                     <fluent-slider
                       min="0"
-                      max="400"
+                      max="1000"
                       step="1"
                       .value=${settings.options.nations.value}
                       .defaultValue=${settings.options.nations.defaultValue}

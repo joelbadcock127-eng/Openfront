@@ -21,6 +21,7 @@ import {
   GameMode,
   GameUpdates,
   HumansVsNations,
+  MapExtras,
   MessageType,
   MutableAlliance,
   Nation,
@@ -38,7 +39,6 @@ import {
   Unit,
   UnitInfo,
   UnitType,
-  MapExtras,
 } from "./Game";
 import { GameMap, TileRef } from "./GameMap";
 import { GameUpdate, GameUpdateType } from "./GameUpdates";

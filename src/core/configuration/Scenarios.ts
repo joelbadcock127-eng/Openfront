@@ -23,7 +23,7 @@ export const SCENARIOS: readonly Scenario[] = [
     id: "battle_for_oceania",
     map: GameMapType.WorldOceania,
     difficulty: Difficulty.Medium,
-    bots: 400,
+    bots: 600,
     victoryCondition: "domination",
     weatherEnabled: true,
   },

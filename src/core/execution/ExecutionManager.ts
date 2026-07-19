@@ -10,12 +10,12 @@ import { AttackExecution } from "./AttackExecution";
 import { BoatRetreatExecution } from "./BoatRetreatExecution";
 import { ConstructionExecution } from "./ConstructionExecution";
 import { DeleteUnitExecution } from "./DeleteUnitExecution";
+import { DevelopSiteExecution } from "./DevelopSiteExecution";
 import { DonateGoldExecution } from "./DonateGoldExecution";
 import { DonateTroopsExecution } from "./DonateTroopExecution";
 import { EmbargoAllExecution } from "./EmbargoAllExecution";
 import { EmbargoExecution } from "./EmbargoExecution";
 import { EmojiExecution } from "./EmojiExecution";
-import { SpyExecution } from "./SpyExecution";
 import { MarkDisconnectedExecution } from "./MarkDisconnectedExecution";
 import { MoveWarshipExecution } from "./MoveWarshipExecution";
 import { NationExecution } from "./NationExecution";
@@ -24,6 +24,8 @@ import { PauseExecution } from "./PauseExecution";
 import { QuickChatExecution } from "./QuickChatExecution";
 import { RetreatExecution } from "./RetreatExecution";
 import { SpawnExecution } from "./SpawnExecution";
+import { SpyExecution } from "./SpyExecution";
+import { StabilizeExecution } from "./StabilizeExecution";
 import { TargetPlayerExecution } from "./TargetPlayerExecution";
 import { TransportShipExecution } from "./TransportShipExecution";
 import { TribeSpawner } from "./TribeSpawner";
@@ -91,6 +93,10 @@ export class Executor {
           intent.operation,
           intent.target,
         );
+      case "stabilize":
+        return new StabilizeExecution(player);
+      case "develop_site":
+        return new DevelopSiteExecution(player, intent.tile);
       case "donate_troops":
         return new DonateTroopsExecution(
           player,

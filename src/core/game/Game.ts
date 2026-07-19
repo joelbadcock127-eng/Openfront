@@ -569,6 +569,11 @@ export interface Player {
   // Espionage: per-player cooldown for spy operations.
   lastSpyOpTick(): Tick;
   recordSpyOp(): void;
+  // Unrest (overextension): rises with rapid conquest, causes rebellions
+  // at 100; reduced by investing (StabilizeExecution) or high troop
+  // reserves. See PlayerExecution.
+  unrest(): number;
+  addUnrest(delta: number): void;
   largestClusterBoundingBox: { min: Cell; max: Cell } | null;
   lastTileChange(): Tick;
 
@@ -742,6 +747,9 @@ export interface MapExtras {
   resources: ResourceSite[];
   chokepoints: Chokepoint[];
   climate?: MapClimate;
+  /** Runtime: per-site development level (1–3), initialised by
+   * WorldExecution and raised by DevelopSiteExecution. */
+  siteLevels?: number[];
 }
 
 export interface Game extends GameMap {
@@ -982,6 +990,9 @@ export enum MessageType {
   WORLD_EVENT,
   SEASON_CHANGE,
   SPY_OPERATION,
+  UNREST,
+  EMPIRE_SHATTERED,
+  SITE_DEVELOPED,
 }
 
 // Message categories used for filtering events in the EventsDisplay
@@ -1025,6 +1036,9 @@ export const MESSAGE_TYPE_CATEGORIES: Record<MessageType, MessageCategory> = {
   [MessageType.WORLD_EVENT]: MessageCategory.TRADE,
   [MessageType.SEASON_CHANGE]: MessageCategory.TRADE,
   [MessageType.SPY_OPERATION]: MessageCategory.ATTACK,
+  [MessageType.UNREST]: MessageCategory.ATTACK,
+  [MessageType.EMPIRE_SHATTERED]: MessageCategory.ATTACK,
+  [MessageType.SITE_DEVELOPED]: MessageCategory.TRADE,
 } as const;
 
 /**

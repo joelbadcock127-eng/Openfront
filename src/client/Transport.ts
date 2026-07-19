@@ -112,6 +112,12 @@ export class SendSpyIntentEvent implements GameEvent {
   ) {}
 }
 
+export class SendStabilizeIntentEvent implements GameEvent {}
+
+export class SendDevelopSiteIntentEvent implements GameEvent {
+  constructor(public readonly tile: number) {}
+}
+
 export class SendDonateGoldIntentEvent implements GameEvent {
   constructor(
     public readonly recipient: PlayerView,
@@ -248,6 +254,12 @@ export class Transport {
     );
     this.eventBus.on(SendEmojiIntentEvent, (e) => this.onSendEmojiIntent(e));
     this.eventBus.on(SendSpyIntentEvent, (e) => this.onSendSpyIntent(e));
+    this.eventBus.on(SendStabilizeIntentEvent, (e) =>
+      this.onSendStabilizeIntent(e),
+    );
+    this.eventBus.on(SendDevelopSiteIntentEvent, (e) =>
+      this.onSendDevelopSiteIntent(e),
+    );
     this.eventBus.on(SendDonateGoldIntentEvent, (e) =>
       this.onSendDonateGoldIntent(e),
     );
@@ -534,6 +546,14 @@ export class Transport {
       type: "targetPlayer",
       target: event.targetID,
     });
+  }
+
+  private onSendStabilizeIntent(_event: SendStabilizeIntentEvent) {
+    this.sendIntent({ type: "stabilize" });
+  }
+
+  private onSendDevelopSiteIntent(event: SendDevelopSiteIntentEvent) {
+    this.sendIntent({ type: "develop_site", tile: event.tile });
   }
 
   private onSendSpyIntent(event: SendSpyIntentEvent) {

@@ -3,27 +3,31 @@
  * chokepoint control, alternative victory conditions, seasons/monsoon
  * weather, capital crisis, espionage, and deterministic AI personalities.
  */
+import { DevelopSiteExecution } from "../src/core/execution/DevelopSiteExecution";
 import { SpawnExecution } from "../src/core/execution/SpawnExecution";
-import { GameUpdateType } from "../src/core/game/GameUpdates";
 import { SpyExecution } from "../src/core/execution/SpyExecution";
-import { WorldExecution } from "../src/core/execution/WorldExecution";
+import { StabilizeExecution } from "../src/core/execution/StabilizeExecution";
 import { rollPersonality } from "../src/core/execution/utils/AiPersonality";
+import { WorldExecution } from "../src/core/execution/WorldExecution";
 import {
   Game,
   MapExtras,
   Player,
   PlayerInfo,
   PlayerType,
+  UnitType,
 } from "../src/core/game/Game";
+import { GameUpdateType } from "../src/core/game/GameUpdates";
 import {
   Season,
-  seasonAt,
   SEASON_TICKS,
+  seasonAt,
   weatherMagnitudeMultiplier,
   weatherSpeedMultiplier,
 } from "../src/core/game/Weather";
 import { PseudoRandom } from "../src/core/PseudoRandom";
 import { setup } from "./util/Setup";
+import { TestConfig } from "./util/TestConfig";
 
 const gameID = "world_gameplay_test";
 
@@ -45,7 +49,11 @@ async function spawnedGame(
   game.addPlayer(aliceInfo);
   game.addPlayer(bobInfo);
   game.addExecution(
-    new SpawnExecution(gameID, game.player(aliceInfo.id).info(), game.ref(0, 10)),
+    new SpawnExecution(
+      gameID,
+      game.player(aliceInfo.id).info(),
+      game.ref(0, 10),
+    ),
     new SpawnExecution(gameID, game.player(bobInfo.id).info(), game.ref(0, 15)),
   );
   game.executeNextTick();
@@ -174,8 +182,12 @@ describe("weather (#6)", () => {
     const gameAt = (tick: number, y: number) =>
       ({ ticks: () => tick, y: () => y }) as unknown as Game;
     // Wet season, inside the belt.
-    expect(weatherSpeedMultiplier(gameAt(10, 5), 0, climate)).toBeGreaterThan(1);
-    expect(weatherMagnitudeMultiplier(gameAt(10, 5), 0, climate)).toBeGreaterThan(1);
+    expect(weatherSpeedMultiplier(gameAt(10, 5), 0, climate)).toBeGreaterThan(
+      1,
+    );
+    expect(
+      weatherMagnitudeMultiplier(gameAt(10, 5), 0, climate),
+    ).toBeGreaterThan(1);
     // Wet season, south of the belt.
     expect(weatherSpeedMultiplier(gameAt(10, 25), 0, climate)).toBe(1);
     // Dry season, inside the belt.
@@ -276,5 +288,128 @@ describe("AI personalities (#7)", () => {
     expect(aggressive.attackRateMultiplier).toBeLessThan(
       turtle.attackRateMultiplier,
     );
+  });
+});
+
+describe("capital city and empire shatter", () => {
+  test("humans get a free capital city at spawn (world maps)", async () => {
+    const extras: MapExtras = {
+      resources: [{ name: "Test Iron", type: "iron", x: 4, y: 2 }],
+      chokepoints: [],
+    };
+    const { alice } = await spawnedGame(extras);
+    expect(alice.unitCount(UnitType.City)).toBe(1);
+  });
+
+  test("a large empire shatters into successor states when the capital falls", async () => {
+    const { game, alice, bob } = await spawnedGame();
+    (game.config() as TestConfig).setCapitalShatterMinTiles(30);
+    // Alice conquers most of the map (land is columns 0-7).
+    for (let y = 0; y < 16; y++) {
+      for (let x = 0; x < 8; x++) {
+        const ref = game.ref(x, y);
+        if (game.isLand(ref) && game.owner(ref) !== bob) {
+          alice.conquer(ref);
+        }
+      }
+    }
+    const before = alice.numTilesOwned();
+    expect(before).toBeGreaterThan(30);
+    const playersBefore = game.allPlayers().length;
+
+    bob.conquer(alice.capital()!);
+    run(game, 620); // crisis duration + margin
+
+    expect(alice.inCapitalCrisis()).toBe(false);
+    expect(alice.numTilesOwned()).toBeLessThan(before);
+    const successors = game
+      .allPlayers()
+      .filter((p) => p.name().includes("Successors"));
+    expect(successors.length).toBeGreaterThanOrEqual(2);
+    expect(game.allPlayers().length).toBeGreaterThan(playersBefore);
+    // The breakaway states actually hold territory.
+    expect(
+      successors.reduce((sum, p) => sum + p.numTilesOwned(), 0),
+    ).toBeGreaterThan(0);
+  });
+});
+
+describe("resource capture windfall and development", () => {
+  test("seizing a site pays a one-time windfall", async () => {
+    const extras: MapExtras = {
+      resources: [{ name: "Test Gold", type: "gold", x: 0, y: 10 }],
+      chokepoints: [],
+    };
+    const { game, alice } = await spawnedGame(extras);
+    game.addExecution(new WorldExecution(gameID));
+    const before = alice.gold();
+    run(game, 12); // first CHECK_EVERY boundary
+    // Windfall (75k) dwarfs regular income over 12 ticks.
+    expect(alice.gold() - before).toBeGreaterThanOrEqual(75_000n);
+  });
+
+  test("developing a site raises its level and its output", async () => {
+    const extras: MapExtras = {
+      resources: [{ name: "Test Iron", type: "iron", x: 0, y: 10 }],
+      chokepoints: [],
+    };
+    const { game, alice } = await spawnedGame(extras);
+    game.addExecution(new WorldExecution(gameID));
+    run(game, 12);
+    alice.addGold(10_000_000n);
+
+    const deltaOver = (ticks: number): bigint => {
+      const g0 = alice.gold();
+      run(game, ticks);
+      return alice.gold() - g0;
+    };
+    const level1 = deltaOver(40);
+    game.addExecution(new DevelopSiteExecution(alice, game.ref(0, 10)));
+    run(game, 2);
+    expect(game.mapExtras().siteLevels?.[0]).toBe(2);
+    const level2 = deltaOver(40);
+    expect(level2).toBeGreaterThan(level1);
+  });
+});
+
+describe("overextension and unrest", () => {
+  test("rapid conquest raises unrest and warns; investment calms it", async () => {
+    const { game, alice } = await spawnedGame();
+    (game.config() as TestConfig).setUnrestCheckTicks(10);
+    run(game, 11); // establish the baseline snapshot
+
+    // Blitz: grab a large share of the map inside one check window.
+    for (let y = 0; y < 16; y++) {
+      for (let x = 0; x < 8; x++) {
+        const ref = game.ref(x, y);
+        if (game.isLand(ref) && !game.hasOwner(ref)) alice.conquer(ref);
+      }
+    }
+    run(game, 12);
+    expect(alice.unrest()).toBeGreaterThan(0);
+
+    alice.addUnrest(80); // push into warning territory
+    const before = alice.unrest();
+    alice.addGold(100_000_000n);
+    game.addExecution(new StabilizeExecution(alice));
+    run(game, 2);
+    expect(alice.unrest()).toBeLessThan(before);
+  });
+
+  test("unrest at the breaking point triggers a rebellion", async () => {
+    const { game, alice } = await spawnedGame();
+    (game.config() as TestConfig).setUnrestCheckTicks(10);
+    run(game, 11);
+    for (let y = 0; y < 16; y++) {
+      for (let x = 0; x < 8; x++) {
+        const ref = game.ref(x, y);
+        if (game.isLand(ref) && !game.hasOwner(ref)) alice.conquer(ref);
+      }
+    }
+    alice.addUnrest(95);
+    const before = alice.numTilesOwned();
+    run(game, 25); // two check windows: gain pushes past 100 -> rebellion
+    expect(alice.numTilesOwned()).toBeLessThan(before);
+    expect(alice.unrest()).toBeLessThan(100);
   });
 });

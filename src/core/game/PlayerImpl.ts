@@ -853,6 +853,14 @@ export class PlayerImpl implements Player {
     this._lastSpyOpTick = this.mg.ticks();
   }
 
+  private _unrest = 0;
+  unrest(): number {
+    return this._unrest;
+  }
+  addUnrest(delta: number): void {
+    this._unrest = Math.max(0, Math.min(120, this._unrest + delta));
+  }
+
   decayRelations() {
     this.relations.forEach((r: number, p: Player) => {
       const sign = -1 * Math.sign(r);
