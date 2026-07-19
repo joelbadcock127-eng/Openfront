@@ -3,17 +3,17 @@
   "map": {
     "width": 8192,
     "height": 7168,
-    "num_land_tiles": 9921436
+    "num_land_tiles": 9923150
   },
   "map4x": {
     "width": 4096,
     "height": 3584,
-    "num_land_tiles": 2490103
+    "num_land_tiles": 2489975
   },
   "map16x": {
     "width": 2048,
     "height": 1792,
-    "num_land_tiles": 626576
+    "num_land_tiles": 626563
   },
   "nations": [
     {
@@ -98,8 +98,8 @@
     },
     {
       "coordinates": [
-        3659,
-        5774
+        3658,
+        5773
       ],
       "flag": "au",
       "name": "Melbourne"
