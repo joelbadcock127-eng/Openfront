@@ -328,7 +328,7 @@
     "missile_intercepted": "Missile intercepted {unit}",
     "no_boats_available": "No boats available, max {max}",
     "plague": "A plague is spreading — armies are wasting away",
-    "rebellion": "Rebellion! {tiles} tiles of frontier territory have broken free",
+    "rebellion": "Rebellion! {tiles} tiles of frontier territory have declared independence as a rebel state",
     "received_gold_from_captured_ship": "Received {gold} gold from ship captured from {name}",
     "received_gold_from_conquest": "Conquered {name}, received {gold} gold",
     "received_gold_from_player": "Received {gold} gold from {name}",

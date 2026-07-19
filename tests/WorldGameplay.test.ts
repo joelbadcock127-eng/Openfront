@@ -411,5 +411,10 @@ describe("overextension and unrest", () => {
     run(game, 25); // two check windows: gain pushes past 100 -> rebellion
     expect(alice.numTilesOwned()).toBeLessThan(before);
     expect(alice.unrest()).toBeLessThan(100);
+    // The pocket declares independence as a live AI rebel state.
+    const rebels = game.allPlayers().filter((p) => p.name().includes("Rebels"));
+    expect(rebels.length).toBeGreaterThan(0);
+    expect(rebels[0].numTilesOwned()).toBeGreaterThan(0);
+    expect(rebels[0].type()).toBe(PlayerType.Bot);
   });
 });

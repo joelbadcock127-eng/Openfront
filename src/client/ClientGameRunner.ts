@@ -716,16 +716,11 @@ async function createClientGame(
     // context, canvas and input overlay — a few games and mobile browsers hit
     // their WebGL context limit. Idempotent: stop() may be called more than once.
     // Real-geography markers (resource "buildings", strait control rings,
-    // the capital crown) on maps that carry them; drawn above the game
-    // canvas, below the HUD. The capital marker follows the player's chosen
-    // spawn tile.
+    // capital castles for every player, defection pulses) on maps that
+    // carry them; drawn above the game canvas, below the HUD.
     let resourceOverlay:
       | import("./world/ResourceOverlay").ResourceOverlay
       | null = null;
-    let myCapital: { x: number; y: number } | null = null;
-    eventBus.on(SendSpawnIntentEvent, (e) => {
-      myCapital = { x: gameView.x(e.tile), y: gameView.y(e.tile) };
-    });
     if (gameMap.resources.length > 0 || gameMap.chokepoints.length > 0) {
       void import("./world/ResourceOverlay").then(({ ResourceOverlay }) => {
         if (rendererDisposed) return;
@@ -736,7 +731,6 @@ async function createClientGame(
           gameMap.resources,
           gameMap.chokepoints,
           gameView,
-          () => myCapital,
           glCanvas,
         );
       });

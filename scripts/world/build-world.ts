@@ -273,14 +273,16 @@ const WINDOWS: Array<{
 const OCEAN_SEED: [number, number] = [-30, 0]; // mid-Atlantic
 
 /**
- * Major rivers painted as thin water with periodic fords (land crossings)
- * so they channel and slow land expansion without ever splitting a
- * continent into disconnected landmasses. Selected from Natural Earth
- * 10m rivers by scalerank.
+ * Rivers are painted as navigable ESTUARIES only: the lower reaches nearest
+ * the sea become a 2-cell-wide water channel connected to the ocean (so
+ * ships can sail upriver), and everything upstream stays plain land — rivers
+ * never obstruct land expansion and never draw thin broken water lines
+ * across the interior. Selected from Natural Earth 10m rivers by scalerank,
+ * plus a few hand-added lines (e.g. the Yarra into Melbourne).
  */
 const RIVER_MAX_SCALERANK = 5;
-/** A 2-cell land ford roughly every this many km of river. */
-const RIVER_FORD_EVERY_KM = 30;
+/** Paint at most this many km of river inland from its mouth. */
+const RIVER_ESTUARY_KM = 75;
 
 /**
  * Real resource deposits on their actual locations (approximate mine/field
@@ -407,7 +409,9 @@ function elevSamplerFor(
   lodAbs: number,
   originX = 0,
   originY = 0,
-): ((x: number, y: number) => { landMag: number; waterMag: number }) | undefined {
+):
+  | ((x: number, y: number) => { landMag: number; waterMag: number })
+  | undefined {
   const e = worldElev;
   if (!e) return undefined;
   return (x: number, y: number) => {
@@ -427,6 +431,22 @@ function finishTerrain(g: TerrainGrid, lod: number): void {
 
 /** River polylines (lon/lat vertex lists) selected for gameplay painting. */
 let riverLines: Array<Array<[number, number]>> = [];
+
+/**
+ * Hand-added rivers missing from the Natural Earth selection, ordered
+ * source → mouth. The Yarra connects Melbourne to Port Phillip Bay.
+ */
+const EXTRA_RIVER_LINES: Array<Array<[number, number]>> = [
+  [
+    [145.12, -37.73], // upper Yarra (Templestowe bend)
+    [145.05, -37.76],
+    [144.99, -37.8],
+    [144.96, -37.818], // Melbourne CBD
+    [144.94, -37.83],
+    [144.92, -37.845],
+    [144.91, -37.86], // Hobsons Bay mouth
+  ],
+];
 
 function loadRivers(): void {
   const rivers = loadGeojson("ne_10m_rivers_lake_centerlines.geojson");
@@ -453,14 +473,17 @@ function loadRivers(): void {
       if (touches) riverLines.push(line);
     }
   }
+  riverLines.push(...EXTRA_RIVER_LINES);
   log(`rivers: ${riverLines.length} major river lines in region`);
 }
 
 /**
- * Paint rivers as 1-cell water with a 2-cell land ford roughly every
- * RIVER_FORD_EVERY_KM, so rivers channel expansion but never disconnect a
- * landmass. Deterministic: ford positions follow the painted-cell counter.
- * Must run on raw land grids BEFORE ocean flood / shore / magnitude.
+ * Paint each river's ESTUARY: starting from the mouth (the end of the line
+ * that reaches existing water), walk inland up to RIVER_ESTUARY_KM painting
+ * a 2-cell-wide water channel. The channel touches the sea, so the ocean
+ * flood makes it navigable; everything further upstream is left as land and
+ * never obstructs expansion. Must run on raw land grids BEFORE ocean flood
+ * / shore / magnitude.
  */
 function paintRivers(
   g: TerrainGrid,
@@ -469,24 +492,80 @@ function paintRivers(
   originY: number,
 ): void {
   const proj = projectorForLod(lodAbs);
-  const fordEvery = Math.max(8, Math.round(RIVER_FORD_EVERY_KM / cellKmAt(lodAbs)));
+  const maxCells = Math.max(4, Math.round(RIVER_ESTUARY_KM / cellKmAt(lodAbs)));
+  const isWaterAt = (x: number, y: number): boolean => {
+    if (x < 0 || y < 0 || x >= g.width || y >= g.height) return false;
+    return !isLand(g.data[y * g.width + x]);
+  };
+  // The mouth end sits in (or within a few cells of) pre-existing water.
+  const nearWater = (x: number, y: number): boolean => {
+    for (let dy = -3; dy <= 3; dy++) {
+      for (let dx = -3; dx <= 3; dx++) {
+        if (isWaterAt(x + dx, y + dy)) return true;
+      }
+    }
+    return false;
+  };
   for (const line of riverLines) {
-    let painted = 0;
-    let prev: [number, number] | null = null;
-    for (const [lon, lat] of line) {
+    if (line.length < 2) continue;
+    const cells = line.map(([lon, lat]) => {
       const p = proj(lon, lat);
-      const cx = Math.round(p.x) - originX;
-      const cy = Math.round(p.y) - originY;
+      return [Math.round(p.x) - originX, Math.round(p.y) - originY] as const;
+    });
+    const first = cells[0];
+    const last = cells[cells.length - 1];
+    // Natural Earth digitizes source → mouth; verify against the grid and
+    // flip when the data disagrees. Skip rivers whose mouth isn't in this
+    // window (nothing to connect, nothing to obstruct).
+    let ordered: Array<readonly [number, number]> = cells;
+    if (nearWater(last[0], last[1])) {
+      ordered = [...cells].reverse();
+    } else if (!nearWater(first[0], first[1])) {
+      continue;
+    }
+    // Bridge the mouth vertex to the actual water cell so the channel is
+    // guaranteed to touch the sea (rasterization can leave a 1–3 cell gap).
+    const m0 = ordered[0];
+    if (!isWaterAt(m0[0], m0[1])) {
+      let bridge: [number, number] | null = null;
+      for (let r = 1; r <= 3 && bridge === null; r++) {
+        for (let dy = -r; dy <= r && bridge === null; dy++) {
+          for (let dx = -r; dx <= r && bridge === null; dx++) {
+            if (Math.max(Math.abs(dx), Math.abs(dy)) !== r) continue;
+            if (isWaterAt(m0[0] + dx, m0[1] + dy)) {
+              bridge = [m0[0] + dx, m0[1] + dy];
+            }
+          }
+        }
+      }
+      if (bridge !== null) ordered = [bridge, ...ordered];
+    }
+    let painted = 0;
+    let prev: readonly [number, number] | null = null;
+    outer: for (const [cx, cy] of ordered) {
       if (prev) {
-        const steps = Math.max(Math.abs(cx - prev[0]), Math.abs(cy - prev[1]), 1);
+        const steps = Math.max(
+          Math.abs(cx - prev[0]),
+          Math.abs(cy - prev[1]),
+          1,
+        );
         for (let s = 1; s <= steps; s++) {
           const t = s / steps;
           const x = Math.round(prev[0] + (cx - prev[0]) * t);
           const y = Math.round(prev[1] + (cy - prev[1]) * t);
-          painted++;
-          if (painted % fordEvery < 2) continue; // leave a land ford
-          if (x < 0 || y < 0 || x >= g.width || y >= g.height) continue;
-          g.data[y * g.width + x] = 0; // water
+          // 2-cell-wide channel so the estuary is boat-navigable.
+          for (const [ox, oy] of [
+            [0, 0],
+            [1, 0],
+            [0, 1],
+            [1, 1],
+          ]) {
+            const px = x + ox;
+            const py = y + oy;
+            if (px < 0 || py < 0 || px >= g.width || py >= g.height) continue;
+            g.data[py * g.width + px] = 0; // water
+          }
+          if (++painted >= maxCells) break outer;
         }
       }
       prev = [cx, cy];
@@ -825,7 +904,12 @@ function emitWindowMap(
     // Offshore fields snap to their coastal terminal.
     const snapped = snapToLand(full, x, y, 40);
     if (!snapped) continue;
-    resources.push({ name: site.name, type: site.type, x: snapped[0], y: snapped[1] });
+    resources.push({
+      name: site.name,
+      type: site.type,
+      x: snapped[0],
+      y: snapped[1],
+    });
   }
 
   // Strait chokepoints inside this window (centre stays in water; the game

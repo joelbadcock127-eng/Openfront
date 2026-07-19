@@ -552,6 +552,8 @@ export class PlayerExecution implements Execution {
       "events_display.empire_shattered",
       MessageType.EMPIRE_SHATTERED,
       player.id(),
+      undefined,
+      { x: cx, y: cy },
     );
   }
 
@@ -614,7 +616,9 @@ export class PlayerExecution implements Execution {
     }
   }
 
-  /** A border region breaks free to the wilderness. */
+  /** A border region breaks free as a new independent AI rebel state. */
+  private rebellionCount = 0;
+
   private rebellion(): void {
     const player = this.player;
     let seed: TileRef | null = null;
@@ -660,15 +664,32 @@ export class PlayerExecution implements Execution {
       }
       frontier = next;
     }
+    // The pocket declares independence as a new AI bot state (visibly
+    // recoloured on the map) rather than dissolving into wilderness.
+    const info = new PlayerInfo(
+      `Free ${player.name()} Rebels`,
+      PlayerType.Bot,
+      null,
+      `${player.id()}_rebels_${this.rebellionCount++}`,
+    );
+    const rebels = this.mg.addPlayer(info);
+    this.mg.addExecution(new PlayerExecution(rebels));
+    this.mg.addExecution(new TribeExecution(rebels));
     for (const t of pocket) {
-      player.relinquish(t);
+      rebels.conquer(t);
     }
+    rebels.setCapital(seed);
     this.mg.displayMessage(
       "events_display.rebellion",
       MessageType.UNREST,
       player.id(),
       undefined,
-      { tiles: pocket.length },
+      {
+        tiles: pocket.length,
+        x: this.mg.x(seed),
+        y: this.mg.y(seed),
+        rebel: rebels.smallID(),
+      },
     );
   }
 
