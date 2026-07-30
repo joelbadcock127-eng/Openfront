@@ -241,6 +241,63 @@ const WINDOWS: Array<{
     latMin: -11,
     latMax: 25,
   },
+  {
+    // The JOINED theatre: Southeast Asia (Burma/Indochina through the
+    // Philippines and the archipelago) plus ALL of Oceania (Australia,
+    // New Zealand, New Guinea, Fiji) as ONE map — one match, one
+    // territorial state from Hanoi to Wellington. Joining at LOD1 would
+    // be ~90M tiles (past the ~59M measured lag-free ceiling, and the
+    // 8704-tile width would exceed the 8192px WebGL texture floor), so
+    // the joined map is emitted at LOD2 (~2.4 km/tile): 4864×4608 ≈ 22M
+    // tiles — fewer than WorldOceania itself, comfortably lag-free.
+    id: "worldindopacific",
+    gameMap: "WorldIndoPacific",
+    lod: 2,
+    maxNations: 36,
+    maxNationsPerCountry: 8,
+    nationIsos: [
+      // Oceania
+      "au",
+      "nz",
+      "pg",
+      "fj",
+      "sb",
+      "vu",
+      "nc",
+      // Southeast Asia
+      "th",
+      "mm",
+      "vn",
+      "kh",
+      "la",
+      "my",
+      "ph",
+      "id",
+      "sg",
+      "bn",
+    ],
+    pinnedNations: [
+      "Darwin",
+      "Hobart",
+      "Wellington",
+      "Port Moresby",
+      "Suva",
+      "Bangkok",
+      "Manila",
+      "Yangon",
+      "Hanoi",
+      "Ho Chi Minh City",
+      "Singapore",
+      "Phnom Penh",
+      "Kuala Lumpur",
+      "Jakarta",
+    ],
+    // Union of the two one-world theatres (the whole detail region).
+    lonMin: 92,
+    lonMax: 180,
+    latMin: -48.5,
+    latMax: 25,
+  },
   // Regional theatres — smaller matches at maximum detail, cut from the
   // same grid and living in the same continuous world.
   {

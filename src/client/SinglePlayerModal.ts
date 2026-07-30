@@ -75,6 +75,8 @@ export class SinglePlayerModal extends BaseModal {
     DEFAULT_OPTIONS.maxTimerValue;
   @state() private instantBuild: boolean = DEFAULT_OPTIONS.instantBuild;
   @state() private weatherEnabled: boolean = true;
+  // Unrest rebellions + empire shatter (breakaway AI states). Default on.
+  @state() private rebellions: boolean = true;
   @state() private gameMode: GameMode = GameMode.FFA;
   @state() private teamCount: number = 2;
   @state() private selectedScenario: string | null = null;
@@ -371,6 +373,10 @@ export class SinglePlayerModal extends BaseModal {
                     checked: this.weatherEnabled,
                   },
                   {
+                    labelKey: "single_modal.rebellions",
+                    checked: this.rebellions,
+                  },
+                  {
                     labelKey: "single_modal.victory_economic",
                     checked: this.victoryEconomic,
                   },
@@ -438,6 +444,7 @@ export class SinglePlayerModal extends BaseModal {
     this.maxTimer = DEFAULT_OPTIONS.maxTimer;
     this.maxTimerValue = DEFAULT_OPTIONS.maxTimerValue;
     this.instantBuild = DEFAULT_OPTIONS.instantBuild;
+    this.rebellions = true;
     this.randomSpawn = DEFAULT_OPTIONS.randomSpawn;
     this.disabledUnits = [...DEFAULT_OPTIONS.disabledUnits];
     this.goldMultiplier = DEFAULT_OPTIONS.goldMultiplier;
@@ -526,6 +533,9 @@ export class SinglePlayerModal extends BaseModal {
         break;
       case "single_modal.weather":
         this.weatherEnabled = checked;
+        break;
+      case "single_modal.rebellions":
+        this.rebellions = checked;
         break;
       case "single_modal.victory_economic":
         this.victoryEconomic = checked;
@@ -743,6 +753,7 @@ export class SinglePlayerModal extends BaseModal {
               infiniteTroops: this.infiniteTroops,
               instantBuild: this.instantBuild,
               weatherEnabled: this.weatherEnabled,
+              rebellionsEnabled: this.rebellions,
               victoryCondition: this.victoryEconomic
                 ? ("economic" as const)
                 : this.victoryStraits

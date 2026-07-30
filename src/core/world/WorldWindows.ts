@@ -13,6 +13,7 @@ import { GameMapType } from "../game/Game";
 export const WORLD_WINDOW_MAPS: ReadonlySet<GameMapType> = new Set([
   GameMapType.WorldOceania,
   GameMapType.WorldSoutheastAsia,
+  GameMapType.WorldIndoPacific,
   GameMapType.BassStrait,
   GameMapType.NewZealand,
   GameMapType.TorresStrait,

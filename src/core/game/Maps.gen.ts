@@ -111,6 +111,7 @@ export enum GameMapType {
   // state); the others are regional theatres cut from the same world grid.
   WorldOceania = "World Oceania", // resources/maps/worldoceania/manifest.json
   WorldSoutheastAsia = "World Southeast Asia", // resources/maps/worldsoutheastasia/manifest.json
+  WorldIndoPacific = "World Indo-Pacific", // resources/maps/worldindopacific/manifest.json
   BassStrait = "Bass Strait", // resources/maps/bassstrait/manifest.json
   NewZealand = "New Zealand", // resources/maps/newzealand/manifest.json
   TorresStrait = "Torres Strait", // resources/maps/torresstrait/manifest.json
@@ -930,6 +931,13 @@ export const maps: readonly MapInfo[] = [
     type: GameMapType.WorldSoutheastAsia,
     translationKey: "map.worldsoutheastasia",
     categories: ["continental", "asia"],
+    multiplayerFrequency: 0,
+  },
+  {
+    id: "WorldIndoPacific",
+    type: GameMapType.WorldIndoPacific,
+    translationKey: "map.worldindopacific",
+    categories: ["continental", "asia", "oceania"],
     multiplayerFrequency: 0,
   },
   {

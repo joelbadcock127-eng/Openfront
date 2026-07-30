@@ -609,6 +609,12 @@ export class Config {
     return this._gameConfig.weatherEnabled ?? true;
   }
 
+  /** Unrest rebellions + capital-crisis empire shatter (default on). When
+   * off, territory never breaks away into AI bot states. */
+  rebellionsEnabled(): boolean {
+    return this._gameConfig.rebellionsEnabled ?? true;
+  }
+
   percentageTilesOwnedToWin(): number {
     if (this._gameConfig.gameMode === GameMode.Team) {
       return 95;

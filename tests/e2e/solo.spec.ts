@@ -61,9 +61,9 @@ test("main menu loads with solo-only navigation", async () => {
 
 test("solo setup shows the enabled maps and starts a match", async () => {
   await page.locator("#solo-play-button").click();
-  // Exactly the enabled solo maps (one-world Oceania + 4 regional theatres
-  // + classic World).
-  await expect(page.locator("map-display")).toHaveCount(7);
+  // Exactly the enabled solo maps (one-world Oceania, Southeast Asia and
+  // the joined Indo-Pacific + 4 regional theatres + classic World).
+  await expect(page.locator("map-display")).toHaveCount(8);
   await expect(page.locator("text=/impossible/i").first()).toBeVisible();
   await page
     .locator("button:visible", { hasText: /start game/i })

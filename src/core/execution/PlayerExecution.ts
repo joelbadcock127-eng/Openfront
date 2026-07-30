@@ -464,6 +464,7 @@ export class PlayerExecution implements Execution {
       PlayerExecution.CAPITAL_CRISIS_TICKS
     ) {
       if (
+        this.mg.config().rebellionsEnabled() &&
         this.player.numTilesOwned() > this.mg.config().capitalShatterMinTiles()
       ) {
         this.shatterEmpire();
@@ -574,6 +575,7 @@ export class PlayerExecution implements Execution {
 
   private handleUnrest(ticks: number): void {
     if (this.player.type() === PlayerType.Bot) return;
+    if (!this.mg.config().rebellionsEnabled()) return;
     const every = this.mg.config().unrestCheckTicks();
     if (this.lastUnrestTick < 0) {
       this.lastUnrestTick = ticks;

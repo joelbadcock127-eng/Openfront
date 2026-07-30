@@ -66,6 +66,7 @@ function orOmitted(value: unknown): unknown {
 const WORLD_PIPELINE_MAPS = new Set([
   "WorldOceania",
   "WorldSoutheastAsia",
+  "WorldIndoPacific",
   "BassStrait",
   "NewZealand",
   "TorresStrait",

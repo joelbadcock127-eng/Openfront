@@ -69,6 +69,20 @@ Range requests were used end-to-end in every run (no full-pack
 downloads); the LOD0/LOD1 packs now cover all of Oceania and total
 ~8 MB on disk.
 
+## Joined Indo-Pacific map (2026-07-30)
+
+The `worldindopacific` window joins the Southeast Asia and Oceania
+theatres (lon 92–180, lat 48.5°S–25°N) into ONE map. At the two
+theatres' native LOD 1 the union bounding box would be 8704×9216 ≈ 90M
+tiles — past the ~59M ceiling measured for WorldOceania and wider than
+the 8192px minimum WebGL `MAX_TEXTURE_SIZE` — so the joined map is
+emitted at LOD 2 (~2.4 km/tile): 4864×4608 ≈ 22.4M tiles, fewer than
+WorldOceania itself. Verified in the Playwright/SwiftShader harness
+(100 bots + 36 nations, spawn + expansion): the joined map simulated
+~4.3 ticks/s where WorldOceania does ~3.1 ticks/s in the same GPU-less
+container — i.e. joining the theatres made the match cheaper, not
+laggier (on GPU hardware both run the upstream 10 ticks/s).
+
 ## Instrumentation available
 
 The `worldDebug` overlay reports, live: current LOD, chunks drawn, draw

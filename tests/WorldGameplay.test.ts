@@ -418,4 +418,54 @@ describe("overextension and unrest", () => {
     expect(rebels[0].numTilesOwned()).toBeGreaterThan(0);
     expect(rebels[0].type()).toBe(PlayerType.Bot);
   });
+
+  test("rebellionsEnabled: false — blitzing never raises unrest or rebels", async () => {
+    const { game, alice } = await spawnedGame(undefined, {
+      rebellionsEnabled: false,
+    });
+    (game.config() as TestConfig).setUnrestCheckTicks(10);
+    run(game, 11);
+    for (let y = 0; y < 16; y++) {
+      for (let x = 0; x < 8; x++) {
+        const ref = game.ref(x, y);
+        if (game.isLand(ref) && !game.hasOwner(ref)) alice.conquer(ref);
+      }
+    }
+    alice.addUnrest(95); // even primed unrest must never fire a rebellion
+    const before = alice.numTilesOwned();
+    run(game, 25);
+    expect(alice.numTilesOwned()).toBe(before);
+    const rebels = game.allPlayers().filter((p) => p.name().includes("Rebels"));
+    expect(rebels).toHaveLength(0);
+  });
+
+  test("rebellionsEnabled: false — a lost capital relocates instead of shattering", async () => {
+    const { game, alice, bob } = await spawnedGame(undefined, {
+      rebellionsEnabled: false,
+    });
+    (game.config() as TestConfig).setCapitalShatterMinTiles(30);
+    for (let y = 0; y < 16; y++) {
+      for (let x = 0; x < 8; x++) {
+        const ref = game.ref(x, y);
+        if (game.isLand(ref) && game.owner(ref) !== bob) {
+          alice.conquer(ref);
+        }
+      }
+    }
+    const before = alice.numTilesOwned();
+    expect(before).toBeGreaterThan(30);
+
+    const oldCapital = alice.capital()!;
+    bob.conquer(oldCapital);
+    run(game, 620); // crisis duration + margin
+
+    expect(alice.inCapitalCrisis()).toBe(false);
+    expect(alice.capital()).not.toBe(oldCapital);
+    // No successor states; Alice keeps everything but the captured tile.
+    expect(alice.numTilesOwned()).toBe(before - 1);
+    const successors = game
+      .allPlayers()
+      .filter((p) => p.name().includes("Successors"));
+    expect(successors).toHaveLength(0);
+  });
 });

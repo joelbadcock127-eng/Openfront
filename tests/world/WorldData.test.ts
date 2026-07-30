@@ -263,6 +263,7 @@ describe("playable window ↔ world consistency (one Oceania map)", () => {
       "eastaustralia",
       "newzealand",
       "torresstrait",
+      "worldindopacific",
       "worldoceania",
       "worldsoutheastasia",
     ]);
@@ -368,6 +369,121 @@ describe("playable window ↔ world consistency (one Oceania map)", () => {
       expect(names).toContain(expected);
     }
     expect(manifest.nations.length).toBeGreaterThanOrEqual(15);
+    for (const n of manifest.nations) {
+      const [x, y] = n.coordinates;
+      expect(land(mapBin[y * manifest.map.width + x]), n.name).toBe(true);
+    }
+  });
+});
+
+describe("joined Indo-Pacific theatre (Southeast Asia + Oceania as ONE map)", () => {
+  const mapsDir = path.join(__dirname, "..", "..", "resources", "maps");
+  const win = index.windows.find((w) => w.id === "worldindopacific")!;
+  const mapDir = path.join(mapsDir, "worldindopacific");
+  const manifest = JSON.parse(
+    fs.readFileSync(path.join(mapDir, "manifest.json"), "utf8"),
+  );
+  const mapBin: Buffer = fs.readFileSync(path.join(mapDir, "map.bin"));
+
+  test("covers the union of the Oceania and Southeast Asia windows", () => {
+    const oceania = index.windows.find((w) => w.id === "worldoceania")!;
+    const seasia = index.windows.find((w) => w.id === "worldsoutheastasia")!;
+    for (const other of [oceania, seasia]) {
+      expect(win.lod0Rect.x).toBeLessThanOrEqual(other.lod0Rect.x);
+      expect(win.lod0Rect.y).toBeLessThanOrEqual(other.lod0Rect.y);
+      expect(win.lod0Rect.x + win.lod0Rect.width).toBeGreaterThanOrEqual(
+        other.lod0Rect.x + other.lod0Rect.width,
+      );
+      expect(win.lod0Rect.y + win.lod0Rect.height).toBeGreaterThanOrEqual(
+        other.lod0Rect.y + other.lod0Rect.height,
+      );
+    }
+  });
+
+  test("stays inside the measured lag-free budget despite the joined extent", () => {
+    // Joining at LOD1 would be ~90M tiles and >8192px wide; the joined map
+    // is emitted at LOD2 so it must be SMALLER than WorldOceania (58.7M,
+    // the measured lag-free ceiling) and fit common WebGL texture limits.
+    expect(win.lod).toBe(2);
+    expect(manifest.map.width).toBe(win.lod0Rect.width >> win.lod);
+    expect(manifest.map.height).toBe(win.lod0Rect.height >> win.lod);
+    expect(mapBin.length).toBe(manifest.map.width * manifest.map.height);
+    expect(manifest.map.width).toBeLessThanOrEqual(8192);
+    expect(manifest.map.height).toBeLessThanOrEqual(8192);
+    expect(manifest.map.width * manifest.map.height).toBeLessThan(58_720_256);
+  });
+
+  test("land spans both theatres — Indochina down to New Zealand and Fiji", () => {
+    const landmarks: Array<[string, number, number]> = [
+      ["Hanoi (Vietnam)", 105.85, 21.03],
+      ["Bangkok (Thailand)", 100.5, 13.75],
+      ["Yangon (Burma)", 96.16, 16.87],
+      ["Singapore", 103.82, 1.35],
+      ["Jakarta (Java)", 106.85, -6.2],
+      ["Manila (Luzon)", 120.98, 14.6],
+      ["Perth (Western Australia)", 115.86, -31.95],
+      ["Sydney (Australia)", 151.2, -33.87],
+      ["Hobart (Tasmania)", 147.33, -42.88],
+      ["Auckland (New Zealand)", 174.76, -36.85],
+      ["Port Moresby (New Guinea)", 147.18, -9.44],
+      ["Suva (Fiji)", 178.44, -18.14],
+    ];
+    for (const [name, lon, lat] of landmarks) {
+      const w = grid.geoToWorld(lon, lat);
+      const x = (Math.floor(w.x) - win.lod0Rect.x) >> win.lod;
+      const y = (Math.floor(w.y) - win.lod0Rect.y) >> win.lod;
+      expect(x, name).toBeGreaterThan(0);
+      expect(y, name).toBeGreaterThan(0);
+      expect(x, name).toBeLessThan(manifest.map.width);
+      expect(y, name).toBeLessThan(manifest.map.height);
+      let foundLand = false;
+      for (let dy = -3; dy <= 3 && !foundLand; dy++) {
+        for (let dx = -3; dx <= 3 && !foundLand; dx++) {
+          if (land(mapBin[(y + dy) * manifest.map.width + (x + dx)])) {
+            foundLand = true;
+          }
+        }
+      }
+      expect(foundLand, name).toBe(true);
+    }
+  });
+
+  test("the seas CONNECTING the theatres are ocean — one navigable theatre", () => {
+    for (const [name, lon, lat] of [
+      ["Strait of Malacca", 100.7, 2.9],
+      ["Makassar Strait", 117.5, -2.0],
+      ["Torres Strait", 142.6, -9.95],
+      ["Bass Strait", 146.0, -39.5],
+      ["Cook Strait", 174.5, -41.4],
+      ["South China Sea", 112.0, 12.0],
+      ["Coral Sea", 152.0, -18.0],
+      ["Tasman Sea", 160.0, -38.0],
+    ] as Array<[string, number, number]>) {
+      const w = grid.geoToWorld(lon, lat);
+      const x = (Math.floor(w.x) - win.lod0Rect.x) >> win.lod;
+      const y = (Math.floor(w.y) - win.lod0Rect.y) >> win.lod;
+      const v = mapBin[y * manifest.map.width + x];
+      expect(land(v), name).toBe(false);
+      expect(ocean(v), `${name} ocean bit`).toBe(true);
+    }
+  });
+
+  test("nations come from both theatres and sit on land tiles", () => {
+    const names = manifest.nations.map((n: { name: string }) => n.name);
+    for (const expected of [
+      "Bangkok",
+      "Hanoi",
+      "Singapore",
+      "Manila",
+      "Jakarta",
+      "Sydney",
+      "Perth",
+      "Auckland",
+      "Port Moresby",
+    ]) {
+      expect(names).toContain(expected);
+    }
+    expect(manifest.nations.length).toBeGreaterThanOrEqual(24);
     for (const n of manifest.nations) {
       const [x, y] = n.coordinates;
       expect(land(mapBin[y * manifest.map.width + x]), n.name).toBe(true);

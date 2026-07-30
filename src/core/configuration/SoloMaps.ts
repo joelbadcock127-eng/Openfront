@@ -21,6 +21,10 @@ export const ENABLED_SOLO_MAPS: readonly GameMapType[] = [
   // ONE map for the whole of Southeast Asia: Burma, Thailand, Indochina,
   // Malaya, Sumatra/Borneo and the entire Philippines.
   GameMapType.WorldSoutheastAsia,
+  // The two theatres above JOINED into one map (~2.4 km/tile so the huge
+  // extent stays lag-free): Indochina through the archipelago to Australia,
+  // New Zealand and Fiji — one match, one territorial state.
+  GameMapType.WorldIndoPacific,
   // Regional theatres cut from the same world grid (Bass Strait at maximum
   // ~0.61 km detail), plus the classic upstream World map.
   GameMapType.BassStrait,

@@ -377,6 +377,10 @@ export const GameConfigSchema = z.object({
   victoryCondition: z.enum(["domination", "economic", "straits"]).optional(),
   // Seasons + monsoon slowdown on world-pipeline maps (default on).
   weatherEnabled: z.boolean().optional(),
+  // Internal-pressure mechanics (default on): overextension unrest with
+  // rebellions, and empire shatter into AI successor states after a lost
+  // capital crisis. Off ⇒ territory never breaks away into bot states.
+  rebellionsEnabled: z.boolean().optional(),
   goldMultiplier: z.number().min(0.1).max(1000).nullable().optional(),
   startingGold: z.number().int().min(0).max(1000000000).nullable().optional(),
   hostCheats: z
