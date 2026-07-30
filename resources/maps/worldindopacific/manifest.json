@@ -1,0 +1,573 @@
+{
+  "name": "WorldIndoPacific",
+  "map": {
+    "width": 4864,
+    "height": 4608,
+    "num_land_tiles": 3773454
+  },
+  "map4x": {
+    "width": 2432,
+    "height": 2304,
+    "num_land_tiles": 949349
+  },
+  "map16x": {
+    "width": 1216,
+    "height": 1152,
+    "num_land_tiles": 239820
+  },
+  "nations": [
+    {
+      "coordinates": [
+        2560,
+        2441
+      ],
+      "flag": "au",
+      "name": "Darwin"
+    },
+    {
+      "coordinates": [
+        2505,
+        4175
+      ],
+      "flag": "au",
+      "name": "Hobart"
+    },
+    {
+      "coordinates": [
+        3664,
+        4096
+      ],
+      "flag": "nz",
+      "name": "Wellington"
+    },
+    {
+      "coordinates": [
+        3327,
+        2262
+      ],
+      "flag": "pg",
+      "name": "Port Moresby"
+    },
+    {
+      "coordinates": [
+        4599,
+        2785
+      ],
+      "flag": "fj",
+      "name": "Suva"
+    },
+    {
+      "coordinates": [
+        1181,
+        842
+      ],
+      "flag": "th",
+      "name": "Bangkok"
+    },
+    {
+      "coordinates": [
+        2092,
+        792
+      ],
+      "flag": "ph",
+      "name": "Manila"
+    },
+    {
+      "coordinates": [
+        959,
+        660
+      ],
+      "flag": "mm",
+      "name": "Yangon"
+    },
+    {
+      "coordinates": [
+        1335,
+        408
+      ],
+      "flag": "vn",
+      "name": "Hanoi"
+    },
+    {
+      "coordinates": [
+        1485,
+        1024
+      ],
+      "flag": "vn",
+      "name": "Ho Chi Minh City"
+    },
+    {
+      "coordinates": [
+        1397,
+        1603
+      ],
+      "flag": "sg",
+      "name": "Singapore"
+    },
+    {
+      "coordinates": [
+        1400,
+        977
+      ],
+      "flag": "kh",
+      "name": "Phnom Penh"
+    },
+    {
+      "coordinates": [
+        1297,
+        1488
+      ],
+      "flag": "my",
+      "name": "Kuala Lumpur"
+    },
+    {
+      "coordinates": [
+        1520,
+        2061
+      ],
+      "flag": "id",
+      "name": "Jakarta"
+    },
+    {
+      "coordinates": [
+        2986,
+        3697
+      ],
+      "flag": "au",
+      "name": "Sydney"
+    },
+    {
+      "coordinates": [
+        1228,
+        1351
+      ],
+      "flag": "my",
+      "name": "George Town"
+    },
+    {
+      "coordinates": [
+        3855,
+        3858
+      ],
+      "flag": "nz",
+      "name": "Auckland"
+    },
+    {
+      "coordinates": [
+        1232,
+        591
+      ],
+      "flag": "la",
+      "name": "Vientiane"
+    },
+    {
+      "coordinates": [
+        1893,
+        1383
+      ],
+      "flag": "bn",
+      "name": "Bandar Seri Begawan"
+    },
+    {
+      "coordinates": [
+        3975,
+        3030
+      ],
+      "flag": "nc",
+      "name": "Nouméa"
+    },
+    {
+      "coordinates": [
+        3904,
+        2260
+      ],
+      "flag": "sb",
+      "name": "Honiara"
+    },
+    {
+      "coordinates": [
+        4157,
+        2761
+      ],
+      "flag": "vu",
+      "name": "Port Vila"
+    },
+    {
+      "coordinates": [
+        2595,
+        3909
+      ],
+      "flag": "au",
+      "name": "Melbourne"
+    },
+    {
+      "coordinates": [
+        1783,
+        2126
+      ],
+      "flag": "id",
+      "name": "Surabaya"
+    },
+    {
+      "coordinates": [
+        2094,
+        790
+      ],
+      "flag": "ph",
+      "name": "Quezon City"
+    },
+    {
+      "coordinates": [
+        1550,
+        2108
+      ],
+      "flag": "id",
+      "name": "Bandung"
+    },
+    {
+      "coordinates": [
+        1526,
+        2063
+      ],
+      "flag": "id",
+      "name": "Bekasi"
+    },
+    {
+      "coordinates": [
+        1157,
+        1463
+      ],
+      "flag": "id",
+      "name": "Medan"
+    },
+    {
+      "coordinates": [
+        1374,
+        420
+      ],
+      "flag": "vn",
+      "name": "Haiphong"
+    },
+    {
+      "coordinates": [
+        3257,
+        3331
+      ],
+      "flag": "au",
+      "name": "Brisbane"
+    },
+    {
+      "coordinates": [
+        1436,
+        1865
+      ],
+      "flag": "id",
+      "name": "Palembang"
+    },
+    {
+      "coordinates": [
+        1557,
+        3587
+      ],
+      "flag": "au",
+      "name": "Perth"
+    },
+    {
+      "coordinates": [
+        2368,
+        1247
+      ],
+      "flag": "ph",
+      "name": "Davao"
+    },
+    {
+      "coordinates": [
+        1679,
+        2109
+      ],
+      "flag": "id",
+      "name": "Semarang"
+    },
+    {
+      "coordinates": [
+        892,
+        353
+      ],
+      "flag": "mm",
+      "name": "Mandalay"
+    },
+    {
+      "coordinates": [
+        2096,
+        1997
+      ],
+      "flag": "id",
+      "name": "Makassar"
+    }
+  ],
+  "resources": [
+    {
+      "name": "Pilbara Iron",
+      "type": "iron",
+      "x": 1904,
+      "y": 3096
+    },
+    {
+      "name": "Middleback Iron",
+      "type": "iron",
+      "x": 2425,
+      "y": 3646
+    },
+    {
+      "name": "Kalgoorlie Gold",
+      "type": "gold",
+      "x": 1825,
+      "y": 3520
+    },
+    {
+      "name": "Bendigo Gold",
+      "type": "gold",
+      "x": 2605,
+      "y": 3853
+    },
+    {
+      "name": "Porgera Gold",
+      "type": "gold",
+      "x": 3171,
+      "y": 2018
+    },
+    {
+      "name": "Lihir Gold",
+      "type": "gold",
+      "x": 3613,
+      "y": 1874
+    },
+    {
+      "name": "Waihi Gold",
+      "type": "gold",
+      "x": 3877,
+      "y": 3887
+    },
+    {
+      "name": "Vatukoula Gold",
+      "type": "gold",
+      "x": 4586,
+      "y": 2747
+    },
+    {
+      "name": "Hunter Valley Coal",
+      "type": "coal",
+      "x": 3024,
+      "y": 3622
+    },
+    {
+      "name": "Bowen Basin Coal",
+      "type": "coal",
+      "x": 3170,
+      "y": 3044
+    },
+    {
+      "name": "Collie Coal",
+      "type": "coal",
+      "x": 1537,
+      "y": 3666
+    },
+    {
+      "name": "North West Shelf Gas",
+      "type": "gas",
+      "x": 1824,
+      "y": 2940
+    },
+    {
+      "name": "Gippsland Gas",
+      "type": "gas",
+      "x": 2669,
+      "y": 3933
+    },
+    {
+      "name": "Moomba Gas",
+      "type": "gas",
+      "x": 2690,
+      "y": 3369
+    },
+    {
+      "name": "Timor Sea Oil",
+      "type": "oil",
+      "x": 2559,
+      "y": 2443
+    },
+    {
+      "name": "Taranaki Oil",
+      "type": "oil",
+      "x": 3734,
+      "y": 3977
+    },
+    {
+      "name": "Olympic Dam Copper",
+      "type": "copper",
+      "x": 2487,
+      "y": 3502
+    },
+    {
+      "name": "Mount Isa Copper",
+      "type": "copper",
+      "x": 2823,
+      "y": 2939
+    },
+    {
+      "name": "Ok Tedi Copper",
+      "type": "copper",
+      "x": 3082,
+      "y": 2003
+    },
+    {
+      "name": "Grasberg Copper",
+      "type": "copper",
+      "x": 2904,
+      "y": 1932
+    },
+    {
+      "name": "Weipa Bauxite",
+      "type": "bauxite",
+      "x": 3053,
+      "y": 2456
+    },
+    {
+      "name": "Gove Bauxite",
+      "type": "bauxite",
+      "x": 2830,
+      "y": 2432
+    },
+    {
+      "name": "Broken Hill Silver",
+      "type": "silver",
+      "x": 2639,
+      "y": 3588
+    },
+    {
+      "name": "Cadia Gold",
+      "type": "gold",
+      "x": 2909,
+      "y": 3672
+    },
+    {
+      "name": "Mae Moh Coal",
+      "type": "coal",
+      "x": 1100,
+      "y": 572
+    },
+    {
+      "name": "Monywa Copper",
+      "type": "copper",
+      "x": 848,
+      "y": 345
+    },
+    {
+      "name": "Bawdwin Silver",
+      "type": "silver",
+      "x": 929,
+      "y": 287
+    },
+    {
+      "name": "Sepon Gold",
+      "type": "gold",
+      "x": 1393,
+      "y": 644
+    },
+    {
+      "name": "Baguio Gold",
+      "type": "gold",
+      "x": 2053,
+      "y": 684
+    },
+    {
+      "name": "Toledo Copper",
+      "type": "copper",
+      "x": 2255,
+      "y": 1047
+    },
+    {
+      "name": "Cuu Long Oil",
+      "type": "oil",
+      "x": 1527,
+      "y": 1036
+    },
+    {
+      "name": "Seria Oil",
+      "type": "oil",
+      "x": 1866,
+      "y": 1401
+    },
+    {
+      "name": "Yadana Gas",
+      "type": "gas",
+      "x": 1053,
+      "y": 781
+    }
+  ],
+  "chokepoints": [
+    {
+      "name": "Bass Strait",
+      "x": 2560,
+      "y": 4017,
+      "radius": 57
+    },
+    {
+      "name": "Cook Strait",
+      "x": 3648,
+      "y": 4101,
+      "radius": 33
+    },
+    {
+      "name": "Torres Strait",
+      "x": 3115,
+      "y": 2291,
+      "radius": 41
+    },
+    {
+      "name": "Lombok Strait",
+      "x": 1908,
+      "y": 2215,
+      "radius": 33
+    },
+    {
+      "name": "Makassar Strait",
+      "x": 2017,
+      "y": 1805,
+      "radius": 57
+    },
+    {
+      "name": "Vitiaz Strait",
+      "x": 3381,
+      "y": 2044,
+      "radius": 33
+    },
+    {
+      "name": "Foveaux Strait",
+      "x": 3151,
+      "y": 4372,
+      "radius": 29
+    },
+    {
+      "name": "Strait of Malacca",
+      "x": 1252,
+      "y": 1505,
+      "radius": 65
+    },
+    {
+      "name": "Sunda Strait",
+      "x": 1476,
+      "y": 2047,
+      "radius": 37
+    },
+    {
+      "name": "Luzon Strait",
+      "x": 2008,
+      "y": 446,
+      "radius": 49
+    }
+  ],
+  "climate": {
+    "monsoonMaxY": 2896
+  }
+}
